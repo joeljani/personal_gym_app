@@ -1,4 +1,4 @@
-package joeljani.gymapp.model;
+package joeljani.gymapp.domain;
 
 import java.util.List;
 
