@@ -1,45 +1,34 @@
-import React from "react";
+import React, {useState} from "react";
 import {
     CardBody,
     CardTitle,
     CardSubtitle,
     Card,
     Table,
+    Button, Modal, ModalHeader, ModalBody
 } from "reactstrap";
+import {useSelector} from "react-redux";
+import moment from "moment";
+import DayPicker from "react-day-picker";
+import WorkoutDayCard from "./WorkoutDayCard";
 
 
-const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-
+//TODO Creation of a workout and listing of correct workout
 const WorkoutWeekTable = ({workouts}) => {
+
+    const currentWeek = useSelector(state => state.currentWeek)
+
+    const getWorkoutBasedOnDay = (date) => {
+        if(workouts !== undefined) {
+            return workouts.find(workout => parseInt(workout.date.substring(8)) === date.getDate())
+        }
+    }
+
+
     return (
         <div>
-            {days.map(d => createDayCard(d))}
+            {currentWeek.map(d => <WorkoutDayCard key={d.getDate()} date={d} workout={getWorkoutBasedOnDay(d)}/>)}
         </div>
-    )
-};
-
-const createDayCard = (day) => {
-    return (
-        <Card>
-            <CardTitle>{day}</CardTitle>
-            <CardSubtitle>Push</CardSubtitle>
-            <CardBody>
-                <Table>
-                    <thead>
-                    <tr>
-                        <th>Exercise</th>
-                        <th>Reps</th>
-                        <th>Sets</th>
-                        <th>Achieved</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {/*workout content*/}
-                    </tbody>
-                </Table>
-            </CardBody>
-        </Card>
     )
 };
 
