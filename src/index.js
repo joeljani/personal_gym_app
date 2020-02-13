@@ -5,12 +5,15 @@ import * as serviceWorker from './serviceWorker';
 import {Provider} from "react-redux";
 import {applyMiddleware, createStore} from 'redux'
 import {createLogger} from 'redux-logger'
-import ReduxThunk from 'redux-thunk'
+import ReduxThunk from 'redux-thunk';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css'
 const logger = createLogger({colors: false})
 
 
 const initalState = {
     workouts: [],
+    currentWeek: [],
     serverUrl: '',
     serverError: false,
     loading: false
@@ -18,6 +21,7 @@ const initalState = {
 
 const reducer = (state, action) => {
     switch (action.type) {
+        case "SET_CURRENT_WEEK": return ({...state, currentWeek: action.currentWeek})
         case "SERVER_URL_LOADING": return({...state, loading: action.loading})
         case "SERVER_URL_LOADED": return ({...state, serverUrl: action.serverUrl})
         case "SERVER_URL_LOAD_FAILED": return ({...state, serverError: true})
