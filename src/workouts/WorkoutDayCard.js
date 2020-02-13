@@ -1,3 +1,4 @@
+import React, {useState} from "react";
 import moment from "moment";
 import {
     Button,
@@ -9,9 +10,9 @@ import {
     Modal,
     ModalBody,
     ModalHeader,
-    Table
+    Table,
+    CardFooter
 } from "reactstrap";
-import React, {useState} from "react";
 
 const WorkoutDayCard = ({date, workout}) => {
 
@@ -25,10 +26,24 @@ const WorkoutDayCard = ({date, workout}) => {
 
     const noWorkout = () => workout === undefined;
 
+    const cardStyle = {
+        marginTop: '20px',
+        marginBottom: '20px'
+    }
+
+    const buttonStyle = {
+        width: '150px',
+        float: 'right',
+        backgroundColor: 'white',
+        color: 'black',
+        fontSize: '10px',
+    }
+
+
     return (
         <div>
             {noWorkout() ? (
-                <Card>
+                <Card style={cardStyle}>
                     <CardTitle>{day}</CardTitle>
                     <CardSubtitle></CardSubtitle>
                     <CardBody>
@@ -43,17 +58,19 @@ const WorkoutDayCard = ({date, workout}) => {
                             </thead>
                         </Table>
                     </CardBody>
-                    <Button onClick={toggle}>Create Workout</Button>
+                    <CardFooter>
+                    <Button style={buttonStyle} onClick={toggle}>Create Workout</Button>
                     <Modal isOpen={modal} toggle={toggle}>
                         <ModalHeader toggle={toggle}>Create a workout</ModalHeader>
                         <ModalBody>
                         </ModalBody>
                     </Modal>
+                    </CardFooter>
                 </Card>
             ) : (
                 <Card>
                     <CardTitle>{day}</CardTitle>
-                    <CardSubtitle>{workout.name}</CardSubtitle>
+                    <CardSubtitle><h3>{workout.name}</h3></CardSubtitle>
                     <CardBody>
                         <Table>
                             <thead>
@@ -80,12 +97,18 @@ const WorkoutDayCard = ({date, workout}) => {
                             </tbody>
                         </Table>
                     </CardBody>
-                    <Button onClick={toggle}>Create Workout</Button>
+                    <CardFooter>
+                    {noWorkout() ? (
+                        <Button style={buttonStyle} onClick={toggle}>Create Workout</Button>
+                    ) : (
+                        <Button style={buttonStyle} onClick={toggle}>Edit Workout</Button>
+                    )}
                     <Modal isOpen={modal} toggle={toggle}>
                         <ModalHeader toggle={toggle}>Create a workout</ModalHeader>
                         <ModalBody>
                         </ModalBody>
                     </Modal>
+                    </CardFooter>
                 </Card>
             )}
         </div>

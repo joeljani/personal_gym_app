@@ -16,7 +16,7 @@ const WorkoutContainer = ({serverUrl}) => {
     const fetchWorkouts = () => {
         dispatch(
             async dispatch => {
-                const res = await fetch(serverUrl + "/workouts");
+                const res = await fetch("http://192.168.192.65:8080" + "/workouts");
                 const data = await res.json();
                 dispatch({type: "WORKOUTS_FETCHED", workouts: data});
             }
@@ -38,7 +38,7 @@ const WorkoutContainer = ({serverUrl}) => {
     return (
         <Container>
             <Row>
-                <Col><h1>Header</h1></Col>
+                <Col><h3>Current week</h3></Col>
             </Row>
             <Row>
                 <Col><CurrentWeekPicker/></Col>
