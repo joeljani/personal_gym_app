@@ -5,6 +5,8 @@ import {Row} from "reactstrap";
 import Col from "reactstrap/es/Col";
 import Container from "reactstrap/es/Container";
 import CurrentWeek from "./CurrentWeek";
+import moment from "moment";
+
 
 const WorkoutContainer = ({serverUrl}) => {
 
@@ -12,21 +14,28 @@ const WorkoutContainer = ({serverUrl}) => {
     const currentWeek = useSelector(state => state.currentWeek)
     const dispatch = useDispatch();
 
-    useEffect(() => console.log(currentWeek), [currentWeek])
-
-
     const fetchWorkouts = () => {
         dispatch(
             async dispatch => {
-                const res = await fetch("http://127.0.0.1:8080/workouts");
+                const res = await fetch(serverUrl + "/workouts");
                 const data = await res.json();
                 dispatch({type: "WORKOUTS_FETCHED", workouts: data});
-
             }
         );
     };
-
     useEffect(fetchWorkouts, [serverUrl]);
+
+    const getWorkoutsOfCurrentWeek = (workouts) => {
+        console.log(currentWeek)
+        const currentWeekTransformed = currentWeek.map(d => {
+            if(d.getDate() >= 10 && d.getMonth()+1 < 10) return "2020-"+"0" + (d.getMonth()+1) + "-" + d.getDate()
+            else if(d.getDate() < 10 && d.getMonth()+1 < 10) return "2020-"+"0" + (d.getMonth()+1) + "-" + "0" + d.getDate()
+            else if(d.getDate() >= 10 && d.getMonth()+1 >= 10) return  "2020-"+ (d.getMonth()+1) + "-" + d.getDate()
+            else if(d.getDate() < 10 && d.getMonth()+1 >= 10) return "2020-"+ (d.getMonth()+1) + "-" + "0" + d.getDate()
+        })
+        return workouts.filter(workout => currentWeekTransformed.includes(workout.date))
+    }
+
 
     return (
         <Container>
@@ -36,7 +45,7 @@ const WorkoutContainer = ({serverUrl}) => {
             <Row>
                 <Col><CurrentWeek/></Col>
             </Row>
-            <WorkoutWeekTable workouts={workouts}/>
+            <WorkoutWeekTable workouts={getWorkoutsOfCurrentWeek(workouts)}/>
         </Container>
     )
 
