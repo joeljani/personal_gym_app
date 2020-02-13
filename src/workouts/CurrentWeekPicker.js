@@ -7,12 +7,13 @@ import moment from "moment";
 import 'moment/locale/de';
 
 
-const CurrentWeek = () => {
+const CurrentWeekPicker = () => {
 
-    const [hoverRange, setHoverRange] = useState(undefined)
-    const [selectedDays, setSelectedDays] = useState([])
-    const [modal, setModal] = useState(false);
     const dispatch = useDispatch();
+    const [hoverRange, setHoverRange] = useState(undefined)
+    const [selectedDays, setSelectedDays] = useState(getWeekDays(getWeekRange(new Date()).from)) //initial week = actual current week
+    dispatch({type: "SET_CURRENT_WEEK", currentWeek: selectedDays})
+    const [modal, setModal] = useState(false);
 
     const toggle = () => {
         setModal(!modal);
@@ -102,4 +103,4 @@ const getWeekRange = date => {
     };
 }
 
-export default CurrentWeek;
+export default CurrentWeekPicker;

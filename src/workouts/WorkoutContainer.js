@@ -4,8 +4,7 @@ import WorkoutWeekTable from "./WorkoutWeekTable";
 import {Row} from "reactstrap";
 import Col from "reactstrap/es/Col";
 import Container from "reactstrap/es/Container";
-import CurrentWeek from "./CurrentWeek";
-import moment from "moment";
+import CurrentWeekPicker from "./CurrentWeekPicker";
 
 
 const WorkoutContainer = ({serverUrl}) => {
@@ -26,7 +25,6 @@ const WorkoutContainer = ({serverUrl}) => {
     useEffect(fetchWorkouts, [serverUrl]);
 
     const getWorkoutsOfCurrentWeek = (workouts) => {
-        console.log(currentWeek)
         const currentWeekTransformed = currentWeek.map(d => {
             if(d.getDate() >= 10 && d.getMonth()+1 < 10) return "2020-"+"0" + (d.getMonth()+1) + "-" + d.getDate()
             else if(d.getDate() < 10 && d.getMonth()+1 < 10) return "2020-"+"0" + (d.getMonth()+1) + "-" + "0" + d.getDate()
@@ -43,7 +41,7 @@ const WorkoutContainer = ({serverUrl}) => {
                 <Col><h1>Header</h1></Col>
             </Row>
             <Row>
-                <Col><CurrentWeek/></Col>
+                <Col><CurrentWeekPicker/></Col>
             </Row>
             <WorkoutWeekTable workouts={getWorkoutsOfCurrentWeek(workouts)}/>
         </Container>

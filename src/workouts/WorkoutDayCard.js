@@ -6,7 +6,6 @@ import {
     CardSubtitle,
     CardTitle,
     Input,
-    Label,
     Modal,
     ModalBody,
     ModalHeader,
@@ -42,9 +41,6 @@ const WorkoutDayCard = ({date, workout}) => {
                                 <th>Achieved</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            {/*workout content*/}
-                            </tbody>
                         </Table>
                     </CardBody>
                     <Button onClick={toggle}>Create Workout</Button>
