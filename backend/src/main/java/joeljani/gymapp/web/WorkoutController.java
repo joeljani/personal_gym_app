@@ -7,12 +7,15 @@ import joeljani.gymapp.persistence.WorkoutRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +48,11 @@ public class WorkoutController  {
             if((exerciseRepository.findByName(e.getName())) == null) exerciseRepository.save(e);
             else w.replaceExercise(e, exerciseRepository.findByName(e.getName()));
         });
+        setWorkoutDate(w);
+        if(workoutRepository.findAll().stream().anyMatch(workout -> workout.getDate().equals(w.getDate()))) {
+            log.debug("There exists already a workout at that date");
+            return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
+        }
         Workout workout = workoutRepository.save(w);
         return new ResponseEntity<>(workout, HttpStatus.CREATED);
     }
@@ -79,6 +87,14 @@ public class WorkoutController  {
             workoutRepository.save(workout);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private void setWorkoutDate(@RequestBody @Valid Workout w) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dateOfCreation = w.getDate();
+        String formattedDateOfCreationString = dateOfCreation.format(formatter);
+        LocalDate formattedDateOfCreation = LocalDate.parse(formattedDateOfCreationString, formatter);
+        w.setDate(formattedDateOfCreation);
     }
 
 }
