@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {Container} from 'reactstrap'
 import {useSelector, useDispatch} from "react-redux";
 import Loader from "../misc/Loader";
 import WorkoutContainer from "../workouts/WorkoutContainer";

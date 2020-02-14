@@ -24,16 +24,31 @@ const WorkoutContainer = ({serverUrl}) => {
     };
     useEffect(fetchWorkouts, [serverUrl]);
 
-    const getWorkoutsOfCurrentWeek = (workouts) => {
-        const currentWeekTransformed = currentWeek.map(d => {
-            if(d.getDate() >= 10 && d.getMonth()+1 < 10) return "2020-"+"0" + (d.getMonth()+1) + "-" + d.getDate()
-            else if(d.getDate() < 10 && d.getMonth()+1 < 10) return "2020-"+"0" + (d.getMonth()+1) + "-" + "0" + d.getDate()
-            else if(d.getDate() >= 10 && d.getMonth()+1 >= 10) return  "2020-"+ (d.getMonth()+1) + "-" + d.getDate()
-            else if(d.getDate() < 10 && d.getMonth()+1 >= 10) return "2020-"+ (d.getMonth()+1) + "-" + "0" + d.getDate()
-        })
-        return workouts.filter(workout => currentWeekTransformed.includes(workout.date))
+    const createWorkout = async workout => {
+        const request = new Request(serverUrl + "/workouts", {
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=utf-8'
+            }),
+            body: JSON.stringify(workout)
+        });
+        try {
+            const response = await fetch(request);
+            if (!response.ok) {
+                console.log('Status Code: ' + response.status);
+            } else {
+                const newWorkout = await response.json();
+                dispatch({type: "WORKOUTS_CHANGED", workouts: workouts.concat(newWorkout)})
+            }
+        } catch (error) {
+            console.error(error)
+        }
     }
 
+    const getWorkoutsOfCurrentWeek = (workouts) => {
+        const currentWeekTransformed = currentWeek.map(d => transformDateString(d))
+        return workouts.filter(workout => currentWeekTransformed.includes(workout.date))
+    }
 
     return (
         <Container>
@@ -43,11 +58,16 @@ const WorkoutContainer = ({serverUrl}) => {
             <Row>
                 <Col><CurrentWeekPicker/></Col>
             </Row>
-            <WorkoutWeekTable workouts={getWorkoutsOfCurrentWeek(workouts)}/>
+            <WorkoutWeekTable workouts={getWorkoutsOfCurrentWeek(workouts)} createWorkout={createWorkout}/>
         </Container>
     )
+}
 
-
+const transformDateString = (d) => {
+    if(d.getDate() >= 10 && d.getMonth()+1 < 10) return "2020-"+"0" + (d.getMonth()+1) + "-" + d.getDate()
+    else if(d.getDate() < 10 && d.getMonth()+1 < 10) return "2020-"+"0" + (d.getMonth()+1) + "-" + "0" + d.getDate()
+    else if(d.getDate() >= 10 && d.getMonth()+1 >= 10) return  "2020-"+ (d.getMonth()+1) + "-" + d.getDate()
+    else if(d.getDate() < 10 && d.getMonth()+1 >= 10) return "2020-"+ (d.getMonth()+1) + "-" + "0" + d.getDate()
 }
 
 export default WorkoutContainer;

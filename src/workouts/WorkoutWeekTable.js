@@ -1,19 +1,9 @@
-import React, {useState} from "react";
-import {
-    CardBody,
-    CardTitle,
-    CardSubtitle,
-    Card,
-    Table,
-    Button, Modal, ModalHeader, ModalBody
-} from "reactstrap";
+import React from "react";
 import {useSelector} from "react-redux";
-import moment from "moment";
-import DayPicker from "react-day-picker";
 import WorkoutDayCard from "./WorkoutDayCard";
 
 
-const WorkoutWeekTable = ({workouts}) => {
+const WorkoutWeekTable = ({workouts, createWorkout}) => {
 
     const currentWeek = useSelector(state => state.currentWeek)
 
@@ -25,7 +15,10 @@ const WorkoutWeekTable = ({workouts}) => {
 
     return (
         <div>
-            {currentWeek.map(d => <WorkoutDayCard key={d.getDate()} date={d} workout={getWorkoutBasedOnDay(d)}/>)}
+            {currentWeek.map(d => <WorkoutDayCard key={d.getDate()}
+                                                  date={d}
+                                                  workout={getWorkoutBasedOnDay(d)}
+                                                  createWorkout={createWorkout}/>)}
         </div>
     )
 };

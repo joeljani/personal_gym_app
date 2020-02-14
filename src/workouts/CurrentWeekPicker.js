@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import React, {useState} from "react";
+import {useDispatch} from "react-redux";
 import {Button, Modal, ModalBody, ModalHeader} from "reactstrap";
 import DayPicker from "react-day-picker";
 import 'react-day-picker/lib/style.css';
