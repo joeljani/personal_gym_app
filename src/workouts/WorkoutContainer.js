@@ -16,7 +16,7 @@ const WorkoutContainer = ({serverUrl}) => {
     const fetchWorkouts = () => {
         dispatch(
             async dispatch => {
-                const res = await fetch("http://192.168.192.65:8080" + "/workouts");
+                const res = await fetch("http://127.0.0.1:8080" + "/workouts");
                 const data = await res.json();
                 dispatch({type: "WORKOUTS_FETCHED", workouts: data});
             }
