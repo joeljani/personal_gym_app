@@ -1,0 +1,7 @@
+joeljani/gymapp/PersonalGymPlanner.class
+joeljani/gymapp/persistence/ExerciseRepository.class
+joeljani/gymapp/persistence/WorkoutRepository.class
+joeljani/gymapp/web/ExerciseController.class
+joeljani/gymapp/web/WorkoutController.class
+joeljani/gymapp/domain/Workout.class
+joeljani/gymapp/domain/Exercise.class
