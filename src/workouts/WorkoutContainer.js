@@ -16,7 +16,7 @@ const WorkoutContainer = ({serverUrl}) => {
     const fetchWorkouts = () => {
         dispatch(
             async dispatch => {
-                const res = await fetch("http://127.0.0.1:8080" + "/workouts");
+                const res = await fetch("http://10.207.29.214:8080" + "/workouts");
                 const data = await res.json();
                 dispatch({type: "WORKOUTS_FETCHED", workouts: data});
             }
@@ -45,6 +45,23 @@ const WorkoutContainer = ({serverUrl}) => {
         }
     }
 
+    const deleteWorkout = async workout => {
+        const request = new Request(serverUrl + "/workouts/" + workout.id, {
+            method: 'DELETE',
+        });
+        try {
+            const response = await fetch(request);
+            if (!response.ok) {
+                console.log('Status Code: ' + response.status);
+            } else {
+                const modifiedWorkoutList = workouts.filter(w => w.id !== workout.id)
+                dispatch({type: "WORKOUTS_CHANGED", workouts: modifiedWorkoutList})
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     const getWorkoutsOfCurrentWeek = (workouts) => {
         const currentWeekTransformed = currentWeek.map(d => transformDateString(d))
         return workouts.filter(workout => currentWeekTransformed.includes(workout.date))
@@ -58,7 +75,7 @@ const WorkoutContainer = ({serverUrl}) => {
             <Row>
                 <Col><CurrentWeekPicker/></Col>
             </Row>
-            <WorkoutWeekTable workouts={getWorkoutsOfCurrentWeek(workouts)} createWorkout={createWorkout}/>
+            <WorkoutWeekTable workouts={getWorkoutsOfCurrentWeek(workouts)} createWorkout={createWorkout} deleteWorkout={deleteWorkout}/>
         </Container>
     )
 }

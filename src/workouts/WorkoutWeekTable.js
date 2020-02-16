@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import WorkoutDayCard from "./WorkoutDayCard";
 
 
-const WorkoutWeekTable = ({workouts, createWorkout}) => {
+const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout}) => {
 
     const currentWeek = useSelector(state => state.currentWeek)
 
@@ -18,7 +18,9 @@ const WorkoutWeekTable = ({workouts, createWorkout}) => {
             {currentWeek.map(d => <WorkoutDayCard key={d.getDate()}
                                                   date={d}
                                                   workout={getWorkoutBasedOnDay(d)}
-                                                  createWorkout={createWorkout}/>)}
+                                                  createWorkout={createWorkout}
+                                                  deleteWorkout={deleteWorkout}
+            />)}
         </div>
     )
 };

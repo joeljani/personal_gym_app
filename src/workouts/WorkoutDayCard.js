@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 import deleteIcon from '../misc/deleteIcon.png';
 
-const WorkoutDayCard = ({date, workout, createWorkout}) => {
+const WorkoutDayCard = ({date, workout, createWorkout, deleteWorkout}) => {
 
     const [modal, setModal] = useState(false);
     const [modalExercises, setModalExercises] = useState([modalExercise()])
@@ -35,6 +35,7 @@ const WorkoutDayCard = ({date, workout, createWorkout}) => {
 
     const noWorkout = () => workout === undefined;
 
+    //TODO
     const addExercise = () => {
         const updatedModalExercises = modalExercises.concat(modalExercise())
         setModalExercises(updatedModalExercises)
@@ -47,6 +48,11 @@ const WorkoutDayCard = ({date, workout, createWorkout}) => {
 
     const onSaveWorkout = () => {
         createWorkout(currentWorkout);
+        toggle()
+    }
+
+    const onDeleteWorkout = () => {
+        deleteWorkout(workout)
         toggle()
     }
 
@@ -140,9 +146,14 @@ const WorkoutDayCard = ({date, workout, createWorkout}) => {
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col className="clearfix" style={{padding: '.2rem'}}>
-                                <Button onClick={onSaveWorkout} className="float-right" color="secondary">Save</Button>
-                            </Col>
+                            <Row className={"justify-content-end"}>
+                                <Col xs={3} className="clearfix" style={{padding: '.2rem'}}>
+                                    <Button onClick={onSaveWorkout} color="success">Save</Button>
+                                </Col>
+                                <Col xs={3} className="clearfix" style={{padding: '.2rem'}}>
+                                    <Button onClick={onDeleteWorkout} color="danger">Delete</Button>
+                                </Col>
+                            </Row>
                         </FormGroup>
                     </Form>
                 </ModalBody>
