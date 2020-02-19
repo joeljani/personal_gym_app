@@ -1,18 +1,6 @@
-import React, {useState} from "react";
+import React from "react";
 import moment from "moment";
-import {
-    Button,
-    Card,
-    CardBody,
-    CardSubtitle,
-    CardTitle,
-    Input,
-    Modal,
-    ModalBody,
-    ModalHeader,
-    Table,
-    CardFooter, Form, FormGroup, Label, Col, Row
-} from "reactstrap";
+import {Card, CardBody, CardFooter, CardSubtitle, CardTitle, Input, Table} from "reactstrap";
 
 import ModalWorkout from "./ModalWorkout";
 
@@ -47,7 +35,10 @@ const WorkoutDayCard = ({date, workout, createWorkout, deleteWorkout}) => {
                             <td/>
                             <td>
                                 <Input
-                                    style={{right: '-70%', position: 'relative'}} //TODO: find solution for larger displays (e.g tablet)
+                                    style={{
+                                        right: '-70%',
+                                        position: 'relative'
+                                    }} //TODO: find solution for larger displays (e.g tablet)
                                     type="checkbox"
                                     onChange={() => console.log("checked")}
                                 />
@@ -59,26 +50,18 @@ const WorkoutDayCard = ({date, workout, createWorkout, deleteWorkout}) => {
                 </Table>
             </CardBody>
             <CardFooter>
-                <ModalWorkout workout={workout} date={date} noWorkout={noWorkout()} createWorkout={createWorkout} deleteWorkout={deleteWorkout} />
+                <ModalWorkout workout={workout} date={date} noWorkout={noWorkout()} createWorkout={createWorkout}
+                              deleteWorkout={deleteWorkout}/>
             </CardFooter>
         </Card>
     )
 };
 
 
-
 const cardStyle = {
     marginTop: '20px',
     marginBottom: '20px',
     fontSize: '9px'
-}
-
-
-const transformDateString = (d) => {
-    if(d.getDate() >= 10 && d.getMonth()+1 < 10) return "2020-"+"0" + (d.getMonth()+1) + "-" + d.getDate()
-    else if(d.getDate() < 10 && d.getMonth()+1 < 10) return "2020-"+"0" + (d.getMonth()+1) + "-" + "0" + d.getDate()
-    else if(d.getDate() >= 10 && d.getMonth()+1 >= 10) return  "2020-"+ (d.getMonth()+1) + "-" + d.getDate()
-    else if(d.getDate() < 10 && d.getMonth()+1 >= 10) return "2020-"+ (d.getMonth()+1) + "-" + "0" + d.getDate()
 }
 
 export default WorkoutDayCard;

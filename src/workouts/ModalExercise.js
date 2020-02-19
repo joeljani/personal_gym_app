@@ -14,12 +14,17 @@ const ModalExercise = ({id, updateExercise, deleteExercise}) => {
     )
 
     const handleInput = event => {
-        if(event.target.name === "sets" || event.target.name === "reps") {
-            const value = JSON.parse(event.target.value)
-            setExercise({...exercise, [event.target.name]: value})
-        } else {
-            setExercise({...exercise, [event.target.name]: event.target.value})
+        try { //if user enters non numeric value
+            if(event.target.name === "sets" || event.target.name === "reps") {
+                const value = JSON.parse(event.target.value)
+                setExercise({...exercise, [event.target.name]: value})
+            } else {
+                setExercise({...exercise, [event.target.name]: event.target.value})
+            }
+        } catch (e) {
+            console.log(e)
         }
+
     }
 
     useEffect(() => {

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Col, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row} from "reactstrap";
-import ModalExercise from "./ModalExercise";
 import ModalExerciseList from "./ModalExerciseList";
+import {transformDateString} from "../helper/TransformDateString";
 
 const ModalWorkout = ({workout, date, noWorkout, createWorkout, deleteWorkout}) => {
     const [modal, setModal] = useState(false);
@@ -26,7 +26,7 @@ const ModalWorkout = ({workout, date, noWorkout, createWorkout, deleteWorkout}) 
 
 
     const workoutChange = event => {
-        const transformedDate = transformDateString(date) //TODO: change location of set date for better performance, export function transformDateDate,
+        const transformedDate = transformDateString(date) //TODO: change location of set date for better performance
         setCurrentWorkout({...currentWorkout, [event.target.name]: event.target.value, date: transformedDate})
     }
 
@@ -141,13 +141,6 @@ const buttonStyle = {
     backgroundColor: 'white',
     color: 'black',
     fontSize: '10px',
-}
-
-const transformDateString = (d) => {
-    if (d.getDate() >= 10 && d.getMonth() + 1 < 10) return "2020-" + "0" + (d.getMonth() + 1) + "-" + d.getDate()
-    else if (d.getDate() < 10 && d.getMonth() + 1 < 10) return "2020-" + "0" + (d.getMonth() + 1) + "-" + "0" + d.getDate()
-    else if (d.getDate() >= 10 && d.getMonth() + 1 >= 10) return "2020-" + (d.getMonth() + 1) + "-" + d.getDate()
-    else if (d.getDate() < 10 && d.getMonth() + 1 >= 10) return "2020-" + (d.getMonth() + 1) + "-" + "0" + d.getDate()
 }
 
 export default ModalWorkout;
