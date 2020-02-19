@@ -6,7 +6,7 @@ import Col from "reactstrap/es/Col";
 import Container from "reactstrap/es/Container";
 import CurrentWeekPicker from "./CurrentWeekPicker";
 
-
+//TODO: get serverurl from redux store
 const WorkoutContainer = ({serverUrl}) => {
 
     const workouts = useSelector(state => state.workouts);
@@ -16,7 +16,7 @@ const WorkoutContainer = ({serverUrl}) => {
     const fetchWorkouts = () => {
         dispatch(
             async dispatch => {
-                const res = await fetch("http://10.207.29.214:8080" + "/workouts");
+                const res = await fetch("http://127.0.0.1:8080" + "/workouts");
                 const data = await res.json();
                 dispatch({type: "WORKOUTS_FETCHED", workouts: data});
             }
@@ -25,6 +25,8 @@ const WorkoutContainer = ({serverUrl}) => {
     useEffect(fetchWorkouts, [serverUrl]);
 
     const createWorkout = async workout => {
+        console.log(workout)
+        console.log(JSON.stringify(workout))
         const request = new Request(serverUrl + "/workouts", {
             method: 'POST',
             headers: new Headers({
@@ -38,6 +40,7 @@ const WorkoutContainer = ({serverUrl}) => {
                 console.log('Status Code: ' + response.status);
             } else {
                 const newWorkout = await response.json();
+                console.log(newWorkout)
                 dispatch({type: "WORKOUTS_CHANGED", workouts: workouts.concat(newWorkout)})
             }
         } catch (error) {
@@ -61,6 +64,7 @@ const WorkoutContainer = ({serverUrl}) => {
             console.error(error)
         }
     }
+
 
     const getWorkoutsOfCurrentWeek = (workouts) => {
         const currentWeekTransformed = currentWeek.map(d => transformDateString(d))
@@ -86,5 +90,7 @@ const transformDateString = (d) => {
     else if(d.getDate() >= 10 && d.getMonth()+1 >= 10) return  "2020-"+ (d.getMonth()+1) + "-" + d.getDate()
     else if(d.getDate() < 10 && d.getMonth()+1 >= 10) return "2020-"+ (d.getMonth()+1) + "-" + "0" + d.getDate()
 }
+
+
 
 export default WorkoutContainer;

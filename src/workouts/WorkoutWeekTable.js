@@ -9,7 +9,7 @@ const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout}) => {
 
     const getWorkoutBasedOnDay = (date) => {
         if(workouts !== undefined) {
-            return workouts.find(workout => parseInt(workout.date.substring(8)) === date.getDate()); //8th pos of (e.g) "2020-02-13" = "13"
+            return workouts.find(workout => (workout.date.substring(8)) === date.getDate().toString()); //8th pos of (e.g) "2020-02-13" = "13"
         }
     }
 
