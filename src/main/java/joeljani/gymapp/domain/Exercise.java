@@ -17,7 +17,7 @@ public class Exercise {
 
     private boolean achieved;
 
-    private int reps, sets;
+    private int sets, reps;
 
     public String getId() {
         return id;

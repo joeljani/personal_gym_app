@@ -9,7 +9,7 @@ services:
     command: --smallfiles
     hostname: mongo
   spring:
-    image: gymapp
+    image: mygymapp-spring-boot
     ports:
       - 8080:8080
     links:

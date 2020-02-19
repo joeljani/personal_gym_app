@@ -30,5 +30,4 @@ public class ExerciseController {
         List<Exercise> es = exerciseRepository.findAll();
         return new ResponseEntity<>(es, HttpStatus.OK);
     }
-
 }

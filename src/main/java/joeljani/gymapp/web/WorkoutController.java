@@ -44,15 +44,12 @@ public class WorkoutController  {
             result.getAllErrors().forEach(error -> log.debug(error.toString()));
             return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
         }
-        w.getExercises().forEach(e -> {
-            if((exerciseRepository.findByName(e.getName())) == null) exerciseRepository.save(e);
-            else w.replaceExercise(e, exerciseRepository.findByName(e.getName()));
-        });
         setWorkoutDate(w);
         if(workoutRepository.findAll().stream().anyMatch(workout -> workout.getDate().equals(w.getDate()))) {
             log.debug("There exists already a workout at that date");
             return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
         }
+        w.getExercises().forEach(e -> exerciseRepository.save(e)); //TODO: check if exercise exists already (custom exerciserepo mongo query needed)
         Workout workout = workoutRepository.save(w);
         return new ResponseEntity<>(workout, HttpStatus.CREATED);
     }
