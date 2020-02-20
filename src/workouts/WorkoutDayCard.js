@@ -1,14 +1,20 @@
-import React from "react";
+import React, {useState} from "react";
 import moment from "moment";
 import {Card, CardBody, CardFooter, CardSubtitle, CardTitle, Input, Table} from "reactstrap";
+import ModalWorkoutCreate from "./modalWorkout/ModalWorkoutCreate";
+import ModalWorkoutUpdate from "./modalWorkout/ModalWorkoutUpdate";
 
-import ModalWorkout from "./ModalWorkout";
 
-const WorkoutDayCard = ({date, workout, createWorkout, deleteWorkout}) => {
-
+const WorkoutDayCard = ({date, workout, createWorkout, updateWorkout, deleteWorkout}) => {
     const day = moment(date).format('ddd');
 
     const noWorkout = () => workout === undefined;
+
+    const exerciseAchieved = exercise => {
+        exercise.achieved = exercise.achieved === true ? false : true
+        workout.exercises = workout.exercises.map(e => e.id === exercise.id ? exercise : e)
+        updateWorkout(workout);
+    }
 
     return (
         <Card style={cardStyle}>
@@ -40,7 +46,8 @@ const WorkoutDayCard = ({date, workout, createWorkout, deleteWorkout}) => {
                                         position: 'relative'
                                     }} //TODO: find solution for larger displays (e.g tablet)
                                     type="checkbox"
-                                    onChange={() => console.log("checked")}
+                                    checked={e.achieved}
+                                    onChange={() => exerciseAchieved(e)}
                                 />
                             </td>
                         </tr>
@@ -50,8 +57,10 @@ const WorkoutDayCard = ({date, workout, createWorkout, deleteWorkout}) => {
                 </Table>
             </CardBody>
             <CardFooter>
-                <ModalWorkout workout={workout} date={date} noWorkout={noWorkout()} createWorkout={createWorkout}
-                              deleteWorkout={deleteWorkout}/>
+                {noWorkout() ?
+                    <ModalWorkoutCreate date={date} createWorkout={createWorkout}/>
+                    :
+                    <ModalWorkoutUpdate date={date} workout={workout} updateWorkout={updateWorkout} deleteWorkout={deleteWorkout}/>}
             </CardFooter>
         </Card>
     )

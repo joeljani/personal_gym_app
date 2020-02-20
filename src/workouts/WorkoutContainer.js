@@ -17,7 +17,7 @@ const WorkoutContainer = ({serverUrl}) => {
     const fetchWorkouts = () => {
         dispatch(
             async dispatch => {
-                const res = await fetch("http://10.207.18.25:8080" + "/workouts");
+                const res = await fetch("http://127.0.0.1:8080" + "/workouts");
                 const data = await res.json();
                 dispatch({type: "WORKOUTS_FETCHED", workouts: data});
             }
@@ -26,8 +26,6 @@ const WorkoutContainer = ({serverUrl}) => {
     useEffect(fetchWorkouts, [serverUrl]);
 
     const createWorkout = async workout => {
-        console.log(workout)
-        console.log(JSON.stringify(workout))
         const request = new Request(serverUrl + "/workouts", {
             method: 'POST',
             headers: new Headers({
@@ -41,8 +39,35 @@ const WorkoutContainer = ({serverUrl}) => {
                 console.log('Status Code: ' + response.status);
             } else {
                 const newWorkout = await response.json();
-                console.log(newWorkout)
-                dispatch({type: "WORKOUTS_CHANGED", workouts: workouts.concat(newWorkout)})
+                dispatch({
+                    type: "WORKOUTS_CHANGED",
+                    workouts: workouts.concat(newWorkout)
+                })
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const updateWorkout = async workout => {
+        console.log(workout)
+        const request = new Request(serverUrl + "/workouts/" + workout.id, {
+            method: 'PUT',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=utf-8'
+            }),
+            body: JSON.stringify(workout)
+        });
+        console.log(request)
+        try {
+            const response = await fetch(request);
+            if (!response.ok) {
+                console.log('Status Code: ' + response.status);
+            } else {
+                dispatch({
+                    type: "WORKOUTS_CHANGED",
+                    workouts: workouts.map(w => w.id === workout.id ? workout : w)
+                })
             }
         } catch (error) {
             console.error(error)
@@ -59,7 +84,10 @@ const WorkoutContainer = ({serverUrl}) => {
                 console.log('Status Code: ' + response.status);
             } else {
                 const modifiedWorkoutList = workouts.filter(w => w.id !== workout.id)
-                dispatch({type: "WORKOUTS_CHANGED", workouts: modifiedWorkoutList})
+                dispatch({
+                    type: "WORKOUTS_CHANGED",
+                    workouts: modifiedWorkoutList
+                })
             }
         } catch (error) {
             console.error(error)
@@ -80,7 +108,10 @@ const WorkoutContainer = ({serverUrl}) => {
             <Row>
                 <Col><CurrentWeekPicker/></Col>
             </Row>
-            <WorkoutWeekTable workouts={getWorkoutsOfCurrentWeek(workouts)} createWorkout={createWorkout} deleteWorkout={deleteWorkout}/>
+            <WorkoutWeekTable workouts={getWorkoutsOfCurrentWeek(workouts)}
+                              createWorkout={createWorkout}
+                              deleteWorkout={deleteWorkout}
+                              updateWorkout={updateWorkout}/>
         </Container>
     )
 }

@@ -1,28 +1,26 @@
 import React, {useEffect, useState} from "react";
 import {Button, Col, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row} from "reactstrap";
 import ModalExerciseList from "./ModalExerciseList";
-import {transformDateString} from "../helper/TransformDateString";
+import {transformDateString} from "../../helper/TransformDateString";
 
-const ModalWorkout = ({workout, date, noWorkout, createWorkout, deleteWorkout}) => {
+const ModalWorkoutCreate = ({date, createWorkout}) => {
     const [modal, setModal] = useState(false);
     const [currentWorkout, setCurrentWorkout] = useState(
         {
-            name: '',
-            date: '',
-            notes: '',
-            exercises: [],
+            name: "",
+            date: "",
+            notes: "",
+            exercises: [
+                {
+                    id: Date.now().toString(),
+                    name: "",
+                    achieved: false,
+                    sets: 0,
+                    reps: 0,
+                    goal: ""
+                }
+            ]
         })
-    const [exercises, setExercises] = useState([{
-        key: Date.now(),
-        name: '',
-        achieved: false,
-        sets: 0,
-        reps: 0
-    }])
-
-    useEffect(() => {
-        setCurrentWorkout({...currentWorkout, exercises: exercises})
-    }, [exercises])
 
 
     const workoutChange = event => {
@@ -35,35 +33,32 @@ const ModalWorkout = ({workout, date, noWorkout, createWorkout, deleteWorkout}) 
         toggle()
     }
 
-    const onDeleteWorkout = () => {
-        deleteWorkout(workout)
-        toggle()
-    }
 
     const addExercise = () => {
-        const key = Date.now();
-        setExercises(exercises.concat({
-            key: key,
-            name: '',
-            achieved: false,
-            sets: 0,
-            reps: 0
-        }))
+        const key = Date.now().toString();
+        setCurrentWorkout({
+            ...currentWorkout, exercises: currentWorkout.exercises.concat({
+                id: key,
+                name: "",
+                achieved: false,
+                sets: 0,
+                reps: 0,
+                goal: ""
+            })
+        })
     }
 
     const updateExercise = exercise => {
-        console.log(exercise)
-        const updatedExerciseList = exercises.map(e => {
-            if(e.key === exercise.key) return exercise; else return e;
+        const updatedExerciseList = currentWorkout.exercises.map(e => {
+            if (e.id === exercise.id) return exercise; else return e;
         })
-        setExercises(updatedExerciseList)
+        setCurrentWorkout({...currentWorkout, exercises: updatedExerciseList})
     }
 
     const deleteExercise = key => {
-        const updatedExerciseList = exercises.filter(e => e.key !== key)
-        setExercises(updatedExerciseList)
+        const updatedExerciseList = currentWorkout.exercises.filter(e => e.key !== key)
+        setCurrentWorkout({...currentWorkout, exercises: updatedExerciseList})
     }
-
 
     const toggle = () => {
         setModal(!modal);
@@ -71,11 +66,9 @@ const ModalWorkout = ({workout, date, noWorkout, createWorkout, deleteWorkout}) 
 
     return (
         <div>
-            <Button style={buttonStyle}
-                    onClick={toggle}>{noWorkout ? ("Create Workout") : ("Edit Workout")}
-            </Button>
+            <Button style={buttonStyle} onClick={toggle}> Create Workout </Button>
             <Modal isOpen={modal} toggle={toggle} style={{fontSize: '8px'}}>
-                <ModalHeader toggle={toggle}>{noWorkout ? ("Create Workout") : ("Edit Workout")}</ModalHeader>
+                <ModalHeader toggle={toggle}>Create Workout</ModalHeader>
                 <ModalBody>
                     <Form>
                         <FormGroup row>
@@ -104,7 +97,8 @@ const ModalWorkout = ({workout, date, noWorkout, createWorkout, deleteWorkout}) 
                             </Label>
                             <Label xs={1}/>
                         </Row>
-                        <ModalExerciseList exercises={exercises} updateExercise={updateExercise} deleteExercise={deleteExercise}/>
+                        <ModalExerciseList workout={currentWorkout} updateExercise={updateExercise}
+                                           deleteExercise={deleteExercise}/>
                         <Button onClick={addExercise}>Add exercise</Button>
                         <FormGroup row>
                             <Label md={2} for="workoutNotes">
@@ -123,9 +117,6 @@ const ModalWorkout = ({workout, date, noWorkout, createWorkout, deleteWorkout}) 
                                 <Col xs={3} className="clearfix" style={{padding: '.2rem'}}>
                                     <Button onClick={onSaveWorkout} color="success">Save</Button>
                                 </Col>
-                                <Col xs={3} className="clearfix" style={{padding: '.2rem'}}>
-                                    <Button onClick={onDeleteWorkout} color="danger">Delete</Button>
-                                </Col>
                             </Row>
                         </FormGroup>
                     </Form>
@@ -143,4 +134,4 @@ const buttonStyle = {
     fontSize: '10px',
 }
 
-export default ModalWorkout;
+export default ModalWorkoutCreate;
