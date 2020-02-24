@@ -7,7 +7,7 @@ import Container from "reactstrap/es/Container";
 import CurrentWeekPicker from "./CurrentWeekPicker";
 import {transformDateString} from "../helper/TransformDateString";
 
-//TODO: get serverurl from redux store
+
 const WorkoutContainer = ({serverUrl}) => {
 
     const workouts = useSelector(state => state.workouts);

@@ -55,8 +55,8 @@ const ModalWorkoutCreate = ({date, createWorkout}) => {
         setCurrentWorkout({...currentWorkout, exercises: updatedExerciseList})
     }
 
-    const deleteExercise = key => {
-        const updatedExerciseList = currentWorkout.exercises.filter(e => e.key !== key)
+    const deleteExercise = id => {
+        const updatedExerciseList = currentWorkout.exercises.filter(e => e.id !== id)
         setCurrentWorkout({...currentWorkout, exercises: updatedExerciseList})
     }
 
