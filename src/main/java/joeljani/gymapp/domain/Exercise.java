@@ -11,13 +11,11 @@ import javax.validation.constraints.NotNull;
 public class Exercise {
     @Id
     private String id;
-
     @NotNull
     private String name;
-
     private boolean achieved;
-
     private int sets, reps;
+    private String goal;
 
     public String getId() {
         return id;
@@ -57,5 +55,13 @@ public class Exercise {
 
     public void setSets(int sets) {
         this.sets = sets;
+    }
+
+    public String getGoal() {
+        return goal;
+    }
+
+    public void setGoal(String goal) {
+        this.goal = goal;
     }
 }
