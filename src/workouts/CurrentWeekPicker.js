@@ -12,8 +12,9 @@ const CurrentWeekPicker = () => {
     const dispatch = useDispatch();
     const [hoverRange, setHoverRange] = useState(undefined)
     const [selectedDays, setSelectedDays] = useState(getWeekDays(getWeekRange(new Date()).from)) //initial week = actual current week
-    dispatch({type: "SET_CURRENT_WEEK", currentWeek: selectedDays})
     const [modal, setModal] = useState(false);
+
+    dispatch({type: "SET_CURRENT_WEEK", currentWeek: selectedDays})
 
     const toggle = () => {
         setModal(!modal);
@@ -53,14 +54,14 @@ const CurrentWeekPicker = () => {
 
     return (
         <div>
-            <Button onClick={toggle}>
+            <button className={"weekDayPicker"} onClick={toggle}>
                 {selectedDays.length === 7 && (
-                <div>
-                    {moment(selectedDays[0]).format('LL')} – {' '}
-                    {moment(selectedDays[6]).format('LL')}
-                </div>
+                    <div>
+                        {moment(selectedDays[0]).format('LL')} – {' '}
+                        {moment(selectedDays[6]).format('LL')}
+                    </div>
                 )}
-            </Button>
+            </button>
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Select a week</ModalHeader>
                 <ModalBody>
@@ -102,5 +103,6 @@ const getWeekRange = date => {
             .toDate(),
     };
 }
+
 
 export default CurrentWeekPicker;

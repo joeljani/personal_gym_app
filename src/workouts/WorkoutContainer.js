@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import WorkoutWeekTable from "./WorkoutWeekTable";
 import {Row} from "reactstrap";
 import Col from "reactstrap/es/Col";
-import Container from "reactstrap/es/Container";
 import CurrentWeekPicker from "./CurrentWeekPicker";
 import {transformDateString} from "../helper/TransformDateString";
 
@@ -101,18 +100,18 @@ const WorkoutContainer = ({serverUrl}) => {
     }
 
     return (
-        <Container>
+        <div>
             <Row>
-                <Col><h3>Current week</h3></Col>
+                <Col style={{textAlign: 'center'}} className={"currentWeekHeader"}><h3>Current week</h3></Col>
             </Row>
             <Row>
-                <Col><CurrentWeekPicker/></Col>
+                <Col style={{textAlign: 'center'}}><CurrentWeekPicker/></Col>
             </Row>
             <WorkoutWeekTable workouts={getWorkoutsOfCurrentWeek(workouts)}
                               createWorkout={createWorkout}
                               deleteWorkout={deleteWorkout}
                               updateWorkout={updateWorkout}/>
-        </Container>
+        </div>
     )
 }
 

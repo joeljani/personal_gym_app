@@ -6,7 +6,7 @@ import ModalWorkoutUpdate from "./modalWorkout/ModalWorkoutUpdate";
 
 
 const WorkoutDayCard = ({date, workout, createWorkout, updateWorkout, deleteWorkout}) => {
-    const day = moment(date).format('ddd');
+    const workoutDate = moment(date).format('ddd') + "  " + date.getDate() + "." + (date.getMonth() + 1) + " ";
 
     const noWorkout = () => workout === undefined;
 
@@ -17,50 +17,48 @@ const WorkoutDayCard = ({date, workout, createWorkout, updateWorkout, deleteWork
     }
 
     return (
-        <Card style={cardStyle}>
-            <CardTitle>{day}</CardTitle>
-            <CardSubtitle>{noWorkout() ? ("") : (<h3>{workout.name}</h3>)}</CardSubtitle>
-            <CardBody>
-                <Table>
-                    <thead>
-                    <tr>
-                        <th>Exercises</th>
-                        <th>Sets</th>
-                        <th>Reps</th>
-                        <th>Goal</th>
-                        <th>Achieved</th>
-                    </tr>
-                    </thead>
-                    {noWorkout() ? (<div></div>) : (<tbody>
-                    {workout.exercises.map(e =>
-                        <tr key={e.name}>
-                            <td>{e.name}</td>
-                            <td>{e.sets}</td>
-                            <td>{e.reps}</td>
-                            <td>{e.goal}</td>
-                            <td/>
-                            <td>
-                                <Input
-                                    style={{
-                                        right: '-70%',
-                                        position: 'relative'
-                                    }} //TODO: find solution for larger displays (e.g tablet)
-                                    type="checkbox"
-                                    checked={e.achieved}
-                                    onChange={() => exerciseAchieved(e)}
-                                />
-                            </td>
+        <Card className={"workoutCards"}>
+            <CardTitle style={{margin: '0.9rem'}}>{workoutDate}</CardTitle>
+            <CardSubtitle style={{textAlign: 'center'}}>{noWorkout() ? ("") : (<h3>{workout.name}</h3>)}</CardSubtitle>
+            <div className={"cardBodyContainer"}>
+                <CardBody className={"cardBody"}>
+                    <Table borderless={true}>
+                        <thead>
+                        <tr>
+                            <th>Exercises</th>
+                            <th>Sets</th>
+                            <th>Reps</th>
+                            <th>Goal</th>
+                            <th>Achieved</th>
                         </tr>
-                    )}
-                    </tbody>)
-                    }
-                </Table>
-            </CardBody>
+                        </thead>
+                        {noWorkout() ? (<div></div>) : (<tbody>
+                        {workout.exercises.map(e =>
+                            <tr key={e.name}>
+                                <td>{e.name}</td>
+                                <td>{e.sets}</td>
+                                <td>{e.reps}</td>
+                                <td>{e.goal}</td>
+                                <td>
+                                    <input
+                                        type="checkbox"
+                                        checked={e.achieved}
+                                        onChange={() => exerciseAchieved(e)}
+                                    />
+                                </td>
+                            </tr>
+                        )}
+                        </tbody>)
+                        }
+                    </Table>
+                </CardBody>
+            </div>
             <CardFooter>
                 {noWorkout() ?
                     <ModalWorkoutCreate date={date} createWorkout={createWorkout}/>
                     :
-                    <ModalWorkoutUpdate date={date} workout={workout} updateWorkout={updateWorkout} deleteWorkout={deleteWorkout}/>}
+                    <ModalWorkoutUpdate date={date} workout={workout} updateWorkout={updateWorkout}
+                                        deleteWorkout={deleteWorkout}/>}
             </CardFooter>
         </Card>
     )

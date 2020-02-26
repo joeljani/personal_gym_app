@@ -3,6 +3,9 @@ import {useSelector, useDispatch} from "react-redux";
 import Loader from "../misc/Loader";
 import WorkoutContainer from "../workouts/WorkoutContainer";
 import NetworkErrorMessage from "../misc/NetworkErrorMessage";
+import NavBar from "../NavBar";
+import Container from "reactstrap/es/Container";
+
 
 const defaultServerUrl = "http://127.0.0.1:8080/"
 
@@ -31,7 +34,7 @@ const App = () => {
         )
     }
 
-    useEffect(fetchServerURL,[]);
+    useEffect(fetchServerURL, []);
 
     let content;
     if (serverUrl === null) {
@@ -45,7 +48,12 @@ const App = () => {
 
     return (
         <div>
-            {content}
+            <header>
+                <NavBar/>
+            </header>
+            <main>
+                {content}
+            </main>
         </div>
     )
 }

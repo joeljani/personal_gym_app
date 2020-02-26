@@ -52,7 +52,7 @@ const ModalWorkoutUpdate = ({workout, date, updateWorkout, deleteWorkout}) => {
 
     return (
         <div>
-            <Button style={buttonStyle} onClick={toggle}>Edit Workout</Button>
+            <Button className={"cardButton"} onClick={toggle}>Edit Workout</Button>
             <Modal isOpen={modal} toggle={toggle} style={{fontSize: '8px'}}>
                 <ModalHeader toggle={toggle}>Edit Workout</ModalHeader>
                 <ModalBody>
@@ -113,14 +113,6 @@ const ModalWorkoutUpdate = ({workout, date, updateWorkout, deleteWorkout}) => {
             </Modal>
         </div>
     )
-}
-
-const buttonStyle = {
-    width: '150px',
-    float: 'right',
-    backgroundColor: 'white',
-    color: 'black',
-    fontSize: '10px',
 }
 
 export default ModalWorkoutUpdate;

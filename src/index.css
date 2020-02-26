@@ -1,3 +1,131 @@
+:root {
+    --value: 40%;
+    --font-color: #ffffff;
+    --back-color: #29333f;
+    --second-color: #333c47;
+    --contrastColor: #ff931f;
+    --secondContrastColor: #00f9ff;
+    --shadow:
+            5px 5px 10px #202831,
+            -5px -5px 10px #323e4d;
+    --shadow-inset:
+            inset 11px 11px 12px #222a34,
+            inset -11px -11px 12px #303c4a;
+    --back-color-light-mode: #f0f0f0d4;
+    --shadow-light-mode: -4px -4px 17px -10px #FFF, 4px 4px 10px -1px #C4C4C4;
+}
+
+body {
+    background-color: var(--back-color);
+    overflow-x: hidden;
+}
+
+* {
+    font-family: Verdana;
+}
+
+.workoutCards {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 30px;
+    font-size: 11px;
+    color: var(--font-color);
+    box-shadow: var(--shadow);
+    background-color: var(--back-color);
+}
+
+.workoutCards * {
+    color: var(--font-color);
+}
+
+.cardBodyContainer {
+    padding: 10px;
+}
+
+.cardBody {
+    box-shadow: var(--shadow-inset);
+    border-radius: 10px;
+}
+
+.cardButton {
+    width: 150px;
+    float: right;
+    background-color: var(--back-color);
+    color: var(--font-color);
+    font-size: 10px;
+    border: none;
+    border-radius: 20px;
+    box-shadow:  5px 5px 10px #202831,
+    -5px -5px 10px #2a3645;
+}
+
+.header {
+    margin-bottom: 30px;
+    background-color: var(--back-color);
+}
+
+.header * {
+    color: var(--secondContrastColor);
+}
+
+.weekDayPicker {
+    margin-top: 0.2rem;
+    background-color: var(--back-color);
+    color: var(--contrastColor);
+    border: none;
+    border-radius: 30px;
+    box-shadow: var(--shadow);
+    height: 50px;
+}
+
+.weekDayPicker:active {
+    background-color: var(--back-color);
+    border: none;
+}
+
+.currentWeekHeader {
+    color: var(--font-color);
+}
+
+/*input[type='checkbox'] {
+    outline: none;
+    box-shadow:
+            5px 5px 10px #151515,
+            -5px -5px 10px #2b2b2b;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    width: 50px;
+    border-radius: 50px;
+}
+
+input[type='checkbox']::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #2b2b2b;
+    background: transparent;
+    transform: translate(-50%, -50%);
+    transition: all .25s ease;
+}
+
+input[type='checkbox']:checked {
+    box-shadow: var(--shadow);
+}
+
+input[type='checkbox']:checked::after {
+    background-color: var(--contrastColor);
+}*/
+
+.gymPlannerIcon {
+    width: 100px;
+}
+
 html {
     overflow-y: scroll;
 }
