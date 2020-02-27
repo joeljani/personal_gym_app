@@ -1,18 +1,27 @@
 :root {
     --value: 40%;
     --font-color: #ffffff;
-    --back-color: #29333f;
+    --back-color: #1e1f32;
     --second-color: #333c47;
     --contrastColor: #ff931f;
     --secondContrastColor: #00f9ff;
+    --modalWorkout-back-color: #16202c;
     --shadow:
-            5px 5px 10px #202831,
-            -5px -5px 10px #323e4d;
+             6px  6px 18px #0c0c14,
+            -6px -6px 18px #303250;
+    --shadow-modal:
+            6px 6px 18px #0c0c14;
     --shadow-inset:
-            inset 11px 11px 12px #222a34,
-            inset -11px -11px 12px #303c4a;
+            inset 5px 5px 10px #1a1b2b,
+            inset -5px -5px 10px #222339;
+    --shadow-card-button:
+            5px 5px 10px #1a1b2c,
+            -5px -5px 10px #222338;
+
     --back-color-light-mode: #f0f0f0d4;
-    --shadow-light-mode: -4px -4px 17px -10px #FFF, 4px 4px 10px -1px #C4C4C4;
+    --shadow-light-mode:
+            -4px -4px 17px -10px #FFF,
+             4px  4px 10px  -1px  #C4C4C4;
 }
 
 body {
@@ -22,42 +31,6 @@ body {
 
 * {
     font-family: Verdana;
-}
-
-.workoutCards {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 30px;
-    font-size: 11px;
-    color: var(--font-color);
-    box-shadow: var(--shadow);
-    background-color: var(--back-color);
-}
-
-.workoutCards * {
-    color: var(--font-color);
-}
-
-.cardBodyContainer {
-    padding: 10px;
-}
-
-.cardBody {
-    box-shadow: var(--shadow-inset);
-    border-radius: 10px;
-}
-
-.cardButton {
-    width: 150px;
-    float: right;
-    background-color: var(--back-color);
-    color: var(--font-color);
-    font-size: 10px;
-    border: none;
-    border-radius: 20px;
-    box-shadow:  5px 5px 10px #202831,
-    -5px -5px 10px #2a3645;
 }
 
 .header {
@@ -87,6 +60,53 @@ body {
 .currentWeekHeader {
     color: var(--font-color);
 }
+
+.workoutCards {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 30px;
+    font-size: 11px;
+    color: var(--font-color);
+    box-shadow: var(--shadow);
+    background-color: var(--back-color);
+}
+
+.workoutCards * {
+    color: var(--font-color);
+}
+
+.cardBodyContainer {
+    padding: 10px;
+}
+
+.cardBody {
+    box-shadow: var(--shadow-inset);
+    border-radius: 10px;
+}
+
+.cardButton {
+    float: right;
+    background-color: var(--back-color);
+    color: var(--font-color);
+    font-size: 10px;
+    border: none;
+    border-radius: 60%;
+    box-shadow: var(--shadow-card-button)
+}
+
+.modal-content {
+    background-color: var(--back-color);
+    color: var(--font-color);
+    border-radius: 30px;
+    border: none;
+    box-shadow: var(--shadow-modal)
+}
+
+
+
+
+
 
 /*input[type='checkbox'] {
     outline: none;
@@ -121,10 +141,6 @@ input[type='checkbox']:checked {
 input[type='checkbox']:checked::after {
     background-color: var(--contrastColor);
 }*/
-
-.gymPlannerIcon {
-    width: 100px;
-}
 
 html {
     overflow-y: scroll;

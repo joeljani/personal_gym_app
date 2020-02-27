@@ -1,11 +1,12 @@
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
-import {Button, Modal, ModalBody, ModalHeader} from "reactstrap";
+import {Modal, ModalBody, ModalHeader} from "reactstrap";
 import DayPicker from "react-day-picker";
 import 'react-day-picker/lib/style.css';
 import moment from "moment";
 import 'moment/locale/de';
 
+//TODO: add styling to the dayPicker: see https://react-day-picker.js.org/docs/styling/
 
 const CurrentWeekPicker = () => {
 
@@ -62,7 +63,7 @@ const CurrentWeekPicker = () => {
                     </div>
                 )}
             </button>
-            <Modal isOpen={modal} toggle={toggle}>
+            <Modal backdrop={false} isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Select a week</ModalHeader>
                 <ModalBody>
                     <DayPicker selectedDays={selectedDays}

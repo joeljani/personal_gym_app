@@ -4,7 +4,6 @@ import Loader from "../misc/Loader";
 import WorkoutContainer from "../workouts/WorkoutContainer";
 import NetworkErrorMessage from "../misc/NetworkErrorMessage";
 import NavBar from "../NavBar";
-import Container from "reactstrap/es/Container";
 
 
 const defaultServerUrl = "http://127.0.0.1:8080/"

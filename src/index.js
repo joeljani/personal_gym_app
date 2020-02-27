@@ -13,6 +13,7 @@ const logger = createLogger({colors: false})
 const initalState = {
     workouts: [],
     currentWeek: [],
+    exercises: [],
     serverUrl: '',
     serverError: false,
     loading: false
@@ -26,6 +27,8 @@ const reducer = (state, action) => {
         case "SERVER_URL_LOAD_FAILED": return ({...state, serverError: true})
         case "WORKOUTS_FETCHED": return ({...state, workouts: action.workouts})
         case "WORKOUTS_CHANGED": return({...state, workouts: action.workouts})
+        case "EXERCISES_FETCHED": return ({...state, exercises: action.exercises})
+        case "EXERCISES_CHANGED": return({...state, exercises: action.exercises})
         default: return state;
     }
 }
