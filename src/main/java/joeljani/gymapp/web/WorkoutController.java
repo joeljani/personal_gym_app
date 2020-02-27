@@ -49,7 +49,7 @@ public class WorkoutController {
             log.debug("There exists already a workout at that date");
             return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
         }
-        w.getExercises().forEach(e -> exerciseRepository.save(e)); //TODO: check if exercise exists already (custom exerciserepo mongo query needed)
+        setExercisesForWorkout(w);
         Workout workout = workoutRepository.save(w);
         return new ResponseEntity<>(workout, HttpStatus.CREATED);
     }
@@ -63,7 +63,7 @@ public class WorkoutController {
         }
         Optional<Workout> workoutOptional = workoutRepository.findById(id);
         if (workoutOptional.isPresent()) {
-            w.getExercises().forEach(e -> exerciseRepository.save(e)); //TODO: check if exercise exists already (custom exerciserepo mongo query needed)
+            setExercisesForWorkout(w);
             Workout workout = workoutRepository.save(w);
             log.debug("Updated workout with id=" + workout.getId());
             return new ResponseEntity<>(workout, HttpStatus.OK);
@@ -84,12 +84,32 @@ public class WorkoutController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private void setWorkoutDate(@RequestBody @Valid Workout w) {
+    private void setWorkoutDate(Workout w) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate dateOfCreation = w.getDate();
         String formattedDateOfCreationString = dateOfCreation.format(formatter);
         LocalDate formattedDateOfCreation = LocalDate.parse(formattedDateOfCreationString, formatter);
         w.setDate(formattedDateOfCreation);
+    }
+
+    private void setExercisesForWorkout(Workout w) {
+        w.getExercises().forEach(e -> {
+            Optional<Exercise> optionalExercise = checkIfExerciseExists(e);
+            if(!optionalExercise.isPresent()) exerciseRepository.save(e);
+            else {
+                log.debug("This exercise exists already");
+                w.replaceExercise(e, optionalExercise.get());
+            }
+        });
+    }
+
+    private Optional<Exercise> checkIfExerciseExists(Exercise exercise) {
+        List<Exercise> exercises = exerciseRepository.findAll();
+        return exercises.stream().filter(e ->
+                e.getName().equals(exercise.getName())
+                    && e.getSets() == exercise.getSets()
+                    && e.getReps() == exercise.getReps()
+        ).findFirst();
     }
 
 }
