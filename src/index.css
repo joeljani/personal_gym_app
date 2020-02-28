@@ -1,12 +1,12 @@
 :root {
-    --value: 40%;
+   /*
     --font-color: #ffffff;
     --back-color: #1e1f32;
     --second-color: #333c47;
     --contrastColor: #ff931f;
     --secondContrastColor: #00f9ff;
-    --modalWorkout-back-color: #16202c;
-    --shadow:
+    --modalWorkout-back-color: #16202c;*/
+   /* --shadow:
              6px  6px 18px #0c0c14,
             -6px -6px 18px #303250;
     --shadow-modal:
@@ -21,31 +21,44 @@
     --back-color-light-mode: #f0f0f0d4;
     --shadow-light-mode:
             -4px -4px 17px -10px #FFF,
-             4px  4px 10px  -1px  #C4C4C4;
+             4px  4px 10px  -1px  #C4C4C4;*/
+
+
+    /*LIGHT MODE*/
+    --base-color: #ebecf0;
+    --font-color: #9296a2;
+    --shadow-color: #BABECC;
+    --highlight-color: #FFFFFF;
+    --shadow:
+            -5px -5px 20px var(--highlight-color),
+             5px 5px 20px var(--shadow-color);
+    --shadow-small: -2px -2px 5px var(--highlight-color), 2px 2px 5px var(--shadow-color);
+    --shadow-inset: inset 2px 2px 5px var(--shadow-color), inset -5px -5px 10px var(--highlight-color);
 }
 
 body {
-    background-color: var(--back-color);
+    background-color: var(--base-color);
     overflow-x: hidden;
 }
 
 * {
-    font-family: Verdana;
+    font-family: "Helvetica Neue", sans-serif;
+    text-shadow: 1px 1px 0 var(--highlight-color);
 }
 
 .header {
     margin-bottom: 30px;
-    background-color: var(--back-color);
 }
 
 .header * {
-    color: var(--secondContrastColor);
+    color: var(--font-color);
 }
 
 .weekDayPicker {
     margin-top: 0.2rem;
-    background-color: var(--back-color);
-    color: var(--contrastColor);
+    background-color: var(--base-color);
+    color: #9296a2;
+    font-size: 20px;
     border: none;
     border-radius: 30px;
     box-shadow: var(--shadow);
@@ -53,7 +66,7 @@ body {
 }
 
 .weekDayPicker:active {
-    background-color: var(--back-color);
+    background-color: var(--base-color);
     border: none;
 }
 
@@ -61,46 +74,132 @@ body {
     color: var(--font-color);
 }
 
-.workoutCards {
+.workoutDateTitle {
+    color: var(--font-color);
+    font-size: 16px;
+    text-shadow: 1px 1px 0 var(--highlight-color);
+    text-align: center;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: -20px;
+}
+
+.horizontalCarousel {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+}
+
+.workoutCards {
+    height: 450px;
+    width: 20rem;
+    margin: 30px;
     border: none;
     border-radius: 30px;
     font-size: 11px;
-    color: var(--font-color);
     box-shadow: var(--shadow);
-    background-color: var(--back-color);
+    background-color: var(--base-color);
 }
 
 .workoutCards * {
     color: var(--font-color);
+    font-size: 16px;
 }
 
 .cardBodyContainer {
-    padding: 10px;
+    padding: 10px 15px 25px 15px;
+    font-size: 16px;
 }
 
 .cardBody {
+    display: flex;
+    height: 350px;
     box-shadow: var(--shadow-inset);
-    border-radius: 10px;
+    border-radius: 30px;
 }
+
+.cardBodyInside {
+    width: 100%;
+    max-height: inherit;
+    overflow-y: scroll;
+}
+
+.cardTitleGrid {
+    margin: 0.9rem;
+}
+
+.workoutName {
+    display: inline-block;
+    float: left;
+}
+
+.editWorkout {
+    display: inline-block;
+    float: right;
+}
+
+.cardBodyHeader {
+    grid-area: cardBodyHeader;
+    font-weight: bold;
+    justify-self: center;
+    text-decoration-line: underline;
+    margin-bottom: 20px;
+}
+
+.setsLabel {
+    grid-area: setsLabel;
+    font-weight: bold;
+
+}
+
+.repsLabel {
+    grid-area: repsLabel;
+    font-weight: bold;
+
+}
+
+.goalLabel {
+    grid-area: goalLabel;
+    font-weight: bold;
+
+}
+
+.sets {
+    grid-area: sets;
+}
+
+.reps {
+    grid-area: reps;
+}
+
+.goal {
+    grid-area: goal;
+}
+
+.cardBodyGrid {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: auto;
+    grid-template-areas:
+            ". cardBodyHeader ."
+            "setsLabel sets ."
+            "repsLabel reps ."
+            "goalLabel goal ."}
 
 .cardButton {
     float: right;
-    background-color: var(--back-color);
-    color: var(--font-color);
+    background-color: var(--base-color);
     font-size: 10px;
     border: none;
     border-radius: 60%;
-    box-shadow: var(--shadow-card-button)
+    box-shadow: var(--shadow);
+    transition: all 0.2s ease-in-out;
 }
 
 .modal-content {
-    background-color: var(--back-color);
-    color: var(--font-color);
+    background-color: var(--base-color);
     border-radius: 30px;
     border: none;
-    box-shadow: var(--shadow-modal)
+    box-shadow: var(--shadow)
 }
 
 
@@ -143,5 +242,6 @@ input[type='checkbox']:checked::after {
 }*/
 
 html {
-    overflow-y: scroll;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }

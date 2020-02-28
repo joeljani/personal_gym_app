@@ -4,7 +4,7 @@ import WorkoutWeekTable from "./WorkoutWeekTable";
 import {Row} from "reactstrap";
 import Col from "reactstrap/es/Col";
 import CurrentWeekPicker from "./CurrentWeekPicker";
-import {transformDateString} from "../helper/TransformDateString";
+import {transformDateString} from "../helper/DateHelperMethods";
 
 
 const WorkoutContainer = ({serverUrl}) => {
@@ -16,7 +16,7 @@ const WorkoutContainer = ({serverUrl}) => {
     const fetchWorkouts = () => {
         dispatch(
             async dispatch => {
-                const res = await fetch("http://127.0.0.1:8080" + "/workouts");
+                const res = await fetch("http://172.20.10.2:8080" + "/workouts");
                 const data = await res.json();
                 dispatch({type: "WORKOUTS_FETCHED", workouts: data});
             }

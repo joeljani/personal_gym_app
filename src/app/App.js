@@ -47,9 +47,6 @@ const App = () => {
 
     return (
         <div>
-            <header>
-                <NavBar/>
-            </header>
             <main>
                 {content}
             </main>

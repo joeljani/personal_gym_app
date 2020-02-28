@@ -1,6 +1,7 @@
 import React from "react";
 import {useSelector} from "react-redux";
 import WorkoutDayCard from "./WorkoutDayCard";
+import {workoutDate} from "../helper/DateHelperMethods";
 
 
 const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout, updateWorkout}) => {
@@ -14,14 +15,22 @@ const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout, updateWorkout
     }
 
     return (
-        <div>
-            {currentWeek.map(d => <WorkoutDayCard key={d.getDate()}
-                                                  date={d}
-                                                  workout={getWorkoutBasedOnDay(d)}
-                                                  createWorkout={createWorkout}
-                                                  deleteWorkout={deleteWorkout}
-                                                  updateWorkout={updateWorkout}
-            />)}
+        <div className={"horizontalCarousel"}>
+            {currentWeek.map(d =>
+                <div>
+                    <div className={"workoutDateTitle"}>
+                        {workoutDate(d)}
+                    </div>
+                    <div>
+                        <WorkoutDayCard key={d.getDate()}
+                                        date={d}
+                                        workout={getWorkoutBasedOnDay(d)}
+                                        createWorkout={createWorkout}
+                                        deleteWorkout={deleteWorkout}
+                                        updateWorkout={updateWorkout}/>
+                    </div>
+                </div>
+            )}
         </div>
     )
 };
