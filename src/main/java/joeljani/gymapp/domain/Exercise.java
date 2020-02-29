@@ -14,8 +14,10 @@ public class Exercise {
     @NotNull
     private String name;
     private boolean achieved;
-    private int sets, reps;
+    private int sets, reps, kg;
     private String goal;
+
+
 
     public String getId() {
         return id;
@@ -39,6 +41,14 @@ public class Exercise {
 
     public int getSets() {
         return sets;
+    }
+
+    public int getKg() {
+        return kg;
+    }
+
+    public void setKg(int kg) {
+        this.kg = kg;
     }
 
     public void setName(String name) {
