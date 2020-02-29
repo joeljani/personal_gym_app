@@ -4,7 +4,7 @@ import WorkoutDayCard from "./WorkoutDayCard";
 import {workoutDate} from "../helper/DateHelperMethods";
 
 
-const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout, updateWorkout}) => {
+const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout, updateWorkout, deleteExercise}) => {
 
     const currentWeek = useSelector(state => state.currentWeek)
 
@@ -17,7 +17,7 @@ const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout, updateWorkout
     return (
         <div className={"horizontalCarousel"}>
             {currentWeek.map(d =>
-                <div>
+                <div key={d.getDate()}>
                     <div className={"workoutDateTitle"}>
                         {workoutDate(d)}
                     </div>
@@ -27,7 +27,8 @@ const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout, updateWorkout
                                         workout={getWorkoutBasedOnDay(d)}
                                         createWorkout={createWorkout}
                                         deleteWorkout={deleteWorkout}
-                                        updateWorkout={updateWorkout}/>
+                                        updateWorkout={updateWorkout}
+                                        deleteExercise={deleteExercise}/>
                     </div>
                 </div>
             )}

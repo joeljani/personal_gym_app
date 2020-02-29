@@ -10,13 +10,14 @@ import {transformDateString} from "../helper/DateHelperMethods";
 const WorkoutContainer = ({serverUrl}) => {
 
     const workouts = useSelector(state => state.workouts);
+    const exercises = useSelector(state => state.exercises);
     const currentWeek = useSelector(state => state.currentWeek)
     const dispatch = useDispatch();
 
     const fetchWorkouts = () => {
         dispatch(
             async dispatch => {
-                const res = await fetch("http://172.20.10.2:8080" + "/workouts");
+                const res = await fetch("http://127.0.0.1:8080/workouts");
                 const data = await res.json();
                 dispatch({type: "WORKOUTS_FETCHED", workouts: data});
             }
@@ -93,6 +94,18 @@ const WorkoutContainer = ({serverUrl}) => {
         }
     }
 
+    const deleteExercise = async (eId, wId) => {
+        const request = new Request(serverUrl + "/exercises/" + eId + "/workout/" + wId, {
+            method: 'DELETE',
+        });
+        try {
+            const response = await fetch(request);
+            if (!response.ok) console.log('Status Code: ' + response.status);
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
 
     const getWorkoutsOfCurrentWeek = (workouts) => {
         const currentWeekTransformed = currentWeek.map(d => transformDateString(d))
@@ -110,7 +123,8 @@ const WorkoutContainer = ({serverUrl}) => {
             <WorkoutWeekTable workouts={getWorkoutsOfCurrentWeek(workouts)}
                               createWorkout={createWorkout}
                               deleteWorkout={deleteWorkout}
-                              updateWorkout={updateWorkout}/>
+                              updateWorkout={updateWorkout}
+                              deleteExercise={deleteExercise}/>
         </div>
     )
 }

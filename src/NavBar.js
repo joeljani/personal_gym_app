@@ -1,8 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import {Navbar, NavbarBrand} from "reactstrap";
 
 const NavBar = () => {
-
     return (
         <div>
             <Navbar className={"header"}>

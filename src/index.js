@@ -7,7 +7,7 @@ import {createLogger} from 'redux-logger'
 import ReduxThunk from 'redux-thunk';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
-const logger = createLogger({colors: false})
+//const logger = createLogger({colors: false})
 
 
 const initalState = {
@@ -33,7 +33,7 @@ const reducer = (state, action) => {
     }
 }
 
-const store = createStore(reducer, initalState, applyMiddleware(ReduxThunk, logger))
+const store = createStore(reducer, initalState, applyMiddleware(ReduxThunk))
 
 ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('app'))
 
