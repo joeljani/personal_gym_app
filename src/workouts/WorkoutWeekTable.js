@@ -1,7 +1,8 @@
 import React from "react";
 import {useSelector} from "react-redux";
-import WorkoutDayCard from "./WorkoutDayCard";
+import WorkoutDayCard from "./WorkoutCard/WorkoutDayCard";
 import {workoutDate} from "../helper/DateHelperMethods";
+import {emptyWorkout} from "../helper/EmptyObjects";
 
 
 const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout, updateWorkout, deleteExercise}) => {
@@ -9,10 +10,19 @@ const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout, updateWorkout
     const currentWeek = useSelector(state => state.currentWeek)
 
     const getWorkoutBasedOnDay = (date) => {
+        let stringDate;
+        if(date.getDate().toString().length === 1) stringDate = "0" + date.getDate().toString();
+        else stringDate = date.getDate().toString();
+
         if(workouts !== undefined) {
-            return workouts.find(workout => (workout.date.substring(8)) === date.getDate().toString()); //8th pos of (e.g) "2020-02-13" = "13"
+            const workout = workouts.find(workout => (workout.date.substring(8)) === stringDate); //8th pos of (e.g) "2020-02-13" = "13"
+            if(workout !== undefined) return workout
+            else {
+                return emptyWorkout(Date.now().toString(), date);
+            }
         }
     }
+
 
     return (
         <div className={"horizontalCarousel"}>
@@ -23,7 +33,6 @@ const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout, updateWorkout
                     </div>
                     <div>
                         <WorkoutDayCard key={d.getDate()}
-                                        date={d}
                                         workout={getWorkoutBasedOnDay(d)}
                                         createWorkout={createWorkout}
                                         deleteWorkout={deleteWorkout}

@@ -26,6 +26,7 @@ const WorkoutContainer = ({serverUrl}) => {
     useEffect(fetchWorkouts, [serverUrl]);
 
     const createWorkout = async workout => {
+        console.log(workout)
         const request = new Request(serverUrl + "/workouts", {
             method: 'POST',
             headers: new Headers({
@@ -105,7 +106,6 @@ const WorkoutContainer = ({serverUrl}) => {
             console.error(error)
         }
     }
-
 
     const getWorkoutsOfCurrentWeek = (workouts) => {
         const currentWeekTransformed = currentWeek.map(d => transformDateString(d))

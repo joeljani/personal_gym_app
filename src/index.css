@@ -54,11 +54,14 @@ body {
     color: var(--font-color);
 }
 
+/****************************************************************************
+ Week Picker*/
+
 .weekDayPicker {
     margin-top: 0.2rem;
     background-color: var(--base-color);
     color: #9296a2;
-    font-size: 20px;
+    font-size: 16px;
     border: none;
     border-radius: 30px;
     box-shadow: var(--shadow);
@@ -73,6 +76,9 @@ body {
 .currentWeekHeader {
     color: var(--font-color);
 }
+
+/****************************************************************************
+ Workout Card Table/Carousel*/
 
 .workoutDateTitle {
     color: var(--font-color);
@@ -138,6 +144,10 @@ body {
     transform: translate(-50%, -50%)
 }
 
+.saveWorkoutIcon {
+
+}
+
 .editWorkoutDropdownMenu {
     border-radius: 30px;
     background-color: var(--base-color);
@@ -173,13 +183,17 @@ body {
     margin: 0.9rem;
 }
 
+.workoutNameInput {
+    width: 12rem;
+}
+
 /****************************************************************************
  Cardbody grid */
 
 .cardBodyHeader {
     grid-area: cardBodyHeader;
     font-weight: bold;
-    text-decoration-line: underline;
+    font-size: 24px;
 }
 
 .deleteExerciseIcon {
@@ -189,7 +203,6 @@ body {
 .setsLabel {
     grid-area: setsLabel;
     font-weight: bold;
-
 }
 
 .repsLabel {
@@ -230,13 +243,30 @@ body {
     grid-template-columns: 40% 20% 20% 20%;
     grid-template-rows: auto;
     grid-template-areas:
-            "cardBodyHeader . . deleteExerciseIcon"
+            "cardBodyHeader cardBodyHeader cardBodyHeader deleteExerciseIcon"
             "setsLabel sets   . ."
             "repsLabel reps   . ."
             "kgLabel   kg     . ."
             "goalLabel goal achievedLabel achieved";
-    margin-bottom: 20px;
+    margin: 0 0.1rem 0 20px;
 }
+
+.cardBodyGrid * {
+    margin: 0.1rem;
+}
+
+
+.addExerciseButton {
+    margin-top: 10px;
+    border-radius: 30px;
+    background-color: var(--base-color);
+    border: none;
+    box-shadow: var(--shadow);
+}
+
+
+/****************************************************************************
+  */
 
 .modal-content {
     background-color: var(--base-color);
@@ -245,46 +275,28 @@ body {
     box-shadow: var(--shadow)
 }
 
-
-
-
-
-
-/*input[type='checkbox'] {
-    outline: none;
-    box-shadow:
-            5px 5px 10px #151515,
-            -5px -5px 10px #2b2b2b;
-    box-sizing: border-box;
-    transition: all 0.2s ease-in-out;
-    appearance: none;
-    -webkit-appearance: none;
-    position: relative;
-    width: 50px;
-    border-radius: 50px;
+input {
+    animation-name: fadeInFromNone;
+    animation-duration: 1.5s;
+    border: none;
+    border-radius: 15px;
+    background-color: var(--base-color);
+    box-shadow: var(--shadow-inset);
 }
 
-input[type='checkbox']::after {
-    content: '';
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 2px solid #2b2b2b;
-    background: transparent;
-    transform: translate(-50%, -50%);
-    transition: all .25s ease;
-}
-
-input[type='checkbox']:checked {
-    box-shadow: var(--shadow);
-}
-
-input[type='checkbox']:checked::after {
-    background-color: var(--contrastColor);
-}*/
 
 html {
     overflow-y: hidden;
     overflow-x: hidden;
+}
+
+@keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }

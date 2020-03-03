@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import {Dropdown, DropdownToggle, DropdownItem, DropdownMenu} from "reactstrap";
 import deleteIcon from "../../misc/deleteIcon.png";
 
-
 const WorkoutExerciseEdit = ({exercise, onDeleteExercise, updateExercise}) => {
     const [currentExercise, setCurrentExercise] = useState(
         {
@@ -19,7 +18,7 @@ const WorkoutExerciseEdit = ({exercise, onDeleteExercise, updateExercise}) => {
     const [dropdownOpenReps, setDropdownOpenReps] = useState(false);
 
     useEffect(() => {
-        if( JSON.stringify(currentExercise) !== JSON.stringify(exercise)) { //not robust but good for now
+        if( JSON.stringify(currentExercise) !== JSON.stringify(exercise)) { //may not be robust but good for now
             updateExercise(currentExercise)
         }
     }, [currentExercise])
@@ -46,9 +45,8 @@ const WorkoutExerciseEdit = ({exercise, onDeleteExercise, updateExercise}) => {
 
     return (
         <div className={"cardBodyGrid"}>
-            <input className={"cardBodyHeader"} defaultValue={exercise.name} onChange={handleInput}/>
+            <input className={"cardBodyHeader"} name={"name"} defaultValue={currentExercise.name} onChange={handleInput}/>
             <img className={"deleteExerciseIcon"} src={deleteIcon} style={{width: '20px'}} onClick={onDelete} alt={"deleteExercise"}/>
-
             <span className={"setsLabel"}>Sets</span>
             <Dropdown className={"sets"} isOpen={dropdownOpenSets} toggle={toggleSets} >
                 <DropdownToggle tag={"span"} caret>{currentExercise.sets}</DropdownToggle>

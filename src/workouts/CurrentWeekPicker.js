@@ -10,10 +10,10 @@ import 'moment/locale/de';
 
 const CurrentWeekPicker = () => {
 
-    const dispatch = useDispatch();
     const [hoverRange, setHoverRange] = useState(undefined)
     const [selectedDays, setSelectedDays] = useState(getWeekDays(getWeekRange(new Date()).from)) //initial week = actual current week
     const [modal, setModal] = useState(false);
+    const dispatch = useDispatch();
 
     dispatch({type: "SET_CURRENT_WEEK", currentWeek: selectedDays})
 
