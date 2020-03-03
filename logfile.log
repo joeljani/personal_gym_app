@@ -1,0 +1,23 @@
+[2020-03-03T21:24:02.134] [DEBUG] app - Database URL used 'mongodb://localhost:27017/gymPlannerNode'
+[2020-03-03T21:24:02.173] [INFO] app - Server started on port 9090
+[2020-03-03T21:24:06.220] [DEBUG] controller - Successfully created questionnaire with name "ferfer"
+[2020-03-03T21:42:50.402] [DEBUG] app - Database URL used 'mongodb://localhost:27017/gymPlannerNode'
+[2020-03-03T21:42:50.446] [INFO] app - Server started on port 9090
+[2020-03-03T21:42:57.156] [DEBUG] controller - Found 4 workouts
+[2020-03-03T21:43:08.476] [ERROR] controller - Could not create new questionnaire
+[2020-03-03T21:43:42.709] [DEBUG] controller - Found 0 workouts
+[2020-03-03T21:44:31.273] [DEBUG] app - Database URL used 'mongodb://localhost:27017/gymPlannerNode'
+[2020-03-03T21:44:31.318] [INFO] app - Server started on port 9090
+[2020-03-03T21:44:33.246] [DEBUG] controller - Found 0 workouts
+[2020-03-03T21:44:46.177] [DEBUG] controller - Successfully created Workout with id "5e5ec1beabe81b44a32f3df4"
+[2020-03-03T21:44:51.150] [DEBUG] controller - Found 1 workouts
+[2020-03-03T21:45:00.386] [DEBUG] controller - Found 1 workouts
+[2020-03-03T21:45:17.571] [ERROR] controller - Could not create new questionnaire
+[2020-03-03T21:45:47.782] [DEBUG] app - Database URL used 'mongodb://localhost:27017/gymPlannerNode'
+[2020-03-03T21:45:47.820] [INFO] app - Server started on port 9090
+[2020-03-03T21:45:49.377] [ERROR] controller - Could not create new questionnaire
+[2020-03-03T21:46:10.764] [DEBUG] app - Database URL used 'mongodb://localhost:27017/gymPlannerNode'
+[2020-03-03T21:46:10.803] [INFO] app - Server started on port 9090
+[2020-03-03T21:46:15.185] [DEBUG] controller - Found 1 workouts
+[2020-03-03T21:46:36.056] [DEBUG] app - Database URL used 'mongodb://localhost:27017/gymPlannerNode'
+[2020-03-03T21:46:36.090] [INFO] app - Server started on port 9090

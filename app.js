@@ -1,41 +1,44 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+"use strict"
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const log4js = require('log4js')
+const dotenv = require('dotenv-extended')
+const express = require('express')
+const cors = require('cors')
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const routes = require('./web/dispatcher')
 
-var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+// Read the properties from file '.env' and '.env.defaults'
+dotenv.load({ silent: true })
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+log4js.configure('log4js.json')
+const logger = log4js.getLogger('app')
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+mongoose.Promise = global.Promise
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+const url = 'mongodb://' + process.env.MONGO_HOST + '/' + process.env.MONGO_DATABASE
+logger.debug(`Database URL used '%s'`, url)
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+const app = express()
 
-module.exports = app;
+app.use(bodyParser.json())
+
+// Enable CORS (for all requests)
+app.use(cors())
+
+
+// Configure the dispatcher with all its controllers
+app.use('', routes)
+
+// Read PORT from the configuration, default to 9090
+const PORT = process.env.PORT || 9090
+
+// Start the App as HTTP server
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
+
+logger.info(`Server started on port ${PORT}`)
+
+module.exports = app
