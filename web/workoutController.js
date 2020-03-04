@@ -1,8 +1,15 @@
 const log4js = require('log4js')
 const WorkoutModel = require('../domain/workout')
+const Exercise = require('../domain/exercise')
+const WorkoutService = require('../service/workoutService')
 const logger = log4js.getLogger('controller')
+const _this = this;
 
 
+/**
+ * Returns all workouts
+ * HTTP-GET to '/workouts'
+ */
 exports.findAll = (req, res) => {
     WorkoutModel.find((err, workouts) => {
         if (err) return res.status(400).send('database error')
@@ -11,6 +18,10 @@ exports.findAll = (req, res) => {
     })
 }
 
+/**
+ * Creates a new workout
+ * HTTP-POST to '/workouts'
+ */
 exports.create = (req, res) => {
     WorkoutModel.find((err, workouts) => {
         const existingWorkout = workouts.find(w => w.date === req.body.date)
@@ -21,7 +32,9 @@ exports.create = (req, res) => {
             workout.notes = req.body.notes
             workout.exercises = req.body.exercises
 
-            logger.debug(workout)
+            logger.debug(workout.exercises)
+
+            WorkoutService.saveExercises(workout.exercises)
 
             workout.save((err, workoutCreated) => {
                 if (err) {
@@ -39,6 +52,10 @@ exports.create = (req, res) => {
     })
 }
 
+/**
+ * Deletes a given workout
+ * HTTP-DELETE to to '/workouts/{id}'
+ */
 exports.delete = (req, res) => {
     WorkoutModel.deleteOne({_id: req.params.id}, err => {
         if (err) {
@@ -50,6 +67,11 @@ exports.delete = (req, res) => {
     })
 }
 
+
+/**
+ * Updates a given workout
+ * HTTP-UPDATE to to '/workouts/{id}'
+ */
 exports.update = (req, res) => {
     WorkoutModel.findById(req.params.id, (err, workout) => {
         if (err) {
@@ -61,6 +83,8 @@ exports.update = (req, res) => {
         workout.notes = req.body.notes
         workout.exercises = req.body.exercises
 
+
+
         workout.save(err => {
             if (err) {
                 return res.status(404).send('database error')
@@ -70,3 +94,5 @@ exports.update = (req, res) => {
         })
     })
 }
+
+

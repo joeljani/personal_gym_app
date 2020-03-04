@@ -29,7 +29,6 @@ app.use(bodyParser.json())
 // Enable CORS (for all requests)
 app.use(cors())
 
-
 // Configure the dispatcher with all its controllers
 app.use('', routes)
 

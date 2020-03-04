@@ -1,30 +1,7 @@
 const mongoose=require('mongoose')
+const exercise = require('../domain/exercise')
 const Schema=mongoose.Schema
 
-const exerciseSchema = new Schema({
-        name: {
-            type: String
-        },
-        achieved: {
-            type: Boolean
-        },
-        reps: {
-            type: Number
-        },
-        sets: {
-            type: Number
-        },
-        kg: {
-            type: Number
-        },
-        goal: {
-            type: String
-        }
-    },
-    {
-        collection: 'exercises'
-    }
-)
 
 const workoutSchema = new Schema({
         date: {
@@ -36,7 +13,7 @@ const workoutSchema = new Schema({
         notes: {
             type: String
         },
-        exercises: {type: [exerciseSchema]}
+        exercises: {type: [exercise.ExerciseSchema]}
     },
     {
         collection: 'workouts'

@@ -8,6 +8,8 @@ dispatcher.route('/workouts').post(workoutController.create)
 dispatcher.route('/workouts/:id').delete(workoutController.delete)
 dispatcher.route('/workouts/:id').put(workoutController.update)
 
+dispatcher.route('/exercises').get(exerciseController.findAll)
+
 
 
 module.exports = dispatcher;
