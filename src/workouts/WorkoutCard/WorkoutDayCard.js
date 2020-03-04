@@ -1,22 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {
-    Card,
-    CardBody,
-    CardTitle,
-    Dropdown,
-    DropdownToggle,
-    DropdownItem,
-    DropdownMenu,
-    Row,
-    Col,
-    Button
-} from "reactstrap";
+import {Card, CardBody, CardTitle, Dropdown, DropdownToggle, DropdownItem, DropdownMenu, Button} from "reactstrap";
 import addIcon from "../../misc/addIcon.png";
 import editIcon from "../../misc/editIcon.png";
 import saveIcon from "../../misc/saveIcon.png";
 import WorkoutExerciseContainer from "../WorkoutExercises/WorkoutExerciseContainer";
-import {emptyExercise, emptyWorkout} from "../../helper/EmptyObjects";
-
+import {emptyExercise} from "../../helper/EmptyObjects";
 var uuid = require("uuid");
 var id = uuid.v4();
 
@@ -31,15 +19,11 @@ const WorkoutDayCard = ({workout, createWorkout, updateWorkout, deleteWorkout, d
         setCurrentWorkout(workout)
     }, [workout])
 
-    const emptyWorkout = () => {
-        return currentWorkout.name === ""
-    }
+    const emptyWorkout = () => currentWorkout.name === ""
+
+    const toggle = () => setDropdownOpen(prevState => !prevState);
 
     const onDeleteWorkout = () => deleteWorkout(workout)
-
-    const addWorkout = () => {
-        onEditWorkout()
-    }
 
     const onUpdateWorkout = exercise => {
         if (exercise === null || exercise === undefined) updateWorkout(currentWorkout)
@@ -54,7 +38,29 @@ const WorkoutDayCard = ({workout, createWorkout, updateWorkout, deleteWorkout, d
         }
     }
 
-    const updateExercise = exercise => onUpdateWorkout(exercise)
+    const onEditWorkout = () => {
+        editMode ? setEditMode(false) : setEditMode(true);
+        setSaveMode(true);
+    }
+
+    const onSaveWorkout = () => {
+        if(currentWorkout.name === "") {
+            let input = document.getElementsByClassName("workoutNameInput")
+            input.name.placeholder = "Workout needs a name!"
+        } else {
+            if (workout.name === "") { //TODO: get previous state to check if new workout or not
+                if (currentWorkout.name !== "") {
+                    createWorkout(currentWorkout)
+                    setSaveMode(false);
+                    setEditMode(false);
+                } else console.log("workout needs name") //TODO: validation
+            } else {
+                setSaveMode(false);
+                setEditMode(false);
+                updateWorkout(currentWorkout);
+            }
+        }
+    }
 
     const onDeleteExercise = exercise => {
         const updatedExercises = currentWorkout.exercises.filter(e => e.id !== exercise.id);
@@ -66,7 +72,10 @@ const WorkoutDayCard = ({workout, createWorkout, updateWorkout, deleteWorkout, d
         }
     }
 
-    const toggle = () => setDropdownOpen(prevState => !prevState);
+    const handleInput = event => {
+        const updatedWorkout = {...currentWorkout, [event.target.name]: event.target.value}
+        setCurrentWorkout(updatedWorkout)
+    }
 
     const exerciseAchieved = exercise => {
         exercise.achieved = exercise.achieved === true ? false : true
@@ -75,36 +84,13 @@ const WorkoutDayCard = ({workout, createWorkout, updateWorkout, deleteWorkout, d
         setCurrentWorkout(updatedWorkout)
     }
 
-    const addExercise = () => {
-        setCurrentWorkout({...currentWorkout, exercises: currentWorkout.exercises.concat(emptyExercise(Date.now()))})
-    }
+    const updateExercise = exercise => onUpdateWorkout(exercise)
 
-    const onEditWorkout = () => {
-        editMode ? setEditMode(false) : setEditMode(true);
-        setSaveMode(true);
-    }
-
-    const onSaveWorkout = () => {
-        if (workout.name === "") { //TODO: get previous state to check if new workout or not
-            if (currentWorkout.name !== "") {
-                createWorkout(currentWorkout)
-                setSaveMode(false);
-                setEditMode(false);
-            } else console.log("workout needs name") //TODO: validation
-        } else {
-            setSaveMode(false);
-            setEditMode(false);
-            updateWorkout(currentWorkout);
-        }
-    }
-
-    const handleInput = event => {
-        const updatedWorkout = {...currentWorkout, [event.target.name]: event.target.value}
-        setCurrentWorkout(updatedWorkout)
-    }
+    const addExercise = () => setCurrentWorkout({...currentWorkout,
+            exercises: currentWorkout.exercises.concat(emptyExercise(Date.now()))})
 
     return (
-        <Card className={"workoutCards"}>
+        <Card id={workout.date.toString()} className={"workoutCard"}>
             <CardTitle className={"cardTitleGrid"}>
                 <div className={"workoutName"}>
                     {editMode ? <input defaultValue={currentWorkout.name}
@@ -115,7 +101,7 @@ const WorkoutDayCard = ({workout, createWorkout, updateWorkout, deleteWorkout, d
                 </div>
                 <div className={"editWorkout"}>
                     {emptyWorkout() && (saveMode === false) ?
-                        <button className={"editWorkoutButton"} onClick={addWorkout}><img
+                        <button className={"editWorkoutButton"} onClick={onEditWorkout}><img
                             className={"editWorkoutIcon"} src={addIcon} alt={"editWokrkout"}/></button>
                         :
                         saveMode ?
@@ -144,19 +130,13 @@ const WorkoutDayCard = ({workout, createWorkout, updateWorkout, deleteWorkout, d
                                                   saveMode={saveMode}
                                                   updateExercise={updateExercise}
                                                   onDeleteExercise={onDeleteExercise}/>
-                        <Row>
-                            <Col>
-                                {editMode && <Button className={"addExerciseButton"}
-                                                     onClick={addExercise}>Add exercise</Button>}
-                            </Col>
-                        </Row>
+                        {editMode && <Button className={"addExerciseButton"}
+                                             onClick={addExercise}>Add exercise</Button>}
                     </div>
                 </CardBody>
             </div>
         </Card>
     )
 }
-;
-
 
 export default WorkoutDayCard;

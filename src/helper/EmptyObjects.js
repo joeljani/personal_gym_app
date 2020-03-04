@@ -5,7 +5,7 @@ var id = uuid.v4();
 const emptyExercise = id => {
     return {
         id: id,
-        name: " ",
+        name: "",
         achieved: false,
         sets: 0,
         reps: 0,
@@ -15,11 +15,9 @@ const emptyExercise = id => {
 }
 
 const emptyWorkout = (id, date) => {
-    console.log(id)
-    console.log(date)
     return {
         id: id,
-        date: transformDateString(date),
+        date: date,
         name: "",
         notes: "",
         exercises: []

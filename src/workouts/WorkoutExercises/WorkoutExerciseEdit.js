@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {Dropdown, DropdownToggle, DropdownItem, DropdownMenu} from "reactstrap";
+import {Dropdown, DropdownToggle, DropdownItem, DropdownMenu, Button} from "reactstrap";
 import deleteIcon from "../../misc/deleteIcon.png";
 
-const WorkoutExerciseEdit = ({exercise, onDeleteExercise, updateExercise}) => {
+const WorkoutExerciseEdit = ({exercise, onDeleteExercise, updateExercise, addExercise}) => {
     const [currentExercise, setCurrentExercise] = useState(
         {
             id: exercise.id,

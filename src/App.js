@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import Loader from "../misc/Loader";
-import WorkoutContainer from "../workouts/WorkoutContainer";
-import NetworkErrorMessage from "../misc/NetworkErrorMessage";
+import Loader from "./misc/Loader";
+import WorkoutContainer from "./workouts/WorkoutContainer";
+import NetworkErrorMessage from "./misc/NetworkErrorMessage";
 
 
-const defaultServerUrl = "http://127.0.0.1:8080/"
+const defaultServerUrl = "http://127.0.0.1:9090/"
 
 const App = () => {
 

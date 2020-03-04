@@ -7,17 +7,20 @@ import CurrentWeekPicker from "./CurrentWeekPicker";
 import {transformDateString} from "../helper/DateHelperMethods";
 
 
+
 const WorkoutContainer = ({serverUrl}) => {
 
+    const currentDay = transformDateString(new Date());
+    if(document.getElementById(currentDay) !== null) document.getElementById(currentDay).scrollIntoView();
+
     const workouts = useSelector(state => state.workouts);
-    const exercises = useSelector(state => state.exercises);
     const currentWeek = useSelector(state => state.currentWeek)
     const dispatch = useDispatch();
 
     const fetchWorkouts = () => {
         dispatch(
             async dispatch => {
-                const res = await fetch("http://127.0.0.1:8080/workouts");
+                const res = await fetch(serverUrl + "/workouts");
                 const data = await res.json();
                 dispatch({type: "WORKOUTS_FETCHED", workouts: data});
             }
@@ -40,6 +43,7 @@ const WorkoutContainer = ({serverUrl}) => {
                 console.log('Status Code: ' + response.status);
             } else {
                 const newWorkout = await response.json();
+                console.log(newWorkout)
                 dispatch({
                     type: "WORKOUTS_CHANGED",
                     workouts: workouts.concat(newWorkout)
@@ -51,15 +55,13 @@ const WorkoutContainer = ({serverUrl}) => {
     }
 
     const updateWorkout = async workout => {
-        console.log(workout)
-        const request = new Request(serverUrl + "/workouts/" + workout.id, {
+        const request = new Request(serverUrl + "/workouts/" + workout._id, {
             method: 'PUT',
             headers: new Headers({
                 'Content-Type': 'application/json; charset=utf-8'
             }),
             body: JSON.stringify(workout)
         });
-        console.log(request)
         try {
             const response = await fetch(request);
             if (!response.ok) {
@@ -67,7 +69,7 @@ const WorkoutContainer = ({serverUrl}) => {
             } else {
                 dispatch({
                     type: "WORKOUTS_CHANGED",
-                    workouts: workouts.map(w => w.id === workout.id ? workout : w)
+                    workouts: workouts.map(w => w._id === workout._id ? workout : w)
                 })
             }
         } catch (error) {
@@ -76,7 +78,8 @@ const WorkoutContainer = ({serverUrl}) => {
     }
 
     const deleteWorkout = async workout => {
-        const request = new Request(serverUrl + "/workouts/" + workout.id, {
+        console.log(workout)
+        const request = new Request(serverUrl + "/workouts/" + workout._id, {
             method: 'DELETE',
         });
         try {
@@ -84,7 +87,7 @@ const WorkoutContainer = ({serverUrl}) => {
             if (!response.ok) {
                 console.log('Status Code: ' + response.status);
             } else {
-                const modifiedWorkoutList = workouts.filter(w => w.id !== workout.id)
+                const modifiedWorkoutList = workouts.filter(w => w._id !== workout._id)
                 dispatch({
                     type: "WORKOUTS_CHANGED",
                     workouts: modifiedWorkoutList
