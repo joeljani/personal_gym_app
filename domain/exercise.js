@@ -19,6 +19,9 @@ const exerciseSchema = new Schema({
         },
         goal: {
             type: String
+        },
+        workout: {
+            type: Schema.Types.ObjectId, ref: 'workout'
         }
     },
     {

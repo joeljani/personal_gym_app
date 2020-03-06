@@ -1,6 +1,6 @@
-const mongoose=require('mongoose')
-const exercise = require('../domain/exercise')
-const Schema=mongoose.Schema
+const mongoose = require('mongoose')
+const Exercise = require('../domain/exercise')
+const Schema = mongoose.Schema
 
 
 const workoutSchema = new Schema({
@@ -13,7 +13,7 @@ const workoutSchema = new Schema({
         notes: {
             type: String
         },
-        exercises: {type: [exercise.ExerciseSchema]}
+        exercises: [Exercise.ExerciseSchema]
     },
     {
         collection: 'workouts'
