@@ -13,7 +13,6 @@ const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout, updateWorkout
         let stringDate;
         if (date.getDate().toString().length === 1) stringDate = "0" + date.getDate().toString();
         else stringDate = date.getDate().toString();
-        console.log(date)
 
         if (workouts !== undefined) {
             const workout = workouts.find(workout => (workout.date.substring(8)) === stringDate); //8th pos of (e.g) "2020-02-13" = "13"
@@ -36,7 +35,7 @@ const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout, updateWorkout
                         <div className={"workoutDateTitle"}>
                             {workoutDate(d)}
                         </div>
-                            <WorkoutDayCard key={d.getDate()}
+                        <WorkoutDayCard key={d.getDate()}
                                             workout={getWorkoutBasedOnDay(d)}
                                             createWorkout={createWorkout}
                                             deleteWorkout={deleteWorkout}

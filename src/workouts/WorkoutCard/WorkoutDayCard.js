@@ -29,9 +29,10 @@ const WorkoutDayCard = ({workout, createWorkout, updateWorkout, deleteWorkout, d
         if (exercise === null || exercise === undefined) updateWorkout(currentWorkout)
         else { // exercise changed
             if (currentWorkout.exercises.length === 0) {
+                console.log("got here")
                 setCurrentWorkout({...currentWorkout, exercises: currentWorkout.exercises.concat(exercise)})
             } else {
-                const updatedExercises = currentWorkout.exercises.map(e => e.id === exercise.id ? exercise : e);
+                const updatedExercises = currentWorkout.exercises.map(e => e._id === exercise._id ? exercise : e);
                 const updatedWorkout = {...currentWorkout, exercises: updatedExercises}
                 setCurrentWorkout(updatedWorkout)
             }
@@ -63,11 +64,11 @@ const WorkoutDayCard = ({workout, createWorkout, updateWorkout, deleteWorkout, d
     }
 
     const onDeleteExercise = exercise => {
-        const updatedExercises = currentWorkout.exercises.filter(e => e.id !== exercise.id);
+        const updatedExercises = currentWorkout.exercises.filter(e => e._id !== exercise._id);
         const updatedWorkout = {...currentWorkout, exercises: updatedExercises}
         setCurrentWorkout(updatedWorkout)
         if(workout.name !== "") {
-            deleteExercise(exercise.id, currentWorkout.id)
+            deleteExercise(exercise._id, currentWorkout._id)
             updateWorkout(updatedWorkout)
         }
     }
@@ -84,10 +85,17 @@ const WorkoutDayCard = ({workout, createWorkout, updateWorkout, deleteWorkout, d
         setCurrentWorkout(updatedWorkout)
     }
 
-    const updateExercise = exercise => onUpdateWorkout(exercise)
+    const updateExercise = exercise => {
+        console.log(exercise)
+        onUpdateWorkout(exercise)
+    }
 
-    const addExercise = () => setCurrentWorkout({...currentWorkout,
-            exercises: currentWorkout.exercises.concat(emptyExercise(Date.now()))})
+    const addExercise = () => {
+        let id = Date.now()
+        setCurrentWorkout({...currentWorkout,
+            exercises: currentWorkout.exercises.concat(emptyExercise(id))})
+    }
+
 
     return (
         <Card id={workout.date.toString()} className={"workoutCard"}>

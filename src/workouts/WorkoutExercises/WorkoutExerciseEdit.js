@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {Dropdown, DropdownToggle, DropdownItem, DropdownMenu, Button} from "reactstrap";
+import {Dropdown, DropdownToggle, DropdownItem, DropdownMenu, Input} from "reactstrap";
 import deleteIcon from "../../misc/deleteIcon.png";
 
 const WorkoutExerciseEdit = ({exercise, onDeleteExercise, updateExercise, addExercise}) => {
     const [currentExercise, setCurrentExercise] = useState(
         {
-            id: exercise.id,
+            _id: exercise._id,
             name: exercise.name,
             achieved: exercise.achieved,
             sets: exercise.sets,
@@ -14,6 +14,7 @@ const WorkoutExerciseEdit = ({exercise, onDeleteExercise, updateExercise, addExe
             goal: exercise.goal
         }
     )
+
     const [dropdownOpenSets, setDropdownOpenSets] = useState(false);
     const [dropdownOpenReps, setDropdownOpenReps] = useState(false);
 
@@ -45,7 +46,7 @@ const WorkoutExerciseEdit = ({exercise, onDeleteExercise, updateExercise, addExe
 
     return (
         <div className={"cardBodyGrid"}>
-            <input className={"cardBodyHeader"} name={"name"} defaultValue={currentExercise.name} onChange={handleInput}/>
+            <Input className={"cardBodyHeader"} name={"name"} defaultValue={currentExercise.name} onChange={handleInput}/>
             <img className={"deleteExerciseIcon"} src={deleteIcon} style={{width: '20px'}} onClick={onDelete} alt={"deleteExercise"}/>
             <span className={"setsLabel"}>Sets</span>
             <Dropdown className={"sets"} isOpen={dropdownOpenSets} toggle={toggleSets} >
@@ -64,10 +65,10 @@ const WorkoutExerciseEdit = ({exercise, onDeleteExercise, updateExercise, addExe
             </Dropdown>
 
             <span className={"kgLabel"}>Kg</span>
-            <input className={"kg"} name={"kg"} defaultValue={exercise.kg} onChange={handleInput}/>
+            <Input className={"kg"} name={"kg"} defaultValue={exercise.kg} onChange={handleInput}/>
 
             <span className={"goalLabel"}>Goal</span>
-            <input className={"goal"} name={"goal"} defaultValue={exercise.goal} onChange={handleInput}/>
+            <Input className={"goal"} name={"goal"} defaultValue={exercise.goal} onChange={handleInput}/>
         </div>
     )
 }

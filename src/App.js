@@ -19,7 +19,7 @@ const App = () => {
                 fetch('application.json')
                     .then(response => response.json())
                     .then(json => {
-                        const SERVER_URL = json.SERVER_URL ? json.SERVER_URL : defaultServerUrl;
+                        const SERVER_URL = json.SERVER_URL_LOCAL ? json.SERVER_URL_LOCAL : defaultServerUrl;
                         dispatch({type: "SERVER_URL_LOADED", serverUrl: SERVER_URL})
                         dispatch({type: "SERVER_URL_LOADING", loading: false})
                     })

@@ -1,10 +1,8 @@
 import {transformDateString} from "./DateHelperMethods";
-var uuid = require("uuid");
-var id = uuid.v4();
 
 const emptyExercise = id => {
     return {
-        id: id,
+        _id: id,
         name: "",
         achieved: false,
         sets: 0,
@@ -16,12 +14,13 @@ const emptyExercise = id => {
 
 const emptyWorkout = (id, date) => {
     return {
-        id: id,
+        _id: id,
         date: date,
         name: "",
         notes: "",
         exercises: []
     }
 }
+
 
 export {emptyExercise, emptyWorkout}
