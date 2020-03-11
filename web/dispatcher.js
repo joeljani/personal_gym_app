@@ -9,6 +9,7 @@ dispatcher.route('/workouts/:id').delete(workoutController.delete)
 dispatcher.route('/workouts/:id').put(workoutController.update)
 
 dispatcher.route('/exercises').get(exerciseController.findAll)
+dispatcher.route('/exercises/:eId/workout/:wId').delete(exerciseController.deleteExercise)
 
 
 
