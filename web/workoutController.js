@@ -1,8 +1,6 @@
 const log4js = require('log4js')
 const WorkoutModel = require('../domain/workout')
-const Exercise = require('../domain/exercise')
 const ExerciseService = require('../service/exerciseService')
-const WorkoutService = require('../service/workoutService')
 const logger = log4js.getLogger('controller')
 
 
@@ -80,12 +78,17 @@ exports.update = (req, res) => {
         workout.date = req.body.date
         workout.name = req.body.name
         workout.notes = req.body.notes
-        workout.exercises = req.body.exercises
-
-        await ExerciseService.updateExercises(workout.exercises)
+        if(workout.exercises.length === 0) {
+            await ExerciseService.saveExercises(workout._id, req.body.exercises)
+            workout.exercises = await ExerciseService.getExercisesOfWorkout(workout._id)
+        } else {
+            workout.exercises = req.body.exercises
+            await ExerciseService.updateExercises(workout._id, workout.exercises)
+        }
 
         await workout.save(err => {
             if (err) {
+                logger.error(err)
                 return res.status(404).send('database error')
             }
             logger.debug(`Successfully updated workout with id "${workout.id}"`)

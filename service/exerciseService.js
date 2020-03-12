@@ -22,6 +22,7 @@ const saveExercises = async (workoutId, exercises) => {
     }
 }
 
+
 /**
  * Gets exercises of a workout
  * @param workoutId
@@ -38,13 +39,12 @@ const getExercisesOfWorkout = async workoutId => {
  * Updates exercises
  * @param exercises
  */
-const updateExercises = exercises => {
+const updateExercises = (workoutId, exercises) => {
     for (const e of exercises) {
         Exercise.ExerciseModel.findById(e._id, (err, existingExercise) => {
             if (err) {
                 logger.error(`Could not update exercise with id "${e._id}": ${err}`)
             }
-            console.log(e._id)
             existingExercise.name = e.name
             existingExercise.achieved = e.achieved
             existingExercise.sets = e.sets
@@ -69,7 +69,7 @@ const updateExercises = exercises => {
 const deleteExercises = exercises => {
     for (const e of exercises) {
         Exercise.ExerciseModel.deleteOne({_id: e._id}, (err) => {
-            if(err) logger.error(`Could not delete exercise with id ${e._id}`)
+            if (err) logger.error(`Could not delete exercise with id ${e._id}`)
             logger.debug(`Successfully deleted exercise with id ${e._id}`)
         })
     }
