@@ -1,6 +1,7 @@
 const Exercise = require('../domain/exercise')
 const log4js = require('log4js')
 const logger = log4js.getLogger('service')
+const mongoose = require('mongoose')
 
 
 /**
@@ -9,6 +10,8 @@ const logger = log4js.getLogger('service')
  * @param exercises
  */
 const saveExercises = async (workoutId, exercises) => {
+    let savedExercises = []
+    if(!(exercises instanceof Array)) exercises = [exercises]
     for (const e of exercises) {
         await Exercise.ExerciseModel.create({
             name: e.name,
@@ -18,8 +21,9 @@ const saveExercises = async (workoutId, exercises) => {
             kg: e.kg,
             goal: e.goal,
             workout: workoutId
-        })
+        }).then((e) => savedExercises.push(e))
     }
+    return savedExercises
 }
 
 
@@ -32,19 +36,42 @@ const getExercisesOfWorkout = async workoutId => {
     return await Exercise.ExerciseModel.find({workout: workoutId}, (err, exercises) => {
         if (err) logger.debug(`couldn't find any exercise for workout with workoutId ${workoutId}`)
         logger.debug(`Found ${exercises.length} exercises`)
+        return exercises
     })
 }
 
+
 /**
- * Updates exercises
+ *
+ * @param wId
  * @param exercises
+ * @return {*[]}
  */
-const updateExercises = (workoutId, exercises) => {
+const updateExercises = async (wId, exercises) => {
+    let newExercises = []
+    let existingExercises = []
     for (const e of exercises) {
-        Exercise.ExerciseModel.findById(e._id, (err, existingExercise) => {
-            if (err) {
-                logger.error(`Could not update exercise with id "${e._id}": ${err}`)
-            }
+        if (mongoose.isValidObjectId(e._id) && e._id !== undefined) {
+            existingExercises = existingExercises.concat(updateExercise(wId, e))
+        } else newExercises =  newExercises.concat(await saveExercises(wId, e))
+    }
+
+    return existingExercises.concat(newExercises)
+}
+
+
+/**
+ *
+ * @param wId
+ * @param e
+ * @return {Promise<*>}
+ */
+const updateExercise = (wId, e) => {
+    Exercise.ExerciseModel.findById(e._id,(err, existingExercise) => {
+        if (err) {
+            logger.error(`Could not update exercise with id "${e._id}": ${err}`)
+        }
+        if(existingExercise != null) {
             existingExercise.name = e.name
             existingExercise.achieved = e.achieved
             existingExercise.sets = e.sets
@@ -58,8 +85,9 @@ const updateExercises = (workoutId, exercises) => {
                 }
                 logger.debug(`Successfully updated exercise with id "${e.id}"`)
             })
-        })
-    }
+        }
+    })
+    return e;
 }
 
 /**
@@ -74,6 +102,7 @@ const deleteExercises = exercises => {
         })
     }
 }
+
 
 module.exports = {
     saveExercises: saveExercises,

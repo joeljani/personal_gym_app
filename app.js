@@ -9,35 +9,28 @@ const mongoose = require('mongoose')
 const routes = require('./web/dispatcher')
 require('dotenv').config()
 
-// Read the properties from file '.env' and '.env.defaults'
-dotenv.load({ silent: true })
+const app = express()
 
+/*
+ * Configurations of app
+ */
 log4js.configure('log4js.json')
 const logger = log4js.getLogger('app')
+app.use(bodyParser.json())
+app.use(cors()) // Enable CORS (for all requests) //TODO: change
+app.use('', routes) // Configure the dispatcher with all its controllers
+dotenv.load({ silent: true }) // Read the properties from file '.env' and '.env.defaults'
+const PORT = process.env.PORT || 8080
+app.listen(PORT, () => console.log(`Running on port ${PORT}!`)) // Start app as HTTP server
+logger.info(`Server started on port ${PORT}`)
 
+/*
+ * Connection to mongoDB
+ */
 mongoose.Promise = global.Promise
-
 const url = 'mongodb://' + process.env.MONGO_HOST_LOCAL + '/' + process.env.MONGO_DATABASE_LOCAL
 logger.debug(`Database URL used '%s'`, url)
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 
-
-const app = express()
-
-app.use(bodyParser.json())
-
-// Enable CORS (for all requests)
-app.use(cors())
-
-// Configure the dispatcher with all its controllers
-app.use('', routes)
-
-// Read PORT from the configuration, default to 9090
-const PORT = process.env.PORT || 8080
-
-// Start the App as HTTP server
-app.listen(PORT, () => console.log(`Running on port ${PORT}!`))
-
-logger.info(`Server started on port ${PORT}`)
 
 module.exports = app

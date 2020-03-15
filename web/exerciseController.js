@@ -11,8 +11,9 @@ exports.findAll = (req, res) => {
 }
 
 exports.deleteExercise = (req, res) => {
-    Exercise.ExerciseModel.findOneAndDelete(req.params.eId, (err, exercise) => {
+    Exercise.ExerciseModel.deleteOne({_id: req.params.eId}, (err, exercise) => {
         if (err) return res.status(400).send('database error')
+        console.log(exercise)
         logger.debug(`successfully deleted exercise with id: ${exercise._id}`)
         res.status(200).send('deleted successfully')
     })

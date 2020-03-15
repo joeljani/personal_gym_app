@@ -30,10 +30,9 @@ exports.createWorkout = (req, res) => {
                 notes: req.body.notes,
                 exercises: []
             })
-            await ExerciseService.saveExercises(workout._id, req.body.exercises)
-            workout.exercises = await ExerciseService.getExercisesOfWorkout(workout._id)
+            workout.exercises = await ExerciseService.saveExercises(workout._id, req.body.exercises)
             await workout.save(err => {
-                if (err) {return res.status(404).send('database error')}
+                if (err) return res.status(404).send('database error')
                 logger.debug(`Successfully created workout with id "${workout.id}"`)
                 res.status(200).json(workout)
             })
@@ -78,12 +77,9 @@ exports.update = (req, res) => {
         workout.date = req.body.date
         workout.name = req.body.name
         workout.notes = req.body.notes
-        if(workout.exercises.length === 0) {
-            await ExerciseService.saveExercises(workout._id, req.body.exercises)
-            workout.exercises = await ExerciseService.getExercisesOfWorkout(workout._id)
-        } else {
-            workout.exercises = req.body.exercises
-            await ExerciseService.updateExercises(workout._id, workout.exercises)
+
+        if(exercisesChanged(workout.exercises, req.body.exercises)) {
+            workout.exercises = await ExerciseService.updateExercises(workout._id, req.body.exercises)
         }
 
         await workout.save(err => {
@@ -95,6 +91,11 @@ exports.update = (req, res) => {
             res.status(200).json(workout)
         })
     })
+}
+
+const exercisesChanged = (eArr1, eArr2) => {
+    return !(Object.keys(eArr1).length === Object.keys(eArr2).length
+        && Object.keys(eArr1).every(p => JSON.stringify(eArr1[p]) === JSON.stringify(eArr2[p])))
 }
 
 

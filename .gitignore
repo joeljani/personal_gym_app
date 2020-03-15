@@ -2,3 +2,5 @@ node_modules
 *.log
 .env.defaults
 package-lock.json
+.idea/codeStyles/
+log4js.json
