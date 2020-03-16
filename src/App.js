@@ -1,17 +1,14 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import Loader from "./misc/Loader";
 import WorkoutContainer from "./workouts/WorkoutContainer";
-import NetworkErrorMessage from "./misc/NetworkErrorMessage";
-import NavBar from "./NavBar";
-
+import {Link, Router} from "@reach/router";
+import Statistics from "./statistics/statistics";
 
 const defaultServerUrl = "http://127.0.0.1:9090/"
 
 const App = () => {
 
     const serverUrl = useSelector(state => state.serverUrl)
-    const serverError = useSelector(state => state.serverError)
     const dispatch = useDispatch();
 
     const fetchServerURL = () => {
@@ -34,23 +31,28 @@ const App = () => {
 
     useEffect(fetchServerURL, []);
 
-    let content;
+   /* let content;
     if (serverUrl === null) {
         content = <Loader/>
     } else if (serverError) {
         content = <NetworkErrorMessage/>
     } else {
         content = <WorkoutContainer serverUrl={serverUrl}/>
-    }
-
+    }*/
 
     return (
         <div>
             <header>
-                <NavBar/>
+                <div className={"navBarGrid"}>
+                    <button className={"workoutsNav"}><Link to='/'>Workouts</Link></button>
+                    <button className={"statisticsNav"}><Link to='/statistics'>Statistics</Link></button>
+                </div>
             </header>
             <main>
-                {content}
+                <Router>
+                    <WorkoutContainer serverUrl={serverUrl} path="/"/>
+                    <Statistics path="/statistics"/>
+                </Router>
             </main>
         </div>
     )
