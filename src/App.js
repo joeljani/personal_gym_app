@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from "react-redux";
 import Loader from "./misc/Loader";
 import WorkoutContainer from "./workouts/WorkoutContainer";
 import NetworkErrorMessage from "./misc/NetworkErrorMessage";
+import NavBar from "./NavBar";
 
 
 const defaultServerUrl = "http://127.0.0.1:9090/"
@@ -21,7 +22,6 @@ const App = () => {
                     .then(json => {
                         const SERVER_URL = json.SERVER_URL_LOCAL ? json.SERVER_URL_LOCAL : defaultServerUrl;
                         dispatch({type: "SERVER_URL_LOADED", serverUrl: SERVER_URL})
-                        dispatch({type: "SERVER_URL_LOADING", loading: false})
                     })
                     .catch(error => {
                         dispatch({type: "SERVER_URL_LOAD_FAILED", serverError: true})
@@ -46,6 +46,9 @@ const App = () => {
 
     return (
         <div>
+            <header>
+                <NavBar/>
+            </header>
             <main>
                 {content}
             </main>

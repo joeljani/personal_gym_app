@@ -58,8 +58,8 @@ const CurrentWeekPicker = () => {
             <button className={"weekDayPicker"} onClick={toggle}>
                 {selectedDays.length === 7 && (
                     <div>
-                        {moment(selectedDays[0]).format('LL')} – {' '}
-                        {moment(selectedDays[6]).format('LL')}
+                        <span>- {moment(selectedDays[0]).format('LL')} – {' '}
+                            {moment(selectedDays[6]).format('LL')} -</span>
                     </div>
                 )}
             </button>

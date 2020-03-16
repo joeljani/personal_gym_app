@@ -1,5 +1,3 @@
-import {transformDateString} from "./DateHelperMethods";
-
 const emptyExercise = id => {
     return {
         _id: id,

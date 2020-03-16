@@ -3,6 +3,9 @@ import {useSelector} from "react-redux";
 import WorkoutDayCard from "./WorkoutCard/WorkoutDayCard";
 import {transformDateString, workoutDate} from "../helper/DateHelperMethods";
 import {emptyWorkout} from "../helper/EmptyObjects";
+import {DropdownItem, DropdownMenu} from "reactstrap";
+import WorkoutDayCardNew from "./WorkoutCard/WorkoutDayCardNew";
+import WorkoutContainer from "./WorkoutContainer";
 
 
 const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout, updateWorkout, deleteExercise}) => {
@@ -23,8 +26,21 @@ const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout, updateWorkout
         }
     }
 
-
     return (
+        <div className={"workoutWeek"}>
+            {currentWeek.map(d =>
+                <div key={d.getDate()}>
+                    <WorkoutDayCardNew key={d.getDate()}
+                                       w={getWorkoutBasedOnDay(d)}
+                                       workoutDate={workoutDate(d)}
+                    />
+                </div>
+            )}
+        </div>
+    )
+
+
+    /*return (
         <div>
             <div>
                 <div className={"nextCardArrow"}></div>
@@ -45,7 +61,7 @@ const WorkoutWeekTable = ({workouts, createWorkout, deleteWorkout, updateWorkout
                 )}
             </div>
         </div>
-    )
+    )*/
 };
 
 

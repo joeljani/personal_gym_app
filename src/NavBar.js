@@ -1,12 +1,10 @@
 import React from "react";
-import {Navbar, NavbarBrand} from "reactstrap";
 
 const NavBar = () => {
     return (
-        <div>
-            <Navbar className={"header"}>
-                <NavbarBrand>back</NavbarBrand>
-            </Navbar>
+        <div className={"navBarGrid"}>
+            <button className={"statisticsNav"}>Statistics</button>
+            <button className={"workoutsNav"}>Workouts</button>
         </div>
     )
 }

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Dropdown, DropdownToggle, DropdownItem, DropdownMenu, Input} from "reactstrap";
 import deleteIcon from "../../misc/deleteIcon.png";
 
-const WorkoutExerciseEdit = ({exercise, onDeleteExercise, updateExercise, addExercise}) => {
+const WorkoutExerciseEdit = ({exercise, onDeleteExercise, updateExercise}) => {
     const [currentExercise, setCurrentExercise] = useState(
         {
             _id: exercise._id,
@@ -41,12 +41,11 @@ const WorkoutExerciseEdit = ({exercise, onDeleteExercise, updateExercise, addExe
 
     const onDelete = () => {
         onDeleteExercise(exercise)
-
     }
 
     return (
         <div className={"cardBodyGrid"}>
-            <Input className={"cardBodyHeader"} name={"name"} defaultValue={currentExercise.name} onChange={handleInput}/>
+            <input className={"cardBodyHeader"} name={"name"} defaultValue={currentExercise.name} onChange={handleInput}/>
             <img className={"deleteExerciseIcon"} src={deleteIcon} style={{width: '20px'}} onClick={onDelete} alt={"deleteExercise"}/>
             <span className={"setsLabel"}>Sets</span>
             <Dropdown className={"sets"} isOpen={dropdownOpenSets} toggle={toggleSets} >
@@ -68,7 +67,7 @@ const WorkoutExerciseEdit = ({exercise, onDeleteExercise, updateExercise, addExe
             <Input className={"kg"} name={"kg"} defaultValue={exercise.kg} onChange={handleInput}/>
 
             <span className={"goalLabel"}>Goal</span>
-            <Input className={"goal"} name={"goal"} defaultValue={exercise.goal} onChange={handleInput}/>
+            <input className={"goal"} name={"goal"} defaultValue={exercise.goal} onChange={handleInput}/>
         </div>
     )
 }

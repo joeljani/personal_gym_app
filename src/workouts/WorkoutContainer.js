@@ -117,7 +117,7 @@ const WorkoutContainer = ({serverUrl}) => {
     return (
         <div>
             <Row>
-                <Col style={{textAlign: 'center'}} className={"currentWeekHeader"}><h3>Current week</h3></Col>
+                <Col style={{textAlign: 'center'}} className={"currentWeekHeader"}><span>Current week</span></Col>
             </Row>
             <Row>
                 <Col style={{textAlign: 'center'}}><CurrentWeekPicker/></Col>

@@ -1,323 +1,119 @@
 :root {
-   /*
-    --font-color: #ffffff;
-    --back-color: #1e1f32;
-    --second-color: #333c47;
-    --contrastColor: #ff931f;
-    --secondContrastColor: #00f9ff;
-    --modalWorkout-back-color: #16202c;*/
-   /* --shadow:
-             6px  6px 18px #0c0c14,
-            -6px -6px 18px #303250;
-    --shadow-modal:
-            6px 6px 18px #0c0c14;
-    --shadow-inset:
-            inset 5px 5px 10px #1a1b2b,
-            inset -5px -5px 10px #222339;
-    --shadow-card-button:
-            5px 5px 10px #1a1b2c,
-            -5px -5px 10px #222338;
-
-    --back-color-light-mode: #f0f0f0d4;
-    --shadow-light-mode:
-            -4px -4px 17px -10px #FFF,
-             4px  4px 10px  -1px  #C4C4C4;*/
-
-
-    /*LIGHT MODE*/
-    --base-color: #ebecf0;
-    --font-color: #9296a2;
-    --shadow-color: #BABECC;
-    --highlight-color: #FFFFFF;
-    --shadow:
-            -5px -5px 20px var(--highlight-color),
-             5px  5px 20px var(--shadow-color);
-    --shadow-small: -2px -2px 5px var(--highlight-color), 2px 2px 5px var(--shadow-color);
-    --shadow-inset: inset 2px 2px 5px var(--shadow-color), inset -5px -5px 10px var(--highlight-color);
+    --color1: #FFFF;
+    --color2: #EEC7B1;
+    --color3: #9FD4C6;
+    --color4: #9FD4C6;
+    --color5: #616576;
 }
 
 body {
-    background-color: var(--base-color);
+    background-color: var(--color1);
     overflow-x: hidden;
 }
 
+/****************************************************************************
+ Globals*/
+
 * {
     font-family: "Helvetica Neue", sans-serif;
-    text-shadow: 1px 1px 0 var(--highlight-color);
+    color: var(--color5);
 }
 
-.header {
-    margin-bottom: 30px;
+/****************************************************************************
+ Navbar*/
+
+.statisticsNav {
+    grid-area: statisticsNav;
+    background-color: var(--color3);
 }
 
-.header * {
-    color: var(--font-color);
+.workoutsNav {
+    grid-area: workoutsNav;
+    background-color: var(--color3);
 }
 
-.nextCardArrow {
-   /* position: absolute;
-    z-index: 10;
-    transform: translateX(300px) translateY(200px);
-    border-width: 50px 0px 0px 50px ;
-    border-style: solid;
-    border-color: blue transparent transparent transparent;
-    opacity: 0.5;
-    background: none;
-    width: 0;
-    height: 0;
-    !*box-shadow: 0 0 1em black;*!
-    filter: drop-shadow(0 0 1em cyan);*/
+.navBarGrid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+    grid-template-areas:
+            "statisticsNav workoutsNav";
+    margin-bottom: 20px;
 }
+
 
 /****************************************************************************
  Week Picker*/
 
 .weekDayPicker {
     margin-top: 0.2rem;
-    background-color: var(--base-color);
+    background-color: var(--color1);
     color: #9296a2;
     font-size: 16px;
     border: none;
     border-radius: 30px;
-    box-shadow: var(--shadow);
     height: 50px;
 }
 
-.weekDayPicker:active {
-    background-color: var(--base-color);
-    border: none;
-}
-
-.currentWeekHeader {
-    color: var(--font-color);
-}
 
 /****************************************************************************
- Workout Card Table/Carousel*/
+ WorkoutWeek */
 
-.workoutDateTitle {
-    color: var(--font-color);
-    font-size: 16px;
-    text-shadow: 1px 1px 0 var(--highlight-color);
-    text-align: center;
+.workoutWeek {
+    margin: 20px 0 0 10px;
+}
+
+.wDate {
+    grid-area: wDate;
     margin-top: 20px;
-    margin-bottom: -20px;
-}
-
-.horizontalCarousel {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-}
-
-/****************************************************************************
- Workout Card*/
-
-.workoutCard {
-    height: 450px;
-    width: 300px;
-    margin: 30px;
-    border: none;
-    border-radius: 30px;
-    font-size: 11px;
-    box-shadow: var(--shadow);
-    background-color: var(--base-color);
-}
-
-.workoutCard * {
-    color: var(--font-color);
 }
 
 .workoutName {
-    font-size: 24px;
-    margin-left: 1rem;
-    display: inline-block;
-    float: left;
+    grid-area: workoutName;
 }
 
-.editWorkout {
-    display: inline-block;
-    float: right;
-}
-
-.editWorkoutButton {
-    border: none;
-    border-radius: 50px;
+.editButton {
+    grid-area: editButton;
     width: 30px;
-    height: 30px;
-    background-color: var(--base-color);
-    box-shadow: var(--shadow);
-    text-align: center;
-    position: relative;
-}
-
-.editWorkoutIcon {
-    position: absolute;
+    background-color: var(--color3);
+    border-radius: 50%;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%)
 }
 
-.saveWorkoutIcon {
-
-}
-
-.editWorkoutDropdownMenu {
-    border-radius: 30px;
-    background-color: var(--base-color);
+.workoutDayCardNew {
+    background-color: var(--color2);
+    height: 60px;
     border: none;
-    box-shadow: var(--shadow);
-    transform: rotate(5deg);
-    transition: transform 0.5s;
+    border-radius: 5px;
+    margin: 0.5rem 0 0.5rem 0;
 }
 
-
-/****************************************************************************
- Cardbody*/
-
-.cardBodyContainer {
-    padding: 10px 15px 25px 15px;
-    font-size: 16px;
+/*TODO: why do i have to font size setting? */
+.workoutDayCardNew * {
+    font-size: 13px;
 }
 
-.cardBody {
-    display: flex;
-    height: 350px;
-    box-shadow: var(--shadow-inset);
-    border-radius: 30px;
-}
-
-.cardBodyInside {
-    width: 100%;
-    max-height: inherit;
-    overflow-y: scroll;
-}
-
-.cardTitleGrid {
-    margin: 0.9rem;
-}
-
-.workoutNameInput {
-    width: 12rem;
-}
-
-/****************************************************************************
- Cardbody grid */
-
-.cardBodyHeader {
-    grid-area: cardBodyHeader;
-    font-weight: bold;
-    font-size: 24px;
-}
-
-.deleteExerciseIcon {
-    grid-area: deleteExerciseIcon;
-}
-
-.setsLabel {
-    grid-area: setsLabel;
-    font-weight: bold;
-}
-
-.repsLabel {
-    grid-area: repsLabel;
-    font-weight: bold;
-
-}
-
-.kgLabel {
-    grid-area: kgLabel;
-    font-weight: bold;
-}
-
-.goalLabel {
-    grid-area: goalLabel;
-    font-weight: bold;
-
-}
-
-.sets {
-    grid-area: sets;
-}
-
-.reps {
-    grid-area: reps;
-}
-
-.kg {
-    grid-area: kg;
-}
-
-.goal {
-    grid-area: goal;
-}
-
-
-.addExerciseButton {
-    grid-area: addExerciseButton;
-    margin-top: 10px;
-    border-radius: 30px;
-    background-color: var(--base-color);
-    border: none;
-    box-shadow: var(--shadow);
-}
-
-
-.cardBodyGrid {
+.workoutDayCardNewGrid {
     display: grid;
-    grid-template-columns: 40% 20% 20% 20%;
+    grid-area: workoutDayCardNewGrid;
+    grid-template-columns: 80% 20%;
     grid-template-rows: auto;
-    grid-template-areas:
-            "cardBodyHeader    cardBodyHeader     cardBodyHeader deleteExerciseIcon"
-            "setsLabel         sets               .              ."
-            "repsLabel         reps               .              ."
-            "kgLabel           kg                 .              ."
-            "goalLabel         goal               achievedLabel  achieved"
-            "addExerciseButton addExerciseButton  .              . ";
-    margin: 0 0.1rem 0 20px;
+    grid-template-areas: "workoutName editButton";
 }
 
-.cardBodyGrid * {
-    margin: 0.1rem;
+.workoutDayGrid {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: auto;
+    grid-template-areas: "wDate workoutDayCardNew";
 }
-
-
 
 /****************************************************************************
-  */
+ WorkoutWeek */
 
 .modal-content {
-    background-color: var(--base-color);
-    border-radius: 30px;
+    height: 80vh;
+    border-radius: 5px;
     border: none;
-    box-shadow: var(--shadow)
-}
-
-input {
-    animation-name: fadeInFromNone;
-    animation-duration: 1.5s;
-    border: none;
-    border-radius: 15px;
-    background-color: var(--base-color);
-    box-shadow: var(--shadow-inset);
-}
-
-input:invalid {
-}
-
-
-html {
-    overflow-y: hidden;
-    overflow-x: hidden;
-}
-
-@keyframes fadeInFromNone {
-    0% {
-        display: none;
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
 }

@@ -5,9 +5,6 @@ import editIcon from "../../misc/editIcon.png";
 import saveIcon from "../../misc/saveIcon.png";
 import WorkoutExerciseContainer from "../WorkoutExercises/WorkoutExerciseContainer";
 import {emptyExercise} from "../../helper/EmptyObjects";
-var uuid = require("uuid");
-var id = uuid.v4();
-
 
 const WorkoutDayCard = ({workout, createWorkout, updateWorkout, deleteWorkout, deleteExercise}) => {
     const [currentWorkout, setCurrentWorkout] = useState(workout);
