@@ -6,14 +6,18 @@ import WorkoutExerciseCreateField from "./WorkoutExercises/WorkoutExerciseCreate
 
 const WorkoutModal = ({workout, createWorkout}) => {
     const [currentWorkout, setCurrentWorkout] = useState(workout)
-    const [exercises, setCurrentExercises] = useState([])
+    const [exercises, setExercises] = useState([])
     const [showModal, setModal] = useState(false)
     const [showExerciseCreateField, setShowExerciseCreateField] = useState(false)
 
     useEffect(() => {
         setCurrentWorkout(workout)
-        setCurrentExercises(workout.exercises)
-    }, [workout, exercises])
+        setExercises(workout.exercises)
+    }, [workout])
+
+    useEffect(() => {
+        setCurrentWorkout({...currentWorkout, exercises: exercises})
+    }, [exercises])
 
     const close = () => setModal(false)
     const open = () => setModal(true)
@@ -29,7 +33,8 @@ const WorkoutModal = ({workout, createWorkout}) => {
     }
 
     const createExercise = () => setShowExerciseCreateField(true)
-    const addExercise = exercise => setCurrentExercises(exercises.concat(exercise))
+    const addExercise = exercise => setExercises(exercises.concat(exercise))
+    const deleteExercise = exercise => setExercises(exercises.filter(e => e._id !== exercise._id))
 
     return (
         <div>
@@ -38,21 +43,26 @@ const WorkoutModal = ({workout, createWorkout}) => {
                 <ModalHeader toggle={close}>
                     Create Workout
                 </ModalHeader>
-                <ModalBody>
-                    <input defaultValue={currentWorkout.name}
-                           className={"workoutNameInput"}
-                           name={"name"}
-                           onChange={handleInput}/>
-                    <h2 style={{textDecoration: "underline"}}>Exercises</h2>
-                    {currentWorkout.exercises.map(e => (
-                        <WorkoutExercise exercise={e}/>
+                <ModalBody className={"workoutModalBody"}>
+                    <div>
+                        <input defaultValue={currentWorkout.name}
+                               className={"workoutNameInput"}
+                               name={"name"}
+                               onChange={handleInput}/>
+                    </div>
+                    <div className={"workoutExercises"}>
+                        <h2 style={{textDecoration: "underline"}}>Exercises</h2>
+                        {currentWorkout.exercises.map(e => (
+                            <WorkoutExercise exercise={e}
+                                             deleteExercise={deleteExercise}/>
                         ))
-                    }
-                    {showExerciseCreateField ?
-                        <WorkoutExerciseCreateField setShowExerciseCreateField={setShowExerciseCreateField}
-                                                    addExercise={addExercise}/>
-                        :
-                        <Button onClick={createExercise}>Create exercise</Button>}
+                        }
+                        {showExerciseCreateField ?
+                            <WorkoutExerciseCreateField setShowExerciseCreateField={setShowExerciseCreateField}
+                                                        addExercise={addExercise}/>
+                            :
+                            <Button onClick={createExercise}>Create exercise</Button>}
+                    </div>
                 </ModalBody>
                 <ModalFooter>
                     <Button color={"primary"} onClick={onSaveWorkout}>Save workout</Button>

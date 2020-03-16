@@ -22,7 +22,7 @@ const WorkoutExerciseCreateField = ({setShowExerciseCreateField, addExercise}) =
 
     const addCustomLabel = () => {
         let exerciseCreateGrid = document.createElement("div");
-        exerciseCreateGrid.className = "exerciseCreateGrid"
+        exerciseCreateGrid.className = "exerciseGrid"
         let label = document.createElement("span")
         label.innerText = "What"
         let value = document.createElement("span")
@@ -52,7 +52,7 @@ const WorkoutExerciseCreateField = ({setShowExerciseCreateField, addExercise}) =
                 {Object.keys(exercise).map(label => {
                     if (label !== "_id" && label !== "name") {
                         return (
-                            <div className={"exerciseCreateGrid"} key={label}>
+                            <div className={"exerciseGrid"} key={label}>
                                 <span className={"label"}>{label}</span>
                                 <span className={"value"}>{exercise[label]}</span>
                                 <button className={"deleteLabel"} onClick={() => deleteLabel(label)}>-</button>
