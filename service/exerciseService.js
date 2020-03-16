@@ -13,15 +13,13 @@ const saveExercises = async (workoutId, exercises) => {
     let savedExercises = []
     if(!(exercises instanceof Array)) exercises = [exercises]
     for (const e of exercises) {
-        await Exercise.ExerciseModel.create({
-            name: e.name,
-            achieved: e.achieved,
-            sets: e.sets,
-            reps: e.reps,
-            kg: e.kg,
-            goal: e.goal,
-            workout: workoutId
-        }).then((e) => savedExercises.push(e))
+        let newExercise = {}
+        Object.keys(e).forEach(prop => {
+            if(prop !== "_id") { //let mongoose generate id
+                newExercise[prop] = e[prop]
+            }
+        })
+        await Exercise.ExerciseModel.create(newExercise).then((e) => savedExercises.push(e))
     }
     return savedExercises
 }

@@ -25,6 +25,7 @@ const exerciseSchema = new Schema({
         }
     },
     {
+        strict: false,
         collection: 'exercises'
     }
 )
