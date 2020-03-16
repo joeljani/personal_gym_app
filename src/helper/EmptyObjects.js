@@ -2,11 +2,11 @@ const emptyExercise = id => {
     return {
         _id: id,
         name: "",
-        achieved: false,
         sets: 0,
         reps: 0,
         kg: 0,
-        goal: ""
+        goal: "",
+        achieved: false
     }
 }
 
