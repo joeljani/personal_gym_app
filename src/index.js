@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import {Provider} from "react-redux";
 import {applyMiddleware, createStore} from 'redux'
-import {createLogger} from 'redux-logger'
+//import {createLogger} from 'redux-logger'
 import ReduxThunk from 'redux-thunk';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'

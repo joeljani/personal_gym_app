@@ -1,13 +1,19 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 
 
-const WorkoutModal = ({workout}) => {
+const WorkoutModal = ({workout, createWorkout}) => {
+    const [currentWorkout, setCurrentWorkout] = useState({})
     const [showModal, setModal] = useState(false)
 
-    const close = () => setModal(false)
+    useEffect(() => {
+        setCurrentWorkout(workout)
+    }, [workout])
 
+    const close = () => setModal(false)
     const open = () => setModal(true)
+
+    const onSaveWorkout = () => createWorkout(currentWorkout)
 
     return (
         <div>
@@ -17,11 +23,11 @@ const WorkoutModal = ({workout}) => {
                     Create Workout
                 </ModalHeader>
                 <ModalBody>
-                    <h1 style={{textDecoration: "underline"}}>Push</h1>
+                    <h1 style={{textDecoration: "underline"}}>{currentWorkout.name}</h1>
                     <h2 style={{textDecoration: "underline"}}>Exercises</h2>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color={"primary"}>Save workout</Button>
+                    <Button color={"primary"} onClick={onSaveWorkout}>Save workout</Button>
                 </ModalFooter>
             </Modal>
         </div>

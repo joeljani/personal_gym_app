@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Dropdown, DropdownToggle, DropdownItem, DropdownMenu, Input} from "reactstrap";
-import deleteIcon from "../../misc/deleteIcon.png";
+import deleteIcon from "../../../misc/deleteIcon.png";
 
 const WorkoutExerciseEdit = ({exercise, onDeleteExercise, updateExercise}) => {
     const [currentExercise, setCurrentExercise] = useState(

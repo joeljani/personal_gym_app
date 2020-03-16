@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Card, CardBody, CardTitle, Dropdown, DropdownToggle, DropdownItem, DropdownMenu, Button} from "reactstrap";
-import addIcon from "../../misc/addIcon.png";
-import editIcon from "../../misc/editIcon.png";
-import saveIcon from "../../misc/saveIcon.png";
-import WorkoutExerciseContainer from "../WorkoutExercises/WorkoutExerciseContainer";
+import WorkoutExerciseContainer from "./WorkoutExercises/WorkoutExerciseContainer";
 import {emptyExercise} from "../../helper/EmptyObjects";
 
 const WorkoutDayCard = ({workout, createWorkout, updateWorkout, deleteWorkout, deleteExercise}) => {

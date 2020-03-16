@@ -1,10 +1,10 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import WorkoutWeekTable from "./WorkoutWeekTable";
 import {Row} from "reactstrap";
 import Col from "reactstrap/es/Col";
 import CurrentWeekPicker from "./CurrentWeekPicker";
 import {transformDateString} from "../helper/DateHelperMethods";
+import WorkoutWeek from "./WorkoutWeek";
 
 
 
@@ -122,7 +122,7 @@ const WorkoutContainer = ({serverUrl}) => {
             <Row>
                 <Col style={{textAlign: 'center'}}><CurrentWeekPicker/></Col>
             </Row>
-            <WorkoutWeekTable workouts={getWorkoutsOfCurrentWeek(workouts)}
+            <WorkoutWeek workouts={getWorkoutsOfCurrentWeek(workouts)}
                               createWorkout={createWorkout}
                               deleteWorkout={deleteWorkout}
                               updateWorkout={updateWorkout}
