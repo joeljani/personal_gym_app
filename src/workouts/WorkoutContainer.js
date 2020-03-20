@@ -1,20 +1,15 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Row} from "reactstrap";
-import Col from "reactstrap/es/Col";
-import CurrentWeekPicker from "./CurrentWeekPicker";
 import {transformDateString} from "../helper/DateHelperMethods";
 import WorkoutWeek from "./WorkoutWeek";
+import {Location, Router} from "@reach/router";
 
 
-
-const WorkoutContainer = ({serverUrl}) => {
-
-    const currentDay = transformDateString(new Date());
-    if(document.getElementById(currentDay) !== null) document.getElementById(currentDay).scrollIntoView();
+const WorkoutContainer = () => {
 
     const workouts = useSelector(state => state.workouts);
     const currentWeek = useSelector(state => state.currentWeek)
+    const serverUrl = useSelector(state => state.serverUrl);
     const dispatch = useDispatch();
 
     const fetchWorkouts = () => {
@@ -26,6 +21,7 @@ const WorkoutContainer = ({serverUrl}) => {
             }
         );
     };
+
     useEffect(fetchWorkouts, [serverUrl]);
 
     const createWorkout = async workout => {
@@ -116,17 +112,11 @@ const WorkoutContainer = ({serverUrl}) => {
 
     return (
         <div>
-            <Row>
-                <Col style={{textAlign: 'center'}} className={"currentWeekHeader"}><span>Current week</span></Col>
-            </Row>
-            <Row>
-                <Col style={{textAlign: 'center'}}><CurrentWeekPicker/></Col>
-            </Row>
             <WorkoutWeek workouts={getWorkoutsOfCurrentWeek(workouts)}
-                              createWorkout={createWorkout}
-                              deleteWorkout={deleteWorkout}
-                              updateWorkout={updateWorkout}
-                              deleteExercise={deleteExercise}/>
+                         createWorkout={createWorkout}
+                         deleteWorkout={deleteWorkout}
+                         updateWorkout={updateWorkout}
+                         deleteExercise={deleteExercise}/>
         </div>
     )
 }

@@ -1,13 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import {transformDateString, workoutDate} from "../helper/DateHelperMethods";
 import {emptyWorkout} from "../helper/EmptyObjects";
-import {Card, CardBody} from "reactstrap";
-import WorkoutModal from "./Workout/WorkoutModal";
+import CurrentWeekPicker from "./CurrentWeekPicker";
+import WorkoutBody from "./Workout/WorkoutBody";
+import addIcon from "../misc/addIcon.png";
+import goArrow from "../misc/goArrow.png";
 
 
 const WorkoutWeek = ({workouts, createWorkout, deleteWorkout, updateWorkout, deleteExercise}) => {
 
+    const [selectedWorkout, setSelectedWorkout] = useState(undefined)
     const currentWeek = useSelector(state => state.currentWeek)
 
     const getWorkoutBasedOnDay = (date) => {
@@ -26,32 +29,63 @@ const WorkoutWeek = ({workouts, createWorkout, deleteWorkout, updateWorkout, del
 
     const noWorkout = workout => workout.name === "" && workout.exercises.length === 0
 
+    const viewWorkout = workout => {
+        setSelectedWorkout(workout)
+    }
+
+    const onAddWorkout = () => {
+
+    }
+
+
     return (
-        <div className={"workoutWeek"}>
-            {currentWeek.map(d => {
-                const workout = getWorkoutBasedOnDay(d)
-                return (
-                    <div className={"workoutDayGrid"} key={d.getDate()}>
-                        <span className={"wDate"}>{workoutDate(d)}</span>
-                        <Card className={"workoutDayCardNew"}>
-                            <CardBody>
-                                <div className={"workoutDayCardNewGrid"}>
-                                    <span className={"workoutName"}>
-                                        {noWorkout(workout) ? "No workout" : workout.name}
-                                    </span>
-                                    <WorkoutModal workout={workout}
-                                                  createWorkout={createWorkout}/>
-                                </div>
-                            </CardBody>
-                        </Card>
+        <div>
+            {selectedWorkout === undefined
+                ?
+                <div className={"workoutWeek"}>
+                    <div className={"currentWeekInfo"}>
+                        <span className={"currentWeekHeader"}>Current week</span>
+                        <CurrentWeekPicker/>
                     </div>
-                )
-            })}
+                    {currentWeek.map(d => {
+                        const currentWorkout = getWorkoutBasedOnDay(d)
+                        return (
+                            <div className={"workoutDayGrid"} key={d.getDate()}>
+                                <span className={"wDateName"}>{workoutDate(d)[0]}</span>
+                                <span className={"wDate"}>{workoutDate(d)[1]}</span>
+                                <div className={noWorkout(currentWorkout) ? "noWorkoutDayButton" : "workoutDayButton"}>
+                                    {noWorkout(currentWorkout) ?
+                                        <div className={"workoutNameWrapper"}>
+                                            <span className={"noWorkoutName"}>Add workout</span>
+                                            <button onClick={onAddWorkout}>
+                                                <img src={addIcon} alt={"Add Workout"}/>
+                                            </button>
+                                        </div>
+                                        :
+                                        <div className={"workoutNameWrapper"}>
+                                            <span className={"workoutName"}>{currentWorkout.name}</span>
+                                            <button onClick={() => viewWorkout(currentWorkout)}>
+                                                <img src={goArrow} alt={"Add Workout"}/>
+                                            </button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+                :
+                <WorkoutBody workout={selectedWorkout}
+                             setSelectedWorkout={setSelectedWorkout}
+                             createWorkout={createWorkout}
+                             deleteWorkout={deleteWorkout}
+                             updateWorkout={updateWorkout}
+                             deleteExercise={deleteExercise}
+                />
+            }
         </div>
     )
-};
+}
 
 
 export default WorkoutWeek;
-
-

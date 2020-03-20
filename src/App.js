@@ -1,14 +1,15 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import WorkoutContainer from "./workouts/WorkoutContainer";
-import {Link, Router} from "@reach/router";
+import {Link, Location, Router, useLocation} from "@reach/router";
 import Statistics from "./statistics/statistics";
+import WorkoutBody from "./workouts/Workout/WorkoutBody";
+import NavBar from "./NavBar";
 
 const defaultServerUrl = "http://127.0.0.1:9090/"
 
-const App = () => {
+const App = ({children}) => {
 
-    const serverUrl = useSelector(state => state.serverUrl)
     const dispatch = useDispatch();
 
     const fetchServerURL = () => {
@@ -42,18 +43,10 @@ const App = () => {
 
     return (
         <div>
-            <header>
-                <div className={"navBarGrid"}>
-                    <button className={"workoutsNav"}><Link to='/'>Workouts</Link></button>
-                    <button className={"statisticsNav"}><Link to='/statistics'>Statistics</Link></button>
-                </div>
-            </header>
-            <main>
-                <Router>
-                    <WorkoutContainer serverUrl={serverUrl} path="/"/>
-                    <Statistics path="/statistics"/>
-                </Router>
-            </main>
+            <NavBar/>
+            <Router>
+                <WorkoutContainer path="/"/>
+            </Router>
         </div>
     )
 }

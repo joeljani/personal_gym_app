@@ -2,7 +2,7 @@ import React from "react";
 import {Card, CardBody, Button} from "reactstrap";
 
 
-const WorkoutExercise = ({exercise, deleteExercise}) => {
+const WorkoutExercise = ({exercise, onDeleteExercise}) => {
     return (
         <Card className={"exerciseCard"}>
             <CardBody>
@@ -10,7 +10,7 @@ const WorkoutExercise = ({exercise, deleteExercise}) => {
                         return (
                             <div>
                                 {label === "name" && <h4>{exercise[label]}</h4>}
-                                {(label !== "_id" && label !== "name") &&
+                                {(label !== "_id" && label !== "name" && label !== "__v") &&
                                 <div className={"exerciseGrid"} key={label}>
                                     <span className={"label"}>{label}</span>
                                     <span className={"value"}>{exercise[label]}</span>
@@ -18,7 +18,7 @@ const WorkoutExercise = ({exercise, deleteExercise}) => {
                             </div>
                         )
                 })}
-                <Button onClick={() => deleteExercise(exercise)}>Delete exercise</Button>
+                <Button onClick={() => onDeleteExercise(exercise)}>Delete exercise</Button>
             </CardBody>
         </Card>
     )
