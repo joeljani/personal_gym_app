@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from "react-redux";
+import React, {useEffect} from 'react';
+import {useDispatch} from "react-redux";
 import WorkoutContainer from "./workouts/WorkoutContainer";
-import {Link, Location, Router, useLocation} from "@reach/router";
-import Statistics from "./statistics/statistics";
-import WorkoutBody from "./workouts/Workout/WorkoutBody";
+import {Router} from "@reach/router";
 import NavBar from "./NavBar";
 
 const defaultServerUrl = "http://127.0.0.1:9090/"

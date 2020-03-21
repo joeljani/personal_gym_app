@@ -7,11 +7,6 @@ import {applyMiddleware, createStore} from 'redux'
 import ReduxThunk from 'redux-thunk';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
-import WorkoutContainer from "./workouts/WorkoutContainer";
-import Statistics from "./statistics/statistics";
-import WorkoutBody from "./workouts/Workout/WorkoutBody";
-import {Location, Router} from "@reach/router";
-import posed, { PoseGroup } from 'react-pose';
 //const logger = createLogger({colors: false})
 
 

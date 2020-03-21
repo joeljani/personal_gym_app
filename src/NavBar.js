@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {Link, Router, useLocation} from "@reach/router";
+import React from "react";
+import {Link} from "@reach/router";
 
 
 const NavBar = () => {
@@ -11,7 +11,6 @@ const NavBar = () => {
             workoutsNav.style.opacity = 1
             statisticsNav.style.opacity = 0.5
         } else {
-            console.log("got here")
             statisticsNav.style.opacity = 1
             workoutsNav.style.opacity = 0.5
         }
@@ -21,7 +20,10 @@ const NavBar = () => {
         <div>
             <header>
                 <div id={"navigation"} className={"navBarGrid"}>
-                        <Link to='/' className={"workoutsNav"} onClick={() =>changeFocus("workouts")}>Workouts</Link>
+                        <Link to='/' className={"workoutsNav"}
+                              onClick={() =>changeFocus("workouts")}>
+                            Workouts
+                        </Link>
                         <Link to='statistics' className={"statisticsNav"}
                               onClick={() =>changeFocus("statistics")}
                               style={{opacity: 0.5}}>

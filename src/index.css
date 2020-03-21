@@ -1,7 +1,7 @@
 :root {
     --baseColor: #fefeff;
     --green: rgba(47, 92, 8, 0.6);
-    --color3: #9FD4C6;
+    --accentColorOrange: #FFA145;
     --color4: #9FD4C6;
     --color5: #616576;
 }
@@ -17,6 +17,12 @@ body {
 * {
     font-family: Helvetica Neue, Helvetica, sans-serif;
     color: #000000;
+}
+
+button {
+    background: none;
+    color: inherit;
+    border: none;
 }
 
 /****************************************************************************
@@ -49,7 +55,7 @@ body {
     grid-template-rows: auto;
     grid-template-areas:
             "workoutsNav statisticsNav";
-    font-size: 28px;
+    font-size: 24px;
     color: var(--green);
     text-decoration: none;
     font-weight: bold;
@@ -66,7 +72,7 @@ body {
     border: 1px solid var(--green);
     border-radius: 10px;
     height: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     font-style: italic;
     font-weight: lighter;
 }
@@ -80,7 +86,7 @@ body {
 }
 
 .currentWeekHeader {
-    font-size: 20px;
+    font-size: 18px;
     color: var(--green);
 }
 
@@ -160,39 +166,24 @@ body {
 }
 
 /****************************************************************************
- Exercises */
-
-.exerciseCard {
-    border-radius: 5px;
-    margin: 0.5rem 0 0.5rem 0;
-    background-color: var(--green);
-}
-
-/****************************************************************************
- Create Exercise */
-
-.label {
-    grid-area: label;
-}
-
-.value {
-    grid-area: value;
-}
-
-.deleteLabel {
-    grid-area: deleteLabel;
-}
-
-.exerciseGrid {
-    display: grid;
-    grid-area: exerciseGrid;
-    grid-template-columns: 50% 40% 10%;
-    grid-template-rows: auto;
-    grid-template-areas: "label value deleteLabel";
-}
-
-/****************************************************************************
  Workout */
+
+.navIconsContainer {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+
+.backArrow {
+    transform: rotate(180deg);
+    grid-column-start: 1;
+    grid-column-end: 1;
+}
+
+.editWorkout {
+    grid-column-start: end;
+    grid-column-end: end;
+    color: var(--accentColorOrange);
+}
 
 .workoutBodyWrapper {
     background-color: var(--green);
@@ -201,23 +192,57 @@ body {
     -webkit-animation-delay: 2s;
     animation: slide-in 0.5s forwards;
     transform: translateX(-100%);
-
 }
-
-.workoutBody {
-    padding: 30px 30px 30px 30px;
-}
-
-.exercisesGrid {
-    display: grid;
-    background-color: white;
-    transform: translateY(5vh);
-    width: 100vw;
-    height: 70vh;
-    border-radius: 40px;
-}
-
 
 @keyframes slide-in {
     100% { transform: translateX(0%); }
 }
+
+.workoutBody {
+}
+
+.workoutInfoHeader {
+    padding: 30px 30px 0px 30px;
+}
+
+.workoutInfoHeader * {
+    color: white;
+}
+
+.exercisesField {
+    background-color: white;
+    padding: 30px;
+    transform: translateY(5vh);
+    width: 100vw;
+    height: 70vh;
+    border-radius: 40px;
+    color: black;
+}
+
+/****************************************************************************
+ Exercises */
+
+.exerciseGrid {
+    display: grid;
+    grid-template-columns: 20% 10% 20% 10% 20% 15% 5%;
+}
+
+.exercise {
+    border: none;
+    border-bottom: 1px solid;
+    margin: 20px 0 20px 0;
+}
+
+@keyframes roll {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes slide-in {
+    100% { transform: translateX(0%); }
+}
+

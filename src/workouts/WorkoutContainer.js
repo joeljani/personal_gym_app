@@ -2,7 +2,6 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {transformDateString} from "../helper/DateHelperMethods";
 import WorkoutWeek from "./WorkoutWeek";
-import {Location, Router} from "@reach/router";
 
 
 const WorkoutContainer = () => {
