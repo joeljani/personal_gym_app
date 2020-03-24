@@ -1,0 +1,54 @@
+.navIconsContainer {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+
+.backArrow {
+    transform: rotate(180deg);
+    grid-column-start: 1;
+    grid-column-end: 1;
+}
+
+.editWorkout {
+    grid-column-start: end;
+    grid-column-end: end;
+    color: var(--accentColorOrange);
+}
+
+.workoutBodyWrapper {
+    background-color: var(--green);
+    height: 100vh;
+    -webkit-animation: slide 0.5s forwards;
+    -webkit-animation-delay: 2s;
+    animation: slide-in 0.5s forwards;
+    transform: translateX(-100%);
+}
+
+@keyframes slide-in {
+    100% { transform: translateX(0%); }
+}
+
+.workoutBody {
+}
+
+.workoutInfoHeader {
+    padding: 30px 30px 0px 30px;
+}
+
+.exercisesField {
+    background-color: white;
+    padding: 30px;
+    transform: translateY(5vh);
+    width: 100vw;
+    height: 70vh;
+    border-radius: 40px;
+    color: black;
+    overflow: scroll;
+}
+
+/****************************************************************************
+ WorkoutCreate */
+
+.workoutDescriptionInput {
+    width: 100%;
+}

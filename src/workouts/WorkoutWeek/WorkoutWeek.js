@@ -1,63 +1,43 @@
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
-import {transformDateString, workoutDate} from "../helper/DateHelperMethods";
-import {emptyWorkout} from "../helper/EmptyObjects";
+import {workoutDate, getWorkoutBasedOnDay} from "../helper/DateHelperMethods";
 import CurrentWeekPicker from "./CurrentWeekPicker";
-import WorkoutBody from "./Workout/WorkoutBody";
+import Workout from "./Workout/Workout";
 import addIcon from "../misc/addIcon.png";
 import goArrow from "../misc/goArrow.png";
+import WorkoutCreate from "./Workout/WorkoutCreate";
+import "./WorkoutWeek.css";
 
-
+//..others
 const WorkoutWeek = ({workouts, createWorkout, deleteWorkout, updateWorkout, deleteExercise}) => {
 
-    const [selectedWorkout, setSelectedWorkout] = useState(undefined)
+    const [selectedWorkout, setSelectedWorkout] = useState({})
     const currentWeek = useSelector(state => state.currentWeek)
 
-    const getWorkoutBasedOnDay = (date) => {
-        let stringDate;
-        if (date.getDate().toString().length === 1) stringDate = "0" + date.getDate().toString();
-        else stringDate = date.getDate().toString();
+    const isEmptyWorkout = workout => workout.name === "" && workout.exercises.length === 0
 
-        if (workouts !== undefined) {
-            const workout = workouts.find(workout => (workout.date.substring(8)) === stringDate); //8th pos of (e.g) "2020-02-13" = "13"
-            if (workout !== undefined) return workout
-            else {
-                return emptyWorkout(Date.now().toString(), transformDateString(date));
-            }
-        }
-    }
-
-    const noWorkout = workout => workout.name === "" && workout.exercises.length === 0
-
-    const viewWorkout = workout => {
-        setSelectedWorkout(workout)
-    }
-
-    const onAddWorkout = () => {
-
-    }
-
+    const viewWorkout = workout => setSelectedWorkout(workout)
+    const onAddWorkout = workout => setSelectedWorkout(workout)
 
     return (
         <div>
-            {selectedWorkout === undefined
-                ?
+            {Object.entries(selectedWorkout).length === 0 ?
                 <div className={"workoutWeek"}>
                     <div className={"currentWeekInfo"}>
                         <span className={"currentWeekHeader"}>Current week</span>
                         <CurrentWeekPicker/>
                     </div>
                     {currentWeek.map(d => {
-                        const currentWorkout = getWorkoutBasedOnDay(d)
+                        const currentWorkout = getWorkoutBasedOnDay(d, workouts)
                         return (
                             <div className={"workoutDayGrid"} key={d.getDate()}>
                                 <span className={"wDateName"}>{workoutDate(d)[0]}</span>
                                 <span className={"wDate"}>{workoutDate(d)[1]}</span>
-                                <div className={noWorkout(currentWorkout) ? "noWorkoutDayButton" : "workoutDayButton"}>
-                                    {noWorkout(currentWorkout) ?
+                                <div className={isEmptyWorkout(currentWorkout) ? "noWorkoutDayButton" : "workoutDayButton"}>
+                                    {isEmptyWorkout(currentWorkout) ?
                                         <div className={"workoutNameWrapper"}>
                                             <span className={"noWorkoutName"}>Add workout</span>
-                                            <button onClick={onAddWorkout}>
+                                            <button onClick={() => onAddWorkout(currentWorkout)}>
                                                 <img src={addIcon} alt={"Add Workout"}/>
                                             </button>
                                         </div>
@@ -65,7 +45,7 @@ const WorkoutWeek = ({workouts, createWorkout, deleteWorkout, updateWorkout, del
                                         <div className={"workoutNameWrapper"}>
                                             <span className={"workoutName"}>{currentWorkout.name}</span>
                                             <button onClick={() => viewWorkout(currentWorkout)}>
-                                                <img src={goArrow} alt={"Add Workout"}/>
+                                                <img src={goArrow} alt={"View Workout"}/>
                                             </button>
                                         </div>
                                     }
@@ -75,13 +55,16 @@ const WorkoutWeek = ({workouts, createWorkout, deleteWorkout, updateWorkout, del
                     })}
                 </div>
                 :
-                <WorkoutBody workout={selectedWorkout}
+                isEmptyWorkout(selectedWorkout) ?
+                    <WorkoutCreate emptyWorkout={selectedWorkout}
+                                   setSelectedWorkout={setSelectedWorkout}/>
+                    :
+                    <Workout workout={selectedWorkout}
                              setSelectedWorkout={setSelectedWorkout}
                              createWorkout={createWorkout}
                              deleteWorkout={deleteWorkout}
                              updateWorkout={updateWorkout}
-                             deleteExercise={deleteExercise}
-                />
+                             deleteExercise={deleteExercise}/>
             }
         </div>
     )

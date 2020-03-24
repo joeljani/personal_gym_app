@@ -1,0 +1,41 @@
+.exerciseGrid {
+    display: grid;
+    grid-template-columns: 20% 10% 20% 10% 20% 15% 5%;
+}
+
+.exerciseInfoTitle {
+    margin: 20px 0 20px 0;
+    font-size: 20px;
+}
+
+.exerciseEditGrid {
+    display: grid;
+    grid-template-columns: 50% 30% 20%;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    align-items: center;
+}
+
+.exercise {
+    border: none;
+    border-bottom: 1px solid;
+    margin: 20px 0 20px 0;
+}
+
+.deleteIcon {
+    width: 20px;
+    height: 20px;
+}
+
+@keyframes roll {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes slide-in {
+    100% { transform: translateX(0%); }
+}

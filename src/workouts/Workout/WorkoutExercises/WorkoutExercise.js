@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Collapse} from "reactstrap";
+import "./WorkoutExercise.css"
 
 
 const WorkoutExercise = ({exercise, index, onDeleteExercise}) => {

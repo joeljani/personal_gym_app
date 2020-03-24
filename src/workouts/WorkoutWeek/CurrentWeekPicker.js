@@ -5,6 +5,7 @@ import DayPicker from "react-day-picker";
 import 'react-day-picker/lib/style.css';
 import moment from "moment";
 import 'moment/locale/de';
+import './CurrentWeekPicker.css'
 
 //TODO: add styling to the dayPicker: see https://react-day-picker.js.org/docs/styling/
 
