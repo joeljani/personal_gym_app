@@ -1,3 +1,3 @@
-# personal_gym_app
+# pwa gym planner
 
-A tailored gym planner app
+
