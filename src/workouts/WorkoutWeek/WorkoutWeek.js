@@ -1,17 +1,18 @@
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
-import {workoutDate, getWorkoutBasedOnDay} from "../helper/DateHelperMethods";
+import {workoutDate, getWorkoutBasedOnDay, transformDateString} from "../../helper/DateHelperMethods";
 import CurrentWeekPicker from "./CurrentWeekPicker";
-import Workout from "./Workout/Workout";
-import addIcon from "../misc/addIcon.png";
-import goArrow from "../misc/goArrow.png";
-import WorkoutCreate from "./Workout/WorkoutCreate";
+import addIcon from "../../misc/addIcon.png";
+import goArrow from "../../misc/goArrow.png";
 import "./WorkoutWeek.css";
+import {emptyWorkout} from "../../helper/EmptyObjects";
+import Workout from "../Workout/Workout";
 
-//..others
+
 const WorkoutWeek = ({workouts, createWorkout, deleteWorkout, updateWorkout, deleteExercise}) => {
 
     const [selectedWorkout, setSelectedWorkout] = useState({})
+
     const currentWeek = useSelector(state => state.currentWeek)
 
     const isEmptyWorkout = workout => workout.name === "" && workout.exercises.length === 0
@@ -33,11 +34,13 @@ const WorkoutWeek = ({workouts, createWorkout, deleteWorkout, updateWorkout, del
                             <div className={"workoutDayGrid"} key={d.getDate()}>
                                 <span className={"wDateName"}>{workoutDate(d)[0]}</span>
                                 <span className={"wDate"}>{workoutDate(d)[1]}</span>
-                                <div className={isEmptyWorkout(currentWorkout) ? "noWorkoutDayButton" : "workoutDayButton"}>
+                                <div
+                                    className={isEmptyWorkout(currentWorkout) ? "noWorkoutDayButton" : "workoutDayButton"}>
                                     {isEmptyWorkout(currentWorkout) ?
                                         <div className={"workoutNameWrapper"}>
                                             <span className={"noWorkoutName"}>Add workout</span>
-                                            <button onClick={() => onAddWorkout(currentWorkout)}>
+                                            <button
+                                                onClick={() => onAddWorkout(emptyWorkout(Date.now(), transformDateString(d)))}>
                                                 <img src={addIcon} alt={"Add Workout"}/>
                                             </button>
                                         </div>
@@ -55,16 +58,12 @@ const WorkoutWeek = ({workouts, createWorkout, deleteWorkout, updateWorkout, del
                     })}
                 </div>
                 :
-                isEmptyWorkout(selectedWorkout) ?
-                    <WorkoutCreate emptyWorkout={selectedWorkout}
-                                   setSelectedWorkout={setSelectedWorkout}/>
-                    :
-                    <Workout workout={selectedWorkout}
-                             setSelectedWorkout={setSelectedWorkout}
-                             createWorkout={createWorkout}
-                             deleteWorkout={deleteWorkout}
-                             updateWorkout={updateWorkout}
-                             deleteExercise={deleteExercise}/>
+                <Workout workout={selectedWorkout}
+                         setSelectedWorkout={setSelectedWorkout}
+                         createWorkout={createWorkout}
+                         updateWorkout={updateWorkout}
+                         deleteWorkout={deleteWorkout}
+                />
             }
         </div>
     )

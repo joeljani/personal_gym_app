@@ -15,7 +15,7 @@ const emptyWorkout = (id, date) => {
         _id: id,
         date: date,
         name: "",
-        notes: "",
+        description: "",
         exercises: []
     }
 }

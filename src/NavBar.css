@@ -1,0 +1,32 @@
+.statisticsNav {
+    grid-area: statisticsNav;
+    color: inherit;
+}
+
+.statisticsNav:link, .statisticsNav:focus, .statisticsNav:active, .statisticsNav:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.workoutsNav {
+    grid-area: workoutsNav;
+    color: inherit;
+}
+
+.workoutsNav:link, .workoutsNav:focus, .workoutsNav:active, .workoutsNav:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navBarGrid {
+    display: grid;
+    margin: 0 10px 20px 20px;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+    grid-template-areas:
+            "workoutsNav statisticsNav";
+    font-size: 24px;
+    color: var(--green);
+    text-decoration: none;
+    font-weight: bold;
+}

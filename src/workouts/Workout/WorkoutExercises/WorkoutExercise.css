@@ -1,19 +1,64 @@
-.exerciseGrid {
-    display: grid;
-    grid-template-columns: 20% 10% 20% 10% 20% 15% 5%;
+.exercisesHeader {
+    display: inline-flex;
+    font-size: 20px;
+    font-style: italic;
+    transform: translateY(-20px);
 }
 
-.exerciseInfoTitle {
-    margin: 20px 0 20px 0;
-    font-size: 20px;
+#exerciseTabs {
+    grid-area: exerciseTabs;
+    display: grid;
+    height: 200px;
+    border-right: 1px solid black;
+    position:relative;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.exerciseTabs button, input {
+    width: 110px;
+}
+
+#verticalLine {
+    left: 98%;
+    width: 3px;
+    height: 30px;
+    background: var(--accentColorOrange);
+    position: absolute;
+}
+
+.exerciseTabButton {
+}
+
+#addExerciseButton {
+    margin-top: 10px;
+    width: 100px;
+    height: 60px;
+    background-color: var(--accentColorOrange);
+    border: none;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 16px;
+}
+
+.exerciseInfo {
+    grid-area: exerciseInfo;
+    margin-left: 30px;
+}
+
+.exercisesInfoContainer {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-template-rows: auto;
+    grid-template-areas: "exerciseTabs exerciseInfo";
 }
 
 .exerciseEditGrid {
     display: grid;
     grid-template-columns: 50% 30% 20%;
     grid-column-gap: 10px;
-    grid-row-gap: 10px;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .exercise {
@@ -23,19 +68,50 @@
 }
 
 .deleteIcon {
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-size: 1.3em;
     width: 20px;
     height: 20px;
 }
 
-@keyframes roll {
-    0% {
-        transform: rotate(0);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+
+.exerciseInfoContainer {
+    flex-direction: column;
+    margin: 0px 0px 10px 10px;
+    transform: translateY(-25px);
+    border-bottom: 1px solid var(--lightGrey);
+    width: 150px;
 }
 
-@keyframes slide-in {
-    100% { transform: translateX(0%); }
+.infoHeader {
+    margin-bottom: 5px;
 }
+
+.infoValue {
+    margin-bottom: 10px;
+}
+
+.goalsAchievedContainer {
+    display: inline-flex;
+    transform: translateX(-80px);
+    width: 250px;
+}
+
+.goalsAchievedCheckbox {
+    vertical-align: bottom;
+    position: relative;
+    top: -1px;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+.exerciseInfoField {
+    margin-top: 20px;
+    transform: translateX(-80px);
+}
+
+
+

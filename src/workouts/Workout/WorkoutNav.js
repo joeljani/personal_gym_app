@@ -1,11 +1,13 @@
 import React from "react";
 import goArrow from "../../misc/goArrow.png";
+import "./Workout.css"
 
-const WorkoutNav = ({currentWorkout, setSelectedWorkout}) => {
+const WorkoutNav = ({currentWorkout, setSelectedWorkout, canDisplayNav, canNavigateBack, deleteWorkout}) => {
 
     const hideShowParent = () => {
         let nav = document.getElementById("navigation")
-        if (nav != null) nav.style.display === "none" ? nav.style.display = "grid" : nav.style.display = "none"
+        console.log(nav.style.display)
+        if (nav !== null) nav.style.display === "" ? nav.style.display = "none" : nav.style.display = ""
         let currentWeekInfo = document.getElementsByClassName("workoutWeek")[0]
         if (currentWeekInfo != null) {
             currentWeekInfo.style.display === "none" ?
@@ -23,18 +25,19 @@ const WorkoutNav = ({currentWorkout, setSelectedWorkout}) => {
         setSelectedWorkout({})
     }
 
+    const onDeleteWorkout = _ => {
+        navigateBack()
+        deleteWorkout(currentWorkout)
+    }
 
     return (
         <div>
-            {hideShowParent()}
+            {canNavigateBack && navigateBack()}
+            {!canDisplayNav && hideShowParent()}
             <div className={"navIconsContainer"}>
                 <button onClick={navigateBack}><img className={"backArrow"} src={goArrow} alt={"Back to workoutweek"}/>
                 </button>
-                <button onClick={() => console.log("edit workout click")} className={"editWorkout"}>...</button>
-            </div>
-            <div className={"workoutInfoHeader"}>
-                <h3>{currentWorkout.name}</h3>
-                <span>A workout with only pushing motions. A workout with only pushing motions</span>
+                <button onClick={() => onDeleteWorkout()} className={"editWorkout"}>...</button>
             </div>
         </div>
     )

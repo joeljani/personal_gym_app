@@ -1,0 +1,11 @@
+.weekDayPicker {
+    margin-top: 0.2rem;
+    background-color: var(--baseColor);
+    color: #9296a2;
+    border: 1px solid var(--green);
+    border-radius: 10px;
+    height: 30px;
+    margin-bottom: 5px;
+    font-style: italic;
+    font-weight: lighter;
+}
