@@ -81,4 +81,13 @@
     color: #ffffff;
 }
 
+.saveWorkoutButton {
+    background-color: var(--accentColorOrange);
+    border-radius: 15px;
+    height: 30px;
+}
 
+.invalidInput {
+    border-bottom-color: red;
+    color: red;
+}

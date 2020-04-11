@@ -6,7 +6,7 @@ import addIcon from "../../misc/addIcon.png";
 import goArrow from "../../misc/goArrow.png";
 import "./WorkoutWeek.css";
 import {emptyWorkout} from "../../helper/EmptyObjects";
-import Workout from "../Workout/Workout";
+import Workout from "./Workout/Workout";
 
 
 const WorkoutWeek = ({workouts, createWorkout, deleteWorkout, updateWorkout, deleteExercise}) => {

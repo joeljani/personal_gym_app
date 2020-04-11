@@ -1,9 +1,9 @@
 import React from "react";
-import {emptyExercise} from "../../../helper/EmptyObjects";
-import {Button} from "reactstrap";
+import {emptyExercise} from "../../../../helper/EmptyObjects";
 import "./WorkoutExercise.css"
 
-const ExerciseTabs = ({exercises, selectedExercise, addExercise, updateExercise, setSelectedExerciseIndex}) => {
+const ExerciseTabs = ({exercises, selectedExercise, addExercise, updateExercise, deleteExercise,
+                          setSelectedExerciseIndex}) => {
 
     const handleInput = event => {
         const updatedExercise = {...selectedExercise, name: event.target.value};
@@ -11,7 +11,7 @@ const ExerciseTabs = ({exercises, selectedExercise, addExercise, updateExercise,
     };
 
     let verticalLineStyle;
-    if(exercises.indexOf(selectedExercise) === -1)
+    if (exercises.indexOf(selectedExercise) === -1)
         verticalLineStyle = {transform: `translateY(0px)`};
     else
         verticalLineStyle = {transform: `translateY(${exercises.indexOf(selectedExercise) * 45}px)`};
@@ -23,15 +23,18 @@ const ExerciseTabs = ({exercises, selectedExercise, addExercise, updateExercise,
         <div id={"exerciseTabs"} style={gridRowStyle}>
             <div id={"verticalLine"} style={verticalLineStyle}/>
             {exercises.map((e, i) =>
-                    <input className={"exerciseTabInput"}
-                           placeholder={e.name === "" ? "Exercise name" : e.name}
+                <div className={"exerciseTabElement"} key={i}>
+                    <input value={e.name}
+                           placeholder={"Exercise name"}
                            onChange={handleInput}
                            onClick={() => setSelectedExerciseIndex(i)}
-                           key={i}
                     />
+                    <button className={"deleteExerciseButton"} onClick={() => deleteExercise(e)}>x</button>
+                </div>
             )}
-            <Button onClick={() => addExercise(emptyExercise(Date.now()))}
-                    id={"addExerciseButton"}> Add Exercise</Button>
+            <button onClick={() => addExercise(emptyExercise(Date.now()))}
+                    className={"addExerciseButton"}> Add Exercise
+            </button>
         </div>
     )
 };

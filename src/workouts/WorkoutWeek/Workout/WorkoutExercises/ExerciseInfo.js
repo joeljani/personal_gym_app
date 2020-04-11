@@ -20,16 +20,23 @@ const ExerciseInfo = ({exercise, updateExercise}) => {
     const handleValueInput = event => {
         const label = event.target.name;
         let newValue = event.target.value;
-        if (numericLabels.includes(label.toLowerCase()))
-            newValue = parseInt(event.target.value);
+        if (numericLabels.includes(label.toLowerCase()) && newValue !== "")
+            newValue = parseInt(newValue);
 
         const updatedExercise = {...exercise, [label]: newValue};
 
         updateExercise(updatedExercise)
     };
 
+    const handleAchievedCheck = event =>
+        updateExercise({...exercise, achieved: event.target.checked})
+
+    const handleNotesInput = event =>
+        updateExercise({...exercise, notes: event.target.value})
+
 
     return (
+        exercise !== undefined &&
         <div className={"exerciseInfo"}>
             {createPairs(exercise).map((pair, i) => {
                     const label = Object.keys(pair)[0];
@@ -54,19 +61,24 @@ const ExerciseInfo = ({exercise, updateExercise}) => {
                 <label>Exercice goals achieved
                     <input type={"checkbox"}
                            checked={exercise.achieved}
-                           onChange={(e, checked) => !checked}
+                           onChange={handleAchievedCheck}
                            className={"goalsAchievedCheckbox"}/>
                 </label>
             </div>
-            <div className={"exerciseInfoField"}>
-                Some info about exercise, maybe a link or whatever
+            <div className={"exerciseNotes"}>
+                <textarea value={exercise.notes}
+                          placeholder={"Exercise notes"}
+                          name={"notes"}
+                          onChange={handleNotesInput}
+                />
             </div>
         </div>
     )
 
 };
 
-const isCorrectLabel = label => label !== "_id" && label !== "name" && label !== "__v" && label !== "achieved";
+const labelsToIgnore = ["_id", "name", "__v", "achieved", "notes"]
+const isCorrectLabel = label => !labelsToIgnore.includes(label)
 
 const numericLabels = ["sets", "reps", "kg"];
 
