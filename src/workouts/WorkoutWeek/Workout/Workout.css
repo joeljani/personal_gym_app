@@ -91,3 +91,13 @@
     border-bottom-color: red;
     color: red;
 }
+
+.accentButton {
+    background-color: var(--accentColorOrange);
+    border-radius: 15px;
+}
+
+.deleteWorkoutButton {
+    background-color: red;
+    border-radius: 15px;
+}

@@ -21,7 +21,7 @@ const Workout = ({workout, setSelectedWorkout, createWorkout, updateWorkout, del
         const errorMessageExercise = document.getElementById("errorMessageExercise"); // validation
         if(errorMessageExercise !== null) errorMessageExercise.remove();
         setCurrentWorkout({...currentWorkout, exercises: currentWorkout.exercises.concat(exercise)});
-    }
+    };
 
     const updateExercises = exercise => {
         setCurrentWorkout({
@@ -34,17 +34,19 @@ const Workout = ({workout, setSelectedWorkout, createWorkout, updateWorkout, del
 
     const onSaveWorkout = _ => {
         if(workoutValid(currentWorkout)) {
-            setHideNav(true)
+            setHideNav(true);
             createWorkout(currentWorkout)
         }
     };
 
     const onUpdateWorkout = _ => {
         if(workoutValid(currentWorkout)) {
-            setHideNav(true)
+            setHideNav(true);
             updateWorkout(currentWorkout)
         }
     };
+
+    const chooseWorkout = chosenWorkout => setCurrentWorkout(chosenWorkout);
 
 
     return (
@@ -54,6 +56,7 @@ const Workout = ({workout, setSelectedWorkout, createWorkout, updateWorkout, del
                             setSelectedWorkout={setSelectedWorkout}
                             hideNav={hideNav}
                             deleteWorkout={deleteWorkout}
+                            chooseWorkout={chooseWorkout}
                 />
                 <div className={"workoutInfoHeader"}>
                     <div id={"workoutNameInputContainer"}>
@@ -96,11 +99,11 @@ const Workout = ({workout, setSelectedWorkout, createWorkout, updateWorkout, del
 const workoutValid = workout => {
     let isValid = true;
     if(workout.exercises.length === 0) {
-        workoutExercisesValidation("errorMessageExercise");
+        setExercisesValidation("errorMessageExercise");
         isValid = false;
     }
     if(workout.name === "") {
-        workoutNameValidation("workoutNameInvalid");
+        setNameValidation("workoutNameInvalid");
         isValid = false;
     }
     return isValid;
@@ -108,7 +111,7 @@ const workoutValid = workout => {
 
 const errorMessage = (message, id) => {
     const errorMessage = document.createElement("DIV");
-    errorMessage.style.color = "red"
+    errorMessage.style.color = "red";
     errorMessage.innerText = message;
     errorMessage.id = id !== undefined ? id : "";
     return errorMessage;
@@ -121,18 +124,18 @@ const hasErrorMessage = (parent, id) => {
     return errorMessageExists;
 };
 
-const workoutExercisesValidation = id => {
+const setExercisesValidation = id => {
     const exerciseTabs = document.getElementById("exerciseTabs");
     if(!hasErrorMessage(exerciseTabs, id))
-        exerciseTabs.appendChild(errorMessage("Workout needs at least one exercise", id))
+        exerciseTabs.appendChild(errorMessage("Workout needs at least one exercise", id));
 };
 
-const workoutNameValidation = id => {
+const setNameValidation = id => {
     const nameInput = document.getElementsByClassName("workoutNameInput")[0];
-    nameInput.classList.add("invalidInput")
+    nameInput.classList.add("invalidInput");
     const nameInputContainer = document.getElementById("workoutNameInputContainer");
     if(!hasErrorMessage(nameInputContainer, id))
-        nameInputContainer.appendChild(errorMessage("Workout needs a name", id))
+        nameInputContainer.appendChild(errorMessage("Workout needs a name", id));
 };
 
 

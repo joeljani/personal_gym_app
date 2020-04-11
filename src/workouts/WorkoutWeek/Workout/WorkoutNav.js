@@ -1,8 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import goArrow from "../../../misc/goArrow.png";
 import "./Workout.css"
+import {Modal, ModalHeader, ModalBody, ModalFooter, Table} from "reactstrap";
+import {useSelector} from "react-redux";
 
-const WorkoutNav = ({currentWorkout, setSelectedWorkout, hideNav, deleteWorkout}) => {
+const WorkoutNav = ({currentWorkout, setSelectedWorkout, hideNav, deleteWorkout, chooseWorkout}) => {
+    const [showMoreInfo, setShowMoreInfo] = useState(false);
+    const [showWorkouts, setShowWorkouts] = useState(false);
+    const workouts = useSelector(state => state.workouts);
+
     let nav = document.getElementById("navigation");
 
     const hideParent = () => {
@@ -32,6 +38,17 @@ const WorkoutNav = ({currentWorkout, setSelectedWorkout, hideNav, deleteWorkout}
         deleteWorkout(currentWorkout)
     };
 
+    const toggle = () => {
+        setShowMoreInfo(!showMoreInfo);
+        setShowWorkouts(false);
+    }
+
+    const onSelectWorkout = workout => {
+        setShowWorkouts(false)
+        chooseWorkout({...workout, _id: currentWorkout._id, date: currentWorkout.date})
+        toggle()
+    };
+
     return (
         <div>
             {hideParent()}
@@ -39,7 +56,52 @@ const WorkoutNav = ({currentWorkout, setSelectedWorkout, hideNav, deleteWorkout}
             <div className={"navIconsContainer"}>
                 <button onClick={navigateBack}><img className={"backArrow"} src={goArrow} alt={"Back to workoutweek"}/>
                 </button>
-                <button onClick={() => onDeleteWorkout()} className={"editWorkout"}>...</button>
+                <button onClick={toggle} className={"editWorkout"}>...</button>
+                <Modal isOpen={showMoreInfo} toggle={toggle}>
+                    <ModalHeader toggle={toggle}>
+                        Workout Options
+                    </ModalHeader>
+                    <ModalBody>
+                        <button onClick={() => setShowWorkouts(!showWorkouts)} className={"accentButton"}>
+                            Choose an existing workout
+                        </button>
+                        {showWorkouts &&
+                        <Table>
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Workout Name</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {workouts.length === 0 ?
+                                <tr>
+                                    <td>No workouts yet!</td>
+                                </tr>
+                                :
+                                workouts.map((w, i) => (
+                                    <tr key={i}>
+                                        <td>{w.date}</td>
+                                        <td>{w.name}</td>
+                                        <td>
+                                            <button onClick={() => onSelectWorkout(w)} className={"accentButton"}>
+                                                Choose
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                            </tbody>
+                        </Table>
+                        }
+                    </ModalBody>
+                    <ModalFooter>
+                        <button onClick={() => onDeleteWorkout()} className={"deleteWorkoutButton"}>
+                            Delete workout
+                        </button>
+                    </ModalFooter>
+                </Modal>
             </div>
         </div>
     )
