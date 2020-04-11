@@ -66,6 +66,7 @@ const ExerciseInfo = ({exercise, updateExercise}) => {
                 </label>
             </div>
             <div className={"exerciseNotes"}>
+                {console.log(exercise.notes)}
                 <textarea value={exercise.notes}
                           placeholder={"Exercise notes"}
                           name={"notes"}

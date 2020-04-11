@@ -6,7 +6,8 @@ const emptyExercise = id => {
         reps: 0,
         kg: 0,
         goal: "",
-        achieved: false
+        achieved: false,
+        notes: ""
     }
 }
 
