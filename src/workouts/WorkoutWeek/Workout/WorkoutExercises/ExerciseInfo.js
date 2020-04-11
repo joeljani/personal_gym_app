@@ -1,12 +1,18 @@
 import React from "react";
 import "./WorkoutExercise.css"
+import {activateExerciseInfoValidation} from "../../../../helper/validation";
 
 const ExerciseInfo = ({exercise, updateExercise}) => {
 
-    const handleLabelInput = event => {
+    const handleLabelInput = (event, i) => {
         const newLabel = event.target.value;
         const oldLabel = event.target.name;
         const value = exercise[oldLabel];
+
+        const pattern = /^\d+$/; // numeric value
+        if(!(numericLabels.includes(newLabel.toLowerCase()) && !pattern.test(value)))
+            activateExerciseInfoValidation("exerciseInfoValueError"+i, i, false)
+        else activateExerciseInfoValidation("exerciseInfoValueError"+i, i, true)
 
         const updatedExercise = {...exercise};
         delete updatedExercise[oldLabel];
@@ -17,15 +23,24 @@ const ExerciseInfo = ({exercise, updateExercise}) => {
         updateExercise(updatedExercise)
     };
 
-    const handleValueInput = event => {
+    const handleValueInput = (event, i) => {
         const label = event.target.name;
         let newValue = event.target.value;
-        if (numericLabels.includes(label.toLowerCase()) && newValue !== "")
-            newValue = parseInt(newValue);
-
-        const updatedExercise = {...exercise, [label]: newValue};
-
-        updateExercise(updatedExercise)
+        if (numericLabels.includes(label.toLowerCase()) && newValue !== "") {
+            const pattern = /^\d+$/; // numeric value
+            if(pattern.test(newValue)) {
+                newValue = parseInt(newValue);
+                const updatedExercise = {...exercise, [label]: newValue};
+                updateExercise(updatedExercise)
+                activateExerciseInfoValidation("exerciseInfoValueError"+i, i, false);
+            } else {
+                activateExerciseInfoValidation("exerciseInfoValueError"+i, i, true)
+            }
+        } else {
+            activateExerciseInfoValidation("exerciseInfoValueError"+i, i, false)
+            const updatedExercise = {...exercise, [label]: newValue};
+            updateExercise(updatedExercise)
+        }
     };
 
     const handleAchievedCheck = event =>
@@ -46,12 +61,12 @@ const ExerciseInfo = ({exercise, updateExercise}) => {
                             <div className={"infoHeader"}>
                                 <input value={label}
                                        name={label}
-                                       onChange={handleLabelInput}/>
+                                       onChange={event => handleLabelInput(event, i)}/>
                             </div>
                             <div className={"infoValue"}>
                                 <input value={value}
                                        name={label}
-                                       onChange={handleValueInput}/>
+                                       onChange={event => handleValueInput(event, i)}/>
                             </div>
                         </div>
                     )
@@ -66,12 +81,10 @@ const ExerciseInfo = ({exercise, updateExercise}) => {
                 </label>
             </div>
             <div className={"exerciseNotes"}>
-                {console.log(exercise.notes)}
                 <textarea value={exercise.notes}
                           placeholder={"Exercise notes"}
                           name={"notes"}
-                          onChange={handleNotesInput}
-                />
+                          onChange={handleNotesInput}/>
             </div>
         </div>
     )
@@ -81,7 +94,7 @@ const ExerciseInfo = ({exercise, updateExercise}) => {
 const labelsToIgnore = ["_id", "name", "__v", "achieved", "notes"]
 const isCorrectLabel = label => !labelsToIgnore.includes(label)
 
-const numericLabels = ["sets", "reps", "kg"];
+const numericLabels = ["sets", "reps", "kg"]; // add for more numeric values
 
 const createPairs = exercise => Object.keys(exercise)
     .filter(isCorrectLabel)

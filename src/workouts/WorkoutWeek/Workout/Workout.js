@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import WorkoutNav from "./WorkoutNav";
 import "./Workout.css"
 import WorkoutExercises from "./WorkoutExercises/WorkoutExercises";
+import {activateNameValidation, workoutValid} from "../../../helper/validation";
 
 
 const Workout = ({workout, setSelectedWorkout, createWorkout, updateWorkout, deleteWorkout}) => {
@@ -10,8 +11,7 @@ const Workout = ({workout, setSelectedWorkout, createWorkout, updateWorkout, del
 
     const handleInput = event => {
         if(event.target.name === "name") { // could optimize performance
-            const nameInput = document.getElementsByClassName("workoutNameInput")[0];
-            nameInput.classList.remove("invalidInput");
+            if(event.target.value !== "") activateNameValidation("workoutNameInvalid", false)
         }
         const updatedWorkout = {...currentWorkout, [event.target.name]: event.target.value};
         setCurrentWorkout(updatedWorkout);
@@ -94,48 +94,6 @@ const Workout = ({workout, setSelectedWorkout, createWorkout, updateWorkout, del
             </div>
         </div>
     )
-};
-
-const workoutValid = workout => {
-    let isValid = true;
-    if(workout.exercises.length === 0) {
-        setExercisesValidation("errorMessageExercise");
-        isValid = false;
-    }
-    if(workout.name === "") {
-        setNameValidation("workoutNameInvalid");
-        isValid = false;
-    }
-    return isValid;
-};
-
-const errorMessage = (message, id) => {
-    const errorMessage = document.createElement("DIV");
-    errorMessage.style.color = "red";
-    errorMessage.innerText = message;
-    errorMessage.id = id !== undefined ? id : "";
-    return errorMessage;
-};
-
-const hasErrorMessage = (parent, id) => {
-    let errorMessageExists = false;
-    parent.childNodes.forEach(
-        child => child.id === id ? errorMessageExists = true : null);
-    return errorMessageExists;
-};
-
-const setExercisesValidation = id => {
-    const exerciseTabs = document.getElementById("exerciseTabs");
-    if(!hasErrorMessage(exerciseTabs, id))
-        exerciseTabs.appendChild(errorMessage("Workout needs at least one exercise", id));
-};
-
-const setNameValidation = id => {
-    const nameInput = document.getElementsByClassName("workoutNameInput")[0];
-    nameInput.classList.add("invalidInput");
-    const nameInputContainer = document.getElementById("workoutNameInputContainer");
-    if(!hasErrorMessage(nameInputContainer, id))
-        nameInputContainer.appendChild(errorMessage("Workout needs a name", id));
 };
 
 
