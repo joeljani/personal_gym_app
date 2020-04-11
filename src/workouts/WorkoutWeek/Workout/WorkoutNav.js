@@ -2,12 +2,11 @@ import React, {useState} from "react";
 import goArrow from "../../../misc/goArrow.png";
 import "./Workout.css"
 import {Modal, ModalHeader, ModalBody, ModalFooter, Table} from "reactstrap";
-import {useSelector} from "react-redux";
+import WorkoutSelection from "./WorkoutSelection";
 
 const WorkoutNav = ({currentWorkout, setSelectedWorkout, hideNav, deleteWorkout, chooseWorkout}) => {
     const [showMoreInfo, setShowMoreInfo] = useState(false);
     const [showWorkouts, setShowWorkouts] = useState(false);
-    const workouts = useSelector(state => state.workouts);
 
     let nav = document.getElementById("navigation");
 
@@ -43,12 +42,6 @@ const WorkoutNav = ({currentWorkout, setSelectedWorkout, hideNav, deleteWorkout,
         setShowWorkouts(false);
     }
 
-    const onSelectWorkout = workout => {
-        setShowWorkouts(false)
-        chooseWorkout({...workout, _id: currentWorkout._id, date: currentWorkout.date})
-        toggle()
-    };
-
     return (
         <div>
             {hideParent()}
@@ -65,36 +58,10 @@ const WorkoutNav = ({currentWorkout, setSelectedWorkout, hideNav, deleteWorkout,
                         <button onClick={() => setShowWorkouts(!showWorkouts)} className={"accentButton"}>
                             Choose an existing workout
                         </button>
-                        {showWorkouts &&
-                        <Table>
-                            <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Workout Name</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {workouts.length === 0 ?
-                                <tr>
-                                    <td>No workouts yet!</td>
-                                </tr>
-                                :
-                                workouts.map((w, i) => (
-                                    <tr key={i}>
-                                        <td>{w.date}</td>
-                                        <td>{w.name}</td>
-                                        <td>
-                                            <button onClick={() => onSelectWorkout(w)} className={"accentButton"}>
-                                                Choose
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))
-                            }
-                            </tbody>
-                        </Table>
-                        }
+                        {showWorkouts && <WorkoutSelection chooseWorkout={chooseWorkout}
+                                                           currentWorkout={currentWorkout}
+                                                           setShowWorkouts={setShowWorkouts}
+                                                           toggle={toggle}/>}
                     </ModalBody>
                     <ModalFooter>
                         <button onClick={() => onDeleteWorkout()} className={"deleteWorkoutButton"}>
