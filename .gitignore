@@ -9,7 +9,7 @@
 /coverage
 
 # production
-Dockerfile
+
 /build
 /public/application.json
 
