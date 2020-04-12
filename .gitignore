@@ -1,6 +1,5 @@
 node_modules
 *.log
-.env.defaults
 package-lock.json
 .idea/codeStyles/
 data
