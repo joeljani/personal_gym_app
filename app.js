@@ -29,7 +29,7 @@ logger.info(`Server started on port ${PORT}`);
  */
 mongoose.Promise = global.Promise;
 const url = 'mongodb://' + process.env.MONGO_HOST_LOCAL + '/' + process.env.MONGO_DATABASE_LOCAL;
-logger.debug(`Database URL used '%s'`, url);
+logger.info(`Database used '%s'`, url);
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
