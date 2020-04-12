@@ -10,7 +10,7 @@ const workoutSchema = new Schema({
         name: {
             type: String
         },
-        notes: {
+        description: {
             type: String
         },
         exercises: [Exercise.ExerciseSchema]

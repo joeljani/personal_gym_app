@@ -1,7 +1,7 @@
-const Exercise = require('../domain/exercise')
-const log4js = require('log4js')
-const logger = log4js.getLogger('service')
-const mongoose = require('mongoose')
+const Exercise = require('../domain/exercise');
+const log4js = require('log4js');
+const logger = log4js.getLogger('service');
+const mongoose = require('mongoose');
 
 
 /**
@@ -10,20 +10,19 @@ const mongoose = require('mongoose')
  * @param exercises
  */
 const saveExercises = async (workoutId, exercises) => {
-    let savedExercises = []
-    if(!(exercises instanceof Array)) exercises = [exercises]
+    let savedExercises = [];
+    if(!(exercises instanceof Array)) exercises = [exercises];
     for (const e of exercises) {
-        let newExercise = {}
+        let newExercise = {};
         Object.keys(e).forEach(prop => {
-            if(prop !== "_id") { //let mongoose generate id
+            if(prop !== "_id") { // let mongoose generate id
                 newExercise[prop] = e[prop]
             }
-        })
+        });
         await Exercise.ExerciseModel.create(newExercise).then((e) => savedExercises.push(e))
     }
     return savedExercises
-}
-
+};
 
 /**
  * Gets exercises of a workout
@@ -32,12 +31,11 @@ const saveExercises = async (workoutId, exercises) => {
  */
 const getExercisesOfWorkout = async workoutId => {
     return await Exercise.ExerciseModel.find({workout: workoutId}, (err, exercises) => {
-        if (err) logger.debug(`couldn't find any exercise for workout with workoutId ${workoutId}`)
-        logger.debug(`Found ${exercises.length} exercises`)
+        if (err) logger.info(`couldn't find any exercise for workout with workoutId ${workoutId}`);
+        logger.info(`Found ${exercises.length} exercises`);
         return exercises
     })
-}
-
+};
 
 /**
  *
@@ -46,8 +44,8 @@ const getExercisesOfWorkout = async workoutId => {
  * @return {*[]}
  */
 const updateExercises = async (wId, exercises) => {
-    let newExercises = []
-    let existingExercises = []
+    let newExercises = [];
+    let existingExercises = [];
     for (const e of exercises) {
         if (mongoose.isValidObjectId(e._id) && e._id !== undefined) {
             existingExercises = existingExercises.concat(updateExercise(wId, e))
@@ -55,7 +53,7 @@ const updateExercises = async (wId, exercises) => {
     }
 
     return existingExercises.concat(newExercises)
-}
+};
 
 
 /**
@@ -70,23 +68,23 @@ const updateExercise = (wId, e) => {
             logger.error(`Could not update exercise with id "${e._id}": ${err}`)
         }
         if(existingExercise != null) {
-            existingExercise.name = e.name
-            existingExercise.achieved = e.achieved
-            existingExercise.sets = e.sets
-            existingExercise.reps = e.reps
-            existingExercise.kg = e.kg
-            existingExercise.goal = e.goal
+            existingExercise.name = e.name;
+            existingExercise.achieved = e.achieved;
+            existingExercise.sets = e.sets;
+            existingExercise.reps = e.reps;
+            existingExercise.kg = e.kg;
+            existingExercise.goal = e.goal;
 
             existingExercise.save(err => {
                 if (err) {
                     logger.error(`Could not save exercise with id "${e._id}"`)
                 }
-                logger.debug(`Successfully updated exercise with id "${e.id}"`)
+                logger.info(`Successfully updated exercise with id "${e.id}"`)
             })
         }
-    })
+    });
     return e;
-}
+};
 
 /**
  * Removes exercises
@@ -95,11 +93,11 @@ const updateExercise = (wId, e) => {
 const deleteExercises = exercises => {
     for (const e of exercises) {
         Exercise.ExerciseModel.deleteOne({_id: e._id}, (err) => {
-            if (err) logger.error(`Could not delete exercise with id ${e._id}`)
-            logger.debug(`Successfully deleted exercise with id ${e._id}`)
+            if (err) logger.error(`Could not delete exercise with id ${e._id}`);
+            logger.info(`Successfully deleted exercise with id ${e._id}`)
         })
     }
-}
+};
 
 
 module.exports = {
@@ -107,4 +105,4 @@ module.exports = {
     updateExercises: updateExercises,
     getExercisesOfWorkout: getExercisesOfWorkout,
     deleteExercises: deleteExercises
-}
+};

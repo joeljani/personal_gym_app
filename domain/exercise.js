@@ -5,19 +5,22 @@ const exerciseSchema = new Schema({
         name: {
             type: String
         },
-        achieved: {
-            type: Boolean
-        },
-        reps: {
+        sets: {
             type: Number
         },
-        sets: {
+        reps: {
             type: Number
         },
         kg: {
             type: Number
         },
+        achieved: {
+            type: Boolean
+        },
         goal: {
+            type: String
+        },
+        notes: {
             type: String
         },
         workout: {
