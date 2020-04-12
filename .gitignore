@@ -3,5 +3,4 @@ node_modules
 .env.defaults
 package-lock.json
 .idea/codeStyles/
-log4js.json
 data
