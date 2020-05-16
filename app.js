@@ -28,7 +28,7 @@ logger.info(`Server started on port ${PORT}`);
  * Connection to mongoDB
  */
 mongoose.Promise = global.Promise;
-const url = 'mongodb://' + process.env.MONGO_HOST_LOCAL + '/' + process.env.MONGO_DATABASE_LOCAL;
+const url = 'mongodb://workoutPlannerDB:27017/workoutPlanner';
 logger.info(`Database used '%s'`, url);
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
