@@ -4,7 +4,7 @@ import WorkoutContainer from "./workouts/WorkoutContainer";
 import {Router} from "@reach/router";
 import NavBar from "./NavBar";
 
-const defaultServerUrl = "http://127.0.0.1:9090/"
+const defaultServerUrl = "http://127.0.0.1:8080/"
 
 const App = ({children}) => {
 
