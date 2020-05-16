@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {transformDateString} from "../helper/DateHelperMethods";
 import WorkoutWeek from "./WorkoutWeek/WorkoutWeek";
 
+const defaultServerUrl = "http://127.0.0.1:8080/"
 
 const WorkoutContainer = () => {
 
@@ -14,11 +15,13 @@ const WorkoutContainer = () => {
     const fetchWorkouts = () => {
         dispatch(
             async dispatch => {
-                const res = await fetch(serverUrl + "/workouts");
+                const res = await fetch(defaultServerUrl + "/workouts");
                 const data = await res.json();
-                dispatch({type: "WORKOUTS_FETCHED", workouts: data});
+                dispatch({
+                    type: "WORKOUTS_FETCHED", workouts: data
+                });
             }
-        );
+        )
     };
 
     useEffect(fetchWorkouts, [serverUrl]);

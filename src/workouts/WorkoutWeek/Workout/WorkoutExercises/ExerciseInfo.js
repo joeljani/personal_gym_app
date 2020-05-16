@@ -104,6 +104,7 @@ const createPairs = exercise => Object.keys(exercise)
 
 const insertProperty = (obj, name, value, index) => {
     if (obj._insertProperty === undefined) { // if method doesn't exist yet
+        // eslint-disable-next-line no-extend-native
         Object.defineProperty(
             Object.prototype,
             '_insertProperty',

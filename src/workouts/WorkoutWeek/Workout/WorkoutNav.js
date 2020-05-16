@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import goArrow from "../../../misc/goArrow.png";
 import "./Workout.css"
-import {Modal, ModalHeader, ModalBody, ModalFooter, Table} from "reactstrap";
+import {Modal, ModalHeader, ModalBody, ModalFooter} from "reactstrap";
 import WorkoutSelection from "./WorkoutSelection";
 
 const WorkoutNav = ({currentWorkout, setSelectedWorkout, hideNav, deleteWorkout, chooseWorkout}) => {
